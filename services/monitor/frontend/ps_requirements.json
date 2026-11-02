@@ -1,0 +1,562 @@
+[{
+	"_id": {
+		"$oid": "6ab0e17a3ca5c474ff43f8d1"
+	},
+	"psCode": "PS-01",
+	"requirement": "หลักสูตรต้องมีอาจารย์ผู้รับผิดชอบหลักสูตรอย่างน้อย 5 คน",
+	"config": {
+		"targetCollection": "appointments",
+		"filter": {
+			"role": "programmeResponsible"
+		},
+		"count": {
+			"field": "personId",
+			"distinct": true
+		},
+		"condition": {
+			"operator": ">=",
+			"value": 5
+		},
+		"result": {
+			"pass": "PASS",
+			"fail": "FAIL",
+			"review": "REVIEW",
+			"na": "N/A"
+		},
+		"reviewCondition": [
+			"จำนวนข้อมูลไม่ชัดเจน"
+		],
+		"naEnabled": false
+	},
+	"active": true,
+	"timestamp": {
+		"$date": "2026-09-26T10:19:19.884Z"
+	}
+},
+{
+	"_id": {
+		"$oid": "6ab0e17a3ca5c474ff43f8d2"
+	},
+	"psCode": "PS-02",
+	"requirement": "อาจารย์ผู้รับผิดชอบหลักสูตรต้องมีสถานะอาจารย์ประจำ",
+	"config": {
+		"targetCollection": "appointments",
+		"responsibleRole": "programmeResponsible",
+		"permanentRole": "programmeStaff",
+		"matching": {
+			"sameCurriculum": true,
+			"samePerson": true
+		},
+		"condition": {
+			"operator": "EXISTS",
+			"field": "programmeStaff"
+		},
+		"result": {
+			"pass": "PASS",
+			"fail": "FAIL",
+			"review": "REVIEW",
+			"na": "N/A"
+		},
+		"reviewCondition": [
+			"ไม่สามารถตรวจสอบสถานะอาจารย์ประจำได้"
+		],
+		"naEnabled": false
+	},
+	"active": true,
+	"timestamp": {
+		"$date": "2026-09-26T10:19:19.884Z"
+	}
+},
+{
+	"_id": {
+		"$oid": "6ab0e17a3ca5c474ff43f8d3"
+	},
+	"psCode": "PS-03",
+	"requirement": "อาจารย์ผู้รับผิดชอบหลักสูตรต้องไม่รับผิดชอบเกิน 1 หลักสูตร",
+	"config": {
+		"targetCollection": "appointments",
+		"targetRole": "programmeResponsible",
+		"review": {
+			"required": true,
+			"reviewByUser": true,
+			"allowManualResult": [
+				"PASS",
+				"FAIL",
+				"REVIEW"
+			]
+		},
+		"result": {
+			"pass": "PASS",
+			"fail": "FAIL",
+			"review": "REVIEW",
+			"na": "N/A"
+		},
+		"naEnabled": false
+	},
+	"active": true,
+	"timestamp": {
+		"$date": "2026-09-26T10:19:19.884Z"
+	}
+},
+{
+	"_id": {
+		"$oid": "6ab0e17a3ca5c474ff43f8d4"
+	},
+	"psCode": "PS-04",
+	"requirement": "หลักสูตรต้องมีคำสั่งแต่งตั้งและระบุบทบาทการบริหารหลักสูตรอย่างชัดเจน",
+	"config": {
+		"targetCollection": "appointments",
+		"requiredFields": [
+			"personId",
+			"role",
+			"roleName",
+			"appointmentOrder"
+		],
+		"appointmentOrder": {
+			"required": true,
+			"requiredFields": [
+				"orderNumber",
+				"orderDate"
+			]
+		},
+		"role": {
+			"required": true,
+			"roleNameRequired": true
+		},
+		"result": {
+			"pass": "PASS",
+			"fail": "FAIL",
+			"review": "REVIEW",
+			"na": "N/A"
+		},
+		"conditions": {
+			"pass": "ข้อมูลการแต่งตั้งครบและระบุบทบาทชัดเจน",
+			"fail": "ไม่มีคำสั่งแต่งตั้งหรือข้อมูลไม่ครบ",
+			"review": "มีข้อมูลแต่ไม่สามารถระบุความครบถ้วนหรือความชัดเจนได้"
+		},
+		"naEnabled": false
+	},
+	"active": true,
+	"timestamp": {
+		"$date": "2026-09-26T10:19:19.884Z"
+	}
+},
+{
+	"_id": {
+		"$oid": "6ab0e17a3ca5c474ff43f8d5"
+	},
+	"psCode": "PS-05",
+	"requirement": "อาจารย์ผู้รับผิดชอบหลักสูตรต้องมีคุณวุฒิสูงสุดอย่างน้อยระดับปริญญาโท",
+	"config": {
+		"targetCollection": "educations",
+		"appointment": {
+			"role": "programmeResponsible"
+		},
+		"join": {
+			"from": "appointments.personId",
+			"to": "educations.personId"
+		},
+		"degree": {
+			"field": "degree",
+			"minimum": "master",
+			"ordering": [
+				"bachelor",
+				"master",
+				"Ph.D."
+			],
+			"aliases": {
+				"bachelor": [
+					"วท.บ.",
+					"บธ.บ.",
+					"วบ.บ."
+				],
+				"master": [
+					"วท.ม."
+				],
+				"Ph.D.": [
+					"ปร.ด."
+				]
+			},
+			"normalization": {
+				"enabled": true,
+				"remove": [
+					" ",
+					"."
+				],
+				"caseInsensitive": true
+			}
+		},
+		"result": {
+			"pass": "PASS",
+			"fail": "FAIL",
+			"review": "REVIEW",
+			"na": "N/A"
+		},
+		"reviewCondition": [
+			"ไม่สามารถระบุระดับคุณวุฒิได้"
+		],
+		"naEnabled": false
+	},
+	"active": true,
+	"timestamp": {
+		"$date": "2026-09-26T10:19:19.884Z"
+	}
+},
+{
+	"_id": {
+		"$oid": "6ab0e17a3ca5c474ff43f8d6"
+	},
+	"psCode": "PS-06",
+	"requirement": "คุณวุฒิของอาจารย์สัมพันธ์กับสาขาของหลักสูตร",
+	"config": {
+		"targetCollection": "educations",
+		"appointment": {
+			"role": "programmeResponsible"
+		},
+		"join": {
+			"appointmentPersonId": "appointments.personId",
+			"educationPersonId": "educations.personId",
+			"curriculumId": "appointments.curriculumId"
+		},
+		"programmeField": {
+			"source": "curricula.curriculumName",
+			"method": "extract"
+		},
+		"qualificationField": {
+			"source": "educations.field"
+		},
+		"normalization": {
+			"enabled": true,
+			"remove": [
+				"สาขาวิชา",
+				"สาขา",
+				"หลักสูตร",
+				"วิชา",
+				" ",
+				"-"
+			],
+			"caseInsensitive": true,
+			"unicode": "NFKC"
+		},
+		"comparison": {
+			"method": "mapping",
+			"allowExactMatch": true,
+			"allowRelatedMatch": true
+		},
+		"fieldMappings": [
+			{
+				"programmeField": "วิทยาการคอมพิวเตอร์",
+				"aliases": [
+					"วิทยาการคอมพิวเตอร์",
+					"Computer Science",
+					"Computing Science",
+					"Computer Sciences",
+					"Computing"
+				],
+				"relatedFields": [
+					"เทคโนโลยีสารสนเทศ",
+					"สารสนเทศศาสตร์",
+					"ระบบสารสนเทศ",
+					"วิศวกรรมซอฟต์แวร์",
+					"วิศวกรรมคอมพิวเตอร์",
+					"เทคโนโลยีคอมพิวเตอร์",
+					"เทคโนโลยีสารสนเทศและการสื่อสาร",
+					"Information Technology",
+					"Information Systems",
+					"Information Science",
+					"Software Engineering",
+					"Computer Engineering",
+					"Computer Technology",
+					"Information and Communication Technology",
+					"ICT"
+				]
+			},
+			{
+				"programmeField": "เทคโนโลยีสารสนเทศ",
+				"aliases": [
+					"เทคโนโลยีสารสนเทศ",
+					"Information Technology",
+					"IT"
+				],
+				"relatedFields": [
+					"วิทยาการคอมพิวเตอร์",
+					"วิทยาการสารสนเทศ",
+					"สารสนเทศศาสตร์",
+					"ระบบสารสนเทศ",
+					"เทคโนโลยีสารสนเทศและการสื่อสาร",
+					"เทคโนโลยีสารสนเทศและนวัตกรรม",
+					"เทคโนโลยีดิจิทัล",
+					"วิศวกรรมซอฟต์แวร์",
+					"Information Science",
+					"Information Systems",
+					"Computer Science",
+					"Information and Communication Technology",
+					"Digital Technology",
+					"Software Engineering",
+					"การจัดการเทคโนโลยีสารสนเทศ",
+					"คอมพิวเตอร์ธุรกิจ",
+					"วิทยาศาสตร์เชิงคำนวณ",
+					"การจัดการคอมพิวเตอร์และวิศวกรรม"
+				]
+			},
+			{
+				"programmeField": "สารสนเทศศาสตร์",
+				"aliases": [
+					"สารสนเทศศาสตร์",
+					"วิทยาการสารสนเทศ",
+					"Information Science",
+					"Informatics"
+				],
+				"relatedFields": [
+					"เทคโนโลยีสารสนเทศ",
+					"ระบบสารสนเทศ",
+					"วิทยาการคอมพิวเตอร์",
+					"เทคโนโลยีสารสนเทศและการสื่อสาร",
+					"Information Technology",
+					"Information Systems",
+					"Computer Science",
+					"Informatics",
+					"Information and Communication Technology"
+				]
+			},
+			{
+				"programmeField": "ระบบสารสนเทศ",
+				"aliases": [
+					"ระบบสารสนเทศ",
+					"Information Systems",
+					"Management Information Systems",
+					"MIS"
+				],
+				"relatedFields": [
+					"เทคโนโลยีสารสนเทศ",
+					"สารสนเทศศาสตร์",
+					"วิทยาการสารสนเทศ",
+					"วิทยาการคอมพิวเตอร์",
+					"เทคโนโลยีสารสนเทศและการสื่อสาร",
+					"Information Technology",
+					"Information Science",
+					"Informatics",
+					"Computer Science",
+					"Information and Communication Technology"
+				]
+			},
+			{
+				"programmeField": "วิศวกรรมซอฟต์แวร์",
+				"aliases": [
+					"วิศวกรรมซอฟต์แวร์",
+					"Software Engineering"
+				],
+				"relatedFields": [
+					"วิทยาการคอมพิวเตอร์",
+					"เทคโนโลยีสารสนเทศ",
+					"วิศวกรรมคอมพิวเตอร์",
+					"เทคโนโลยีคอมพิวเตอร์",
+					"Computer Science",
+					"Information Technology",
+					"Computer Engineering",
+					"Computer Technology"
+				]
+			},
+			{
+				"programmeField": "วิศวกรรมคอมพิวเตอร์",
+				"aliases": [
+					"วิศวกรรมคอมพิวเตอร์",
+					"Computer Engineering"
+				],
+				"relatedFields": [
+					"วิทยาการคอมพิวเตอร์",
+					"วิศวกรรมซอฟต์แวร์",
+					"เทคโนโลยีสารสนเทศ",
+					"เทคโนโลยีคอมพิวเตอร์",
+					"Computer Science",
+					"Software Engineering",
+					"Information Technology",
+					"Computer Technology"
+				]
+			},
+			{
+				"programmeField": "เทคโนโลยีดิจิทัล",
+				"aliases": [
+					"เทคโนโลยีดิจิทัล",
+					"Digital Technology",
+					"Digital Technologies"
+				],
+				"relatedFields": [
+					"เทคโนโลยีสารสนเทศ",
+					"วิทยาการคอมพิวเตอร์",
+					"สารสนเทศศาสตร์",
+					"วิทยาการสารสนเทศ",
+					"ระบบสารสนเทศ",
+					"เทคโนโลยีสารสนเทศและการสื่อสาร",
+					"Information Technology",
+					"Computer Science",
+					"Information Science",
+					"Information Systems",
+					"Information and Communication Technology"
+				]
+			},
+			{
+				"programmeField": "เทคโนโลยีสารสนเทศและการสื่อสาร",
+				"aliases": [
+					"เทคโนโลยีสารสนเทศและการสื่อสาร",
+					"Information and Communication Technology",
+					"Information Communication Technology",
+					"ICT"
+				],
+				"relatedFields": [
+					"เทคโนโลยีสารสนเทศ",
+					"วิทยาการคอมพิวเตอร์",
+					"สารสนเทศศาสตร์",
+					"วิทยาการสารสนเทศ",
+					"ระบบสารสนเทศ",
+					"เทคโนโลยีดิจิทัล",
+					"Information Technology",
+					"Computer Science",
+					"Information Science",
+					"Information Systems",
+					"Digital Technology"
+				]
+			}
+		],
+		"result": {
+			"exact": "PASS",
+			"related": "PASS",
+			"unrelated": "FAIL",
+			"unknown": "REVIEW"
+		},
+		"reviewCondition": [
+			"ไม่พบข้อมูล education.field",
+			"ไม่สามารถระบุ programme field ได้",
+			"ไม่มี Mapping สำหรับ programme field",
+			"ไม่สามารถตัดสินความสัมพันธ์ได้"
+		],
+		"naEnabled": false
+	},
+	"active": true,
+	"timestamp": {
+		"$date": "2026-09-26T10:19:19.884Z"
+	}
+},
+{
+	"_id": {
+		"$oid": "6ab0e17a3ca5c474ff43f8d7"
+	},
+	"psCode": "PS-07",
+	"requirement": "อาจารย์ผู้รับผิดชอบหรืออาจารย์ประจำหลักสูตรต้องมีผลงานวิชาการย้อนหลัง 5 ปี",
+	"config": {
+		"targetCollections": [
+			"academic_works",
+			"appointments"
+		],
+		"targetRoles": [
+			"programmeResponsible",
+			"programmeStaff"
+		],
+		"join": {
+			"from": "appointments.personId",
+			"to": "academic_works.personId"
+		},
+		"publicationYear": {
+			"field": "publicationYear",
+			"period": "previous5Years"
+		},
+		"minimumCount": 1,
+		"result": {
+			"pass": "PASS",
+			"fail": "FAIL",
+			"review": "REVIEW",
+			"na": "N/A"
+		},
+		"reviewCondition": [
+			"ไม่สามารถตรวจสอบ publicationYear ได้"
+		],
+		"naEnabled": false
+	},
+	"active": true,
+	"timestamp": {
+		"$date": "2026-09-26T10:19:19.884Z"
+	}
+},
+{
+	"_id": {
+		"$oid": "6ab0e17a3ca5c474ff43f8d8"
+	},
+	"psCode": "PS-08",
+	"requirement": "อาจารย์พิเศษต้องมีคุณวุฒิและประสบการณ์ที่เหมาะสม",
+	"config": {
+		"targetCollection": "appointments",
+		"targetRole": "specialInstructor",
+		"join": {
+			"appointmentPersonId": "appointments.personId",
+			"educationPersonId": "educations.personId"
+		},
+		"qualification": {
+			"source": "educations.degree",
+			"required": true,
+			"condition": {
+				"operator": "EXISTS"
+			}
+		},
+		"experience": {
+			"required": true,
+			"source": "persons.hasTeachingExperience",
+			"condition": {
+				"operator": "==",
+				"value": true
+			}
+		},
+		"result": {
+			"pass": "PASS",
+			"fail": "FAIL",
+			"review": "REVIEW",
+			"na": "N/A"
+		},
+		"conditions": {
+			"noSpecialInstructor": "N/A",
+			"qualifiedAndSuitable": "PASS",
+			"notQualifiedOrNotSuitable": "FAIL",
+			"insufficientInformation": "REVIEW"
+		},
+		"naEnabled": true
+	},
+	"active": true,
+	"timestamp": {
+		"$date": "2026-09-26T10:19:19.884Z"
+	}
+},
+{
+	"_id": {
+		"$oid": "6ab0e17a3ca5c474ff43f8d9"
+	},
+	"psCode": "PS-09",
+	"requirement": "หลักสูตรต้องมีการปรับปรุงล่าสุดไม่เกิน 5 ปี",
+	"config": {
+		"targetCollection": "curricula",
+		"year": {
+			"field": "curriculumYear"
+		},
+		"comparison": {
+			"operator": "<=",
+			"value": 5,
+			"reference": "currentYear"
+		},
+		"calculation": {
+			"formula": "currentYear - curriculumYear"
+		},
+		"result": {
+			"pass": "PASS",
+			"fail": "FAIL",
+			"review": "REVIEW",
+			"na": "N/A"
+		},
+		"reviewCondition": [
+			"ไม่สามารถระบุ curriculumYear ได้"
+		],
+		"naEnabled": false
+	},
+	"active": true,
+	"timestamp": {
+		"$date": "2026-09-26T10:19:19.884Z"
+	}
+}]
+

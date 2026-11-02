@@ -1,0 +1,1 @@
+export { ResultText } from "./ResultText";

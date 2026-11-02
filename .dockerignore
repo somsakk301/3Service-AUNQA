@@ -1,0 +1,14 @@
+**/.git
+**/.env
+**/.env.*
+**/node_modules
+**/.venv
+**/__pycache__
+**/project-data
+**/output
+**/dist
+**/__MACOSX
+artifacts
+backups
+deploy/certs
+

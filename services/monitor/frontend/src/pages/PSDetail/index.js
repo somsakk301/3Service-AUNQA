@@ -1,0 +1,1 @@
+export { PSDetailPage } from "./PSDetailPage";

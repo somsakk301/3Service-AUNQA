@@ -1,0 +1,323 @@
+[
+  {
+    "psCode": "PS-01",
+    "requirement": "หลักสูตรต้องมีอาจารย์ผู้รับผิดชอบหลักสูตรอย่างน้อย 5 คน",
+    "config": {
+      "targetCollection": "appointments",
+      "filter": {
+        "role": "programmeResponsible"
+      },
+      "count": {
+        "field": "personId",
+        "distinct": true
+      },
+      "condition": {
+        "operator": ">=",
+        "value": 5
+      },
+      "result": {
+        "pass": "PASS",
+        "fail": "FAIL",
+        "review": "REVIEW",
+        "na": "N/A"
+      },
+      "reviewCondition": [
+        "จำนวนข้อมูลไม่ชัดเจน"
+      ],
+      "naEnabled": false
+    },
+    "active": true
+  },
+  {
+    "psCode": "PS-02",
+    "requirement": "อาจารย์ผู้รับผิดชอบหลักสูตรต้องมีสถานะอาจารย์ประจำ",
+    "config": {
+      "targetCollection": "appointments",
+      "responsibleRole": "programmeResponsible",
+      "permanentRole": "programmeStaff",
+      "matching": {
+        "sameCurriculum": true,
+        "samePerson": true
+      },
+      "condition": {
+        "operator": "EXISTS",
+        "field": "programmeStaff"
+      },
+      "result": {
+        "pass": "PASS",
+        "fail": "FAIL",
+        "review": "REVIEW",
+        "na": "N/A"
+      },
+      "reviewCondition": [
+        "ไม่สามารถตรวจสอบสถานะอาจารย์ประจำได้"
+      ],
+      "naEnabled": false
+    },
+    "active": true
+  },
+  {
+    "psCode": "PS-03",
+    "requirement": "อาจารย์ผู้รับผิดชอบหลักสูตรต้องไม่รับผิดชอบเกิน 1 หลักสูตร",
+    "config": {
+      "targetCollection": "appointments",
+      "targetRole": "programmeResponsible",
+      "review": {
+        "required": true,
+        "reviewByUser": true,
+        "allowManualResult": [
+          "PASS",
+          "FAIL",
+          "REVIEW"
+        ]
+      },
+      "result": {
+        "pass": "PASS",
+        "fail": "FAIL",
+        "review": "REVIEW",
+        "na": "N/A"
+      },
+      "naEnabled": false
+    },
+    "active": true
+  },
+  {
+    "psCode": "PS-04",
+    "requirement": "หลักสูตรต้องมีคำสั่งแต่งตั้งและระบุบทบาทการบริหารหลักสูตรอย่างชัดเจน",
+    "config": {
+      "targetCollection": "appointments",
+      "requiredFields": [
+        "personId",
+        "role",
+        "roleName",
+        "appointmentOrder"
+      ],
+      "appointmentOrder": {
+        "required": true,
+        "requiredFields": [
+          "orderNumber",
+          "orderDate"
+        ]
+      },
+      "role": {
+        "required": true,
+        "roleNameRequired": true
+      },
+      "result": {
+        "pass": "PASS",
+        "fail": "FAIL",
+        "review": "REVIEW",
+        "na": "N/A"
+      },
+      "conditions": {
+        "pass": "ข้อมูลการแต่งตั้งครบและระบุบทบาทชัดเจน",
+        "fail": "ไม่มีคำสั่งแต่งตั้งหรือข้อมูลไม่ครบ",
+        "review": "มีข้อมูลแต่ไม่สามารถระบุความครบถ้วนหรือความชัดเจนได้"
+      },
+      "naEnabled": false
+    },
+    "active": true
+  },
+  {
+    "psCode": "PS-05",
+    "requirement": "อาจารย์ผู้รับผิดชอบหลักสูตรต้องมีคุณวุฒิสูงสุดอย่างน้อยระดับปริญญาโท",
+    "config": {
+      "targetCollection": "educations",
+      "appointment": {
+        "role": "programmeResponsible"
+      },
+      "join": {
+        "from": "appointments.personId",
+        "to": "educations.personId"
+      },
+      "degree": {
+        "field": "degree",
+        "minimum": "master",
+        "ordering": [
+          "bachelor",
+          "master",
+          "Ph.D."
+        ],
+        "aliases": {
+          "bachelor": [
+            "วท.บ.",
+            "บธ.บ.",
+            "วบ.บ."
+          ],
+          "master": [
+            "วท.ม."
+          ],
+          "Ph.D.": [
+            "ปร.ด."
+          ]
+        },
+        "normalization": {
+          "enabled": true,
+          "remove": [
+            " ",
+            "."
+          ],
+          "caseInsensitive": true
+        }
+      },
+      "result": {
+        "pass": "PASS",
+        "fail": "FAIL",
+        "review": "REVIEW",
+        "na": "N/A"
+      },
+      "reviewCondition": [
+        "ไม่สามารถระบุระดับคุณวุฒิได้"
+      ],
+      "naEnabled": false
+    },
+    "active": true
+  },
+  {
+    "psCode": "PS-06",
+    "requirement": "คุณวุฒิของอาจารย์สัมพันธ์กับสาขาของหลักสูตร",
+    "config": {
+      "targetCollection": "educations",
+      "appointment": {
+        "role": "programmeResponsible"
+      },
+      "join": {
+        "appointmentPersonId": "appointments.personId",
+        "educationPersonId": "educations.personId",
+        "curriculumId": "appointments.curriculumId"
+      },
+      "qualification": {
+        "source": "educations.degree",
+        "required": true
+      },
+      "qualificationField": {
+        "source": "educations.field",
+        "required": true
+      },
+      "institution": {
+        "source": "educations.institution",
+        "required": true
+      },
+      "review": {
+        "required": true,
+        "reviewByUser": true,
+        "allowManualResult": [
+          "PASS",
+          "FAIL"
+        ]
+      },
+      "result": {
+        "pass": "PASS",
+        "fail": "FAIL",
+        "review": "REVIEW",
+        "na": "N/A"
+      },
+      "naEnabled": false
+    },
+    "active": true
+  },
+  {
+    "psCode": "PS-07",
+    "requirement": "อาจารย์ผู้รับผิดชอบหรืออาจารย์ประจำหลักสูตรต้องมีผลงานวิชาการย้อนหลัง 5 ปี",
+    "config": {
+      "targetCollections": [
+        "academic_works",
+        "appointments"
+      ],
+      "targetRoles": [
+        "programmeResponsible",
+        "programmeStaff"
+      ],
+      "join": {
+        "from": "appointments.personId",
+        "to": "academic_works.personId"
+      },
+      "publicationYear": {
+        "field": "publicationYear",
+        "period": "previous5Years"
+      },
+      "minimumCount": 1,
+      "result": {
+        "pass": "PASS",
+        "fail": "FAIL",
+        "review": "REVIEW",
+        "na": "N/A"
+      },
+      "reviewCondition": [
+        "ไม่สามารถตรวจสอบ publicationYear ได้"
+      ],
+      "naEnabled": false
+    },
+    "active": true
+  },
+  {
+    "psCode": "PS-08",
+    "requirement": "อาจารย์พิเศษต้องมีคุณวุฒิและประสบการณ์ที่เหมาะสม",
+    "config": {
+      "targetCollection": "appointments",
+      "targetRole": "specialInstructor",
+      "join": {
+        "appointmentPersonId": "appointments.personId",
+        "educationPersonId": "educations.personId"
+      },
+      "qualification": {
+        "source": "educations.degree",
+        "required": true,
+        "condition": {
+          "operator": "EXISTS"
+        }
+      },
+      "experience": {
+        "required": true,
+        "source": "persons.hasTeachingExperience",
+        "condition": {
+          "operator": "==",
+          "value": true
+        }
+      },
+      "result": {
+        "pass": "PASS",
+        "fail": "FAIL",
+        "review": "REVIEW",
+        "na": "N/A"
+      },
+      "conditions": {
+        "noSpecialInstructor": "N/A",
+        "qualifiedAndSuitable": "PASS",
+        "notQualifiedOrNotSuitable": "FAIL",
+        "insufficientInformation": "REVIEW"
+      },
+      "naEnabled": true
+    },
+    "active": true
+  },
+  {
+    "psCode": "PS-09",
+    "requirement": "หลักสูตรต้องมีการปรับปรุงล่าสุดไม่เกิน 5 ปี",
+    "config": {
+      "targetCollection": "curricula",
+      "year": {
+        "field": "curriculumYear"
+      },
+      "comparison": {
+        "operator": "<=",
+        "value": 5,
+        "reference": "currentYear"
+      },
+      "calculation": {
+        "formula": "currentYear - curriculumYear"
+      },
+      "result": {
+        "pass": "PASS",
+        "fail": "FAIL",
+        "review": "REVIEW",
+        "na": "N/A"
+      },
+      "reviewCondition": [
+        "ไม่สามารถระบุ curriculumYear ได้"
+      ],
+      "naEnabled": false
+    },
+    "active": true
+  }
+]

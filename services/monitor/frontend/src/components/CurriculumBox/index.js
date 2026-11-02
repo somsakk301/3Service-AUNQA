@@ -1,0 +1,1 @@
+export { CurriculumBox } from "./CurriculumBox";

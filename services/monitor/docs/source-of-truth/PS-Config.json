@@ -1,0 +1,763 @@
+{
+  "_document": {
+    "title": "PS-Config — Source of Truth ของ Configuration เกณฑ์ PS-01 ถึง PS-09 (Mornitor)",
+    "preparedOn": "2026-09-26",
+    "basis": "working tree ของ repository: commit 66ea7f5 + การเปลี่ยนแปลงที่ยังไม่ commit (ตรวจจาก source code, test และไฟล์จริง)",
+    "configurationRoles": {
+      "ACTIVE_FILE": "backend/tests/fixtures/ps_config_v1.json",
+      "RUNTIME": "MongoDB collection ps_requirements — backend อ่านที่นี่เท่านั้น ไม่อ่านไฟล์ configuration ใด ๆ (รวมไฟล์นี้) ตอนทำงาน",
+      "DOCUMENTATION_SNAPSHOT": "docs/source-of-truth/PS-Config.json (ไฟล์นี้) — ไม่มี code ใดอ่าน",
+      "GENERATION_READINESS_FILE": "backend/tests/fixtures/generation_readiness_v1.json"
+    },
+    "howToRead": [
+      "ส่วน ps_requirements (ท้ายไฟล์) คือเนื้อหาของไฟล์ ACTIVE ทุกตัวอักษร (9 เอกสาร, ลำดับเดิม) ไฟล์นี้ทั้งไฟล์เป็น object ไม่ใช่รูปแบบที่นำเข้า MongoDB ได้ ถ้าจะนำเข้า collection ps_requirements ให้ใช้ไฟล์ ACTIVE (JSON array) หรือดึงเฉพาะ array ps_requirements ออกมาก่อน",
+      "ส่วนอื่นเป็นคำอธิบาย: ไฟล์ไหน ACTIVE, หลักฐาน, และไฟล์ version อื่น",
+      "ไม่มี code ใดอ่านไฟล์นี้ ถ้า configuration เปลี่ยน ให้แก้ไฟล์ ACTIVE ก่อน แล้วสร้างไฟล์นี้ใหม่"
+    ],
+    "relatedDocuments": [
+      "SRS.md",
+      "SCOPE.md",
+      "Data-Schema.md",
+      "API.md",
+      "ARCHITECTURE.md"
+    ]
+  },
+  "runtimeConfiguration": {
+    "description": "ขณะทำงานจริง backend ไม่อ่านไฟล์ configuration ใด ๆ แต่อ่าน MongoDB collection ps_requirements",
+    "readBy": [
+      "backend/app/adapters/mongo.py (MongoConfigurationAdapter, CONFIGURATION_COLLECTION = \"ps_requirements\")",
+      "backend/app/repositories/configuration.py (ConfigurationRepository)"
+    ],
+    "database": "MORNITOR_CONFIG_DB_URI / MORNITOR_CONFIG_DB_NAME; ถ้าไม่ตั้ง ใช้ค่าเดียวกับ MORNITOR_DB_URI (ค่าเริ่มต้น mongodb://localhost:27017) / MORNITOR_DB_NAME (ค่าเริ่มต้น mornitor_source) — backend/app/settings.py",
+    "selection": {
+      "GET /api/monitor": "find({active: true}) แล้วเก็บเฉพาะเอกสารที่ active เป็น true จริง (is True) เรียงตาม psCode",
+      "GET /api/monitor/ps/{ps_code}": "find({psCode: ps_code}) ใช้เอกสารแรกที่ได้ และต้องมี active เป็น true มิฉะนั้นตอบ 404"
+    },
+    "readFrequency": "อ่านใหม่ทุก request ไม่มี cache ของ configuration (SRS-Mornitor §42)",
+    "observedLocalDatabase": "ข้อมูลไม่เพียงพอ — MongoDB ที่ localhost:27017 ณ 2026-09-25/26 มีเฉพาะ database admin, aunqa_monitor, ps_checker (ตรวจชื่อ collection เท่านั้น) ไม่มี collection ps_requirements และไม่มี database mornitor_source จึงยังไม่มี configuration ที่ใช้งานจริงใน database ของเครื่องนี้",
+    "generationReadiness": "เอกสาร {configType: \"generationReadiness\", generationReadiness} 1 เอกสารใน ps_requirements เดียวกัน (เจ้าของ project กำหนด 2026-09-26) — MongoConfigurationAdapter.read_by_type: find({configType}) · ConfigurationRepository ไม่โหลดเอกสารที่มี configType เป็น PS · อ่านเฉพาะ GET /api/monitor"
+  },
+  "activeConfiguration": {
+    "status": "ACTIVE",
+    "file": "backend/tests/fixtures/ps_config_v1.json",
+    "sha1": "b2a93c85388af992dedb693721b8800c2a7430a2",
+    "modified": "2026-09-29",
+    "gitState": "tracked, มีการแก้ที่ยังไม่ commit (PS-05 ordering, PS-05 aliases + normalization 2026-09-27, PS-08 experience.source + condition, PS-06 user confirmation 2026-09-29)",
+    "realDatabaseDifference": "ps_requirements ของ aunqa_ps ต่างจากไฟล์นี้: (1) PS-05 degree.aliases / degree.normalization ที่เพิ่ม 2026-09-27 (2) PS-06 ทั้ง config (2026-09-29): database ยังเป็นแบบเดิมที่เทียบชื่อหลักสูตรกับสาขาวิชาโดยอัตโนมัติ (programmeField, normalization, comparison, fieldMappings) ซึ่ง engine ไม่รองรับแล้ว จึงได้ REVIEW + spec_gap ไม่ใช่ PASS/FAIL จนกว่าเจ้าของ config จะนำ PS-06 ของไฟล์นี้เข้า database — Mornitor ไม่เขียน configuration",
+    "psCount": 9,
+    "allActive": true,
+    "whyActive": [
+      "Import reference: backend/tests/support/fixtures.py โหลดเป็น AUTHORITATIVE_CONFIG ให้ test ของ backend ทุกชุด",
+      "Database seed: backend/scripts/seed_test_data.py (PS_CONFIG_FILE) คัดลอกไฟล์นี้เข้า ps_requirements ของ test database (ชื่อลงท้าย _test) โดยไม่แก้เนื้อหา",
+      "Test reference: frontend/src/test/guideline.test.jsx และ psTitles.test.jsx อ่านไฟล์นี้เพื่อยืนยันรายการ PS code และข้อความ requirement ของ frontend",
+      "Architecture test: backend/tests/test_architecture.py ใช้ค่าทุกค่าในไฟล์นี้ตรวจว่า code ของ engine ไม่มีค่าเหล่านี้ฝังอยู่",
+      "Runtime reference: ไม่มี (backend อ่าน database ไม่อ่านไฟล์) — ไฟล์นี้จึงเป็น configuration ที่ ACTIVE ใน project แต่ต้องนำเข้า ps_requirements ก่อนระบบจึงใช้ได้จริง",
+      "active status: ทั้ง 9 เอกสาร active: true",
+      "ไม่มีไฟล์ configuration อื่นใน repository (ตรวจทุกไฟล์ .json/.yaml/.ini/.env/.toml)"
+    ],
+    "provenance": "backend/tests/fixtures/PROVENANCE.md",
+    "differencesFromOwnerFile": [
+      {
+        "psCode": "PS-08",
+        "path": "config.experience.condition",
+        "ownerFile": "<absent>",
+        "activeFile": {
+          "operator": "==",
+          "value": true
+        }
+      },
+      {
+        "psCode": "PS-08",
+        "path": "config.join.experiencePersonId",
+        "ownerFile": "persons.personId",
+        "activeFile": "<absent>"
+      },
+      {
+        "psCode": "PS-08",
+        "path": "config.qualification.condition",
+        "ownerFile": "<absent>",
+        "activeFile": {
+          "operator": "EXISTS"
+        }
+      }
+    ],
+    "differenceReasons": {
+      "PS-08 config.join.experiencePersonId": "ไม่ใส่ เพราะ persons ไม่มี field personId (key คือ persons._id) ถ้าใส่ engine จะรายงาน join ทั้งหมดเป็น SPEC GAP; engine เข้าถึง persons ผ่านความสัมพันธ์ appointments.personId -> persons._id ของ Data Schema อยู่แล้ว",
+      "PS-08 config.qualification.condition / config.experience.condition": "เพิ่มตาม business rule ที่เจ้าของ project กำหนด (2026-09-25): มีคุณวุฒิ และ hasTeachingExperience == true",
+      "PS-06 config": "อาจารย์ยืนยัน (2026-09-29): PS-06 ตัดสินโดยผู้ใช้ 100% ระบบไม่เทียบชื่อสาขาเอง config จึงมีเฉพาะ join ที่บอกว่าผู้ตรวจเห็นอะไร (คุณวุฒิ สาขาวิชา สถาบัน ของอาจารย์ผู้รับผิดชอบหลักสูตรแต่ละคน) และ review (reviewByUser, allowManualResult PASS / FAIL)"
+    }
+  },
+  "configurationFiles": [
+    {
+      "path": "backend/tests/fixtures/ps_config_v1.json",
+      "status": "ACTIVE",
+      "sha1": "b2a93c85388af992dedb693721b8800c2a7430a2",
+      "modified": "2026-09-29",
+      "referencedBy": [
+        "backend/tests/support/fixtures.py",
+        "backend/scripts/seed_test_data.py",
+        "frontend/src/test/guideline.test.jsx",
+        "frontend/src/test/psTitles.test.jsx"
+      ],
+      "note": "ไฟล์ configuration ของ PS-01..PS-09 ไฟล์เดียวใน repository (เอกสาร Generation Readiness อยู่ในไฟล์แยก)"
+    },
+    {
+      "path": "backend/tests/fixtures/generation_readiness_v1.json",
+      "status": "ACTIVE — เอกสาร Generation Readiness",
+      "sha1": "379de2ec460b6648869175f1851d4b2bd79cfc9b",
+      "modified": "2026-09-26",
+      "referencedBy": [
+        "backend/tests/support/fixtures.py",
+        "backend/scripts/seed_test_data.py"
+      ],
+      "note": "นำเข้า ps_requirements เป็นเอกสารที่ 10 ได้ตามรูปนี้ (ไม่มี psCode ไม่มี active)"
+    },
+    {
+      "path": "~/Downloads/PS-Config-with-Generation-Readiness.json",
+      "status": "SOURCE — ไฟล์ของเจ้าของ project",
+      "sha1": "8d94adfc00bb3f155ec0b4fc1ffc2ba32a125ae8",
+      "modified": "2026-09-26 12:05",
+      "referencedBy": [
+        "backend/tests/fixtures/PROVENANCE.md (เอกสารเท่านั้น ไม่มี code อ่าน)"
+      ],
+      "note": "โครงสร้าง {generationReadiness, psConfigurations} ไม่ใช่รูปที่นำเข้า MongoDB ได้ตรง ๆ · generationReadiness คัดลอกทุกตัวอักษรไปที่ backend/tests/fixtures/generation_readiness_v1.json · psConfigurations เท่ากับ ps_config_v1.json ทุกตัวอักษร (ตรวจ 2026-09-26)"
+    },
+    {
+      "path": "~/Mornitor-Data/PS-Config-v1(3)-PS08-updated(3)-degree-ordering.json",
+      "status": "OLD — owner base (ต้นฉบับจากเจ้าของ project ที่ ACTIVE สร้างต่อ)",
+      "sha1": "86e7379c4eff8bbdbcc43e7916c2afb7f53477d0",
+      "modified": "2026-09-25 19:33",
+      "referencedBy": [
+        "backend/tests/fixtures/PROVENANCE.md (เอกสารเท่านั้น ไม่มี code อ่าน)"
+      ],
+      "note": "อยู่นอก repository; PS-01..PS-07 และ PS-09 เหมือน ACTIVE ทุกตัวอักษร; PS-08 ต่างตาม differencesFromOwnerFile ถ้านำไฟล์นี้เข้า ps_requirements ตรง ๆ PS-08 จะได้ REVIEW + Spec Gap"
+    },
+    {
+      "path": "~/Downloads/PS-Config-v1(3)-PS08-updated(3)-degree-ordering.json",
+      "status": "DUPLICATE",
+      "sha1": "86e7379c4eff8bbdbcc43e7916c2afb7f53477d0",
+      "modified": "2026-09-25 19:33",
+      "referencedBy": [],
+      "note": "sha1 เท่ากับไฟล์ใน ~/Mornitor-Data ทุก byte"
+    },
+    {
+      "path": "~/Downloads/ps_config.json",
+      "status": "OLD — format อื่น",
+      "sha1": "dfc6f788c5d5a1a3591120fa7f5eca735aa01e8f",
+      "modified": "2026-09-07 22:18",
+      "referencedBy": [],
+      "note": "โครงสร้าง {config_version, framework: \"AUN-QA\", programme_standards: {PS-01..PS-09}} ไม่ใช่รูปแบบเอกสาร ps_requirements ที่ backend อ่าน; ความสัมพันธ์กับ ACTIVE: ข้อมูลไม่เพียงพอ"
+    },
+    {
+      "path": "~/Downloads/master_config.json",
+      "status": "OLD — format อื่น",
+      "sha1": "c974481dae834a9d00f0d53d78e6c7d4e312bfd0",
+      "modified": "2026-09-07 19:39",
+      "referencedBy": [],
+      "note": "โครงสร้าง {current_academic_year, criterion_order [PS,P1,P2,P3,P4,P8], criteria} ไม่ใช่รูปแบบ ps_requirements; ความสัมพันธ์กับ ACTIVE: ข้อมูลไม่เพียงพอ"
+    },
+    {
+      "path": "~/Downloads/PS-01-rule-config.json",
+      "status": "OLD — format อื่น (PS-01 เท่านั้น)",
+      "sha1": "da11a29aa172e8b5bb781f6dbe29de35a06e5665",
+      "modified": "2026-09-03 22:46",
+      "referencedBy": [],
+      "note": "โครงสร้าง {rule_id, criterion, title, requirement, check, condition, result, evidence}"
+    },
+    {
+      "path": "~/Downloads/PS-01-rule-config-CTE-v3.json",
+      "status": "OLD — format อื่น (PS-01 เท่านั้น)",
+      "sha1": "192bda6929b4056fa764bebc515dd388690b7152",
+      "modified": "2026-09-03 23:13",
+      "referencedBy": [],
+      "note": "โครงสร้างเดียวกับ PS-01-rule-config.json"
+    },
+    {
+      "path": "~/Mornitor-Data/PS-Config-v1.json",
+      "status": "MISSING (ไม่มีไฟล์แล้ว)",
+      "sha1": null,
+      "modified": null,
+      "referencedBy": [
+        "README.md",
+        "docs/SPEC_GAPS.md",
+        "docs/TESTING.md",
+        "frontend/src/app/psGuideline.js (comment)",
+        "frontend/src/test/guideline.test.jsx (comment)",
+        "backend/tests/test_ps_evaluation.py (comment)"
+      ],
+      "note": "ชื่อไฟล์ configuration รุ่นแรกที่เอกสารเดิมยังอ้างถึง"
+    },
+    {
+      "path": "~/Mornitor-Data/PS-Config-v1(3)-PS08-updated.json",
+      "status": "MISSING (ไม่มีไฟล์แล้ว)",
+      "sha1": null,
+      "modified": null,
+      "referencedBy": [],
+      "note": "version ก่อนเพิ่ม PS-05 degree.ordering; ถูกแทนที่ด้วยไฟล์ ...-degree-ordering.json"
+    }
+  ],
+  "derivedCopies": [
+    {
+      "path": "frontend/src/app/psTitles.js",
+      "status": "DERIVED COPY — requirement 9 ข้อ",
+      "purpose": "ข้อความสำรองที่ล็อกไว้ (เจ้าของ project ตัดสินใจ 2026-09-25) ใช้เมื่อ API ไม่ได้ส่ง requirement มา",
+      "checkedBy": "frontend/src/test/psTitles.test.jsx (ต้องตรงกับ ACTIVE ทุกตัวอักษร)"
+    },
+    {
+      "path": "frontend/src/app/psGuideline.js",
+      "status": "DERIVED COPY — รายการ PS code 9 ข้อ",
+      "purpose": "รายการหลักให้การ์ดและเมนู PS-01..PS-09 มีที่แสดงเสมอ",
+      "checkedBy": "frontend/src/test/guideline.test.jsx"
+    },
+    {
+      "path": "frontend/src/test/fixtures/backend-sample.json",
+      "status": "NOT A CONFIGURATION — ภาพถ่าย response ของ API สำหรับ test",
+      "purpose": "ใช้ใน humanreadable.test.jsx และ monitor.test.jsx",
+      "note": "สร้างจาก configuration รุ่นเก่า (PS-08 experience.source: null, ไม่มี PS-05 ordering, ไม่มี PS-08 condition) จึงไม่ตรงกับ ACTIVE"
+    }
+  ],
+  "index": [
+    {
+      "psCode": "PS-01",
+      "active": true,
+      "requirement": "หลักสูตรต้องมีอาจารย์ผู้รับผิดชอบหลักสูตรอย่างน้อย 5 คน",
+      "configKeys": [
+        "targetCollection",
+        "filter",
+        "count",
+        "condition",
+        "result",
+        "reviewCondition",
+        "naEnabled"
+      ],
+      "result": {
+        "pass": "PASS",
+        "fail": "FAIL",
+        "review": "REVIEW",
+        "na": "N/A"
+      },
+      "naEnabled": false
+    },
+    {
+      "psCode": "PS-02",
+      "active": true,
+      "requirement": "อาจารย์ผู้รับผิดชอบหลักสูตรต้องมีสถานะอาจารย์ประจำ",
+      "configKeys": [
+        "targetCollection",
+        "responsibleRole",
+        "permanentRole",
+        "matching",
+        "condition",
+        "result",
+        "reviewCondition",
+        "naEnabled"
+      ],
+      "result": {
+        "pass": "PASS",
+        "fail": "FAIL",
+        "review": "REVIEW",
+        "na": "N/A"
+      },
+      "naEnabled": false
+    },
+    {
+      "psCode": "PS-03",
+      "active": true,
+      "requirement": "อาจารย์ผู้รับผิดชอบหลักสูตรต้องไม่รับผิดชอบเกิน 1 หลักสูตร",
+      "configKeys": [
+        "targetCollection",
+        "targetRole",
+        "review",
+        "result",
+        "naEnabled"
+      ],
+      "result": {
+        "pass": "PASS",
+        "fail": "FAIL",
+        "review": "REVIEW",
+        "na": "N/A"
+      },
+      "naEnabled": false
+    },
+    {
+      "psCode": "PS-04",
+      "active": true,
+      "requirement": "หลักสูตรต้องมีคำสั่งแต่งตั้งและระบุบทบาทการบริหารหลักสูตรอย่างชัดเจน",
+      "configKeys": [
+        "targetCollection",
+        "requiredFields",
+        "appointmentOrder",
+        "role",
+        "result",
+        "conditions",
+        "naEnabled"
+      ],
+      "result": {
+        "pass": "PASS",
+        "fail": "FAIL",
+        "review": "REVIEW",
+        "na": "N/A"
+      },
+      "naEnabled": false
+    },
+    {
+      "psCode": "PS-05",
+      "active": true,
+      "requirement": "อาจารย์ผู้รับผิดชอบหลักสูตรต้องมีคุณวุฒิสูงสุดอย่างน้อยระดับปริญญาโท",
+      "configKeys": [
+        "targetCollection",
+        "appointment",
+        "join",
+        "degree",
+        "result",
+        "reviewCondition",
+        "naEnabled"
+      ],
+      "result": {
+        "pass": "PASS",
+        "fail": "FAIL",
+        "review": "REVIEW",
+        "na": "N/A"
+      },
+      "naEnabled": false
+    },
+    {
+      "psCode": "PS-06",
+      "active": true,
+      "requirement": "คุณวุฒิของอาจารย์สัมพันธ์กับสาขาของหลักสูตร",
+      "configKeys": [
+        "targetCollection",
+        "appointment",
+        "join",
+        "qualification",
+        "qualificationField",
+        "institution",
+        "review",
+        "result",
+        "naEnabled"
+      ],
+      "result": {
+        "pass": "PASS",
+        "fail": "FAIL",
+        "review": "REVIEW",
+        "na": "N/A"
+      },
+      "naEnabled": false
+    },
+    {
+      "psCode": "PS-07",
+      "active": true,
+      "requirement": "อาจารย์ผู้รับผิดชอบหรืออาจารย์ประจำหลักสูตรต้องมีผลงานวิชาการย้อนหลัง 5 ปี",
+      "configKeys": [
+        "targetCollections",
+        "targetRoles",
+        "join",
+        "publicationYear",
+        "minimumCount",
+        "result",
+        "reviewCondition",
+        "naEnabled"
+      ],
+      "result": {
+        "pass": "PASS",
+        "fail": "FAIL",
+        "review": "REVIEW",
+        "na": "N/A"
+      },
+      "naEnabled": false
+    },
+    {
+      "psCode": "PS-08",
+      "active": true,
+      "requirement": "อาจารย์พิเศษต้องมีคุณวุฒิและประสบการณ์ที่เหมาะสม",
+      "configKeys": [
+        "targetCollection",
+        "targetRole",
+        "join",
+        "qualification",
+        "experience",
+        "result",
+        "conditions",
+        "naEnabled"
+      ],
+      "result": {
+        "pass": "PASS",
+        "fail": "FAIL",
+        "review": "REVIEW",
+        "na": "N/A"
+      },
+      "naEnabled": true
+    },
+    {
+      "psCode": "PS-09",
+      "active": true,
+      "requirement": "หลักสูตรต้องมีการปรับปรุงล่าสุดไม่เกิน 5 ปี",
+      "configKeys": [
+        "targetCollection",
+        "year",
+        "comparison",
+        "calculation",
+        "result",
+        "reviewCondition",
+        "naEnabled"
+      ],
+      "result": {
+        "pass": "PASS",
+        "fail": "FAIL",
+        "review": "REVIEW",
+        "na": "N/A"
+      },
+      "naEnabled": false
+    }
+  ],
+  "ps_requirements": [
+    {
+      "psCode": "PS-01",
+      "requirement": "หลักสูตรต้องมีอาจารย์ผู้รับผิดชอบหลักสูตรอย่างน้อย 5 คน",
+      "config": {
+        "targetCollection": "appointments",
+        "filter": {
+          "role": "programmeResponsible"
+        },
+        "count": {
+          "field": "personId",
+          "distinct": true
+        },
+        "condition": {
+          "operator": ">=",
+          "value": 5
+        },
+        "result": {
+          "pass": "PASS",
+          "fail": "FAIL",
+          "review": "REVIEW",
+          "na": "N/A"
+        },
+        "reviewCondition": [
+          "จำนวนข้อมูลไม่ชัดเจน"
+        ],
+        "naEnabled": false
+      },
+      "active": true
+    },
+    {
+      "psCode": "PS-02",
+      "requirement": "อาจารย์ผู้รับผิดชอบหลักสูตรต้องมีสถานะอาจารย์ประจำ",
+      "config": {
+        "targetCollection": "appointments",
+        "responsibleRole": "programmeResponsible",
+        "permanentRole": "programmeStaff",
+        "matching": {
+          "sameCurriculum": true,
+          "samePerson": true
+        },
+        "condition": {
+          "operator": "EXISTS",
+          "field": "programmeStaff"
+        },
+        "result": {
+          "pass": "PASS",
+          "fail": "FAIL",
+          "review": "REVIEW",
+          "na": "N/A"
+        },
+        "reviewCondition": [
+          "ไม่สามารถตรวจสอบสถานะอาจารย์ประจำได้"
+        ],
+        "naEnabled": false
+      },
+      "active": true
+    },
+    {
+      "psCode": "PS-03",
+      "requirement": "อาจารย์ผู้รับผิดชอบหลักสูตรต้องไม่รับผิดชอบเกิน 1 หลักสูตร",
+      "config": {
+        "targetCollection": "appointments",
+        "targetRole": "programmeResponsible",
+        "review": {
+          "required": true,
+          "reviewByUser": true,
+          "allowManualResult": [
+            "PASS",
+            "FAIL",
+            "REVIEW"
+          ]
+        },
+        "result": {
+          "pass": "PASS",
+          "fail": "FAIL",
+          "review": "REVIEW",
+          "na": "N/A"
+        },
+        "naEnabled": false
+      },
+      "active": true
+    },
+    {
+      "psCode": "PS-04",
+      "requirement": "หลักสูตรต้องมีคำสั่งแต่งตั้งและระบุบทบาทการบริหารหลักสูตรอย่างชัดเจน",
+      "config": {
+        "targetCollection": "appointments",
+        "requiredFields": [
+          "personId",
+          "role",
+          "roleName",
+          "appointmentOrder"
+        ],
+        "appointmentOrder": {
+          "required": true,
+          "requiredFields": [
+            "orderNumber",
+            "orderDate"
+          ]
+        },
+        "role": {
+          "required": true,
+          "roleNameRequired": true
+        },
+        "result": {
+          "pass": "PASS",
+          "fail": "FAIL",
+          "review": "REVIEW",
+          "na": "N/A"
+        },
+        "conditions": {
+          "pass": "ข้อมูลการแต่งตั้งครบและระบุบทบาทชัดเจน",
+          "fail": "ไม่มีคำสั่งแต่งตั้งหรือข้อมูลไม่ครบ",
+          "review": "มีข้อมูลแต่ไม่สามารถระบุความครบถ้วนหรือความชัดเจนได้"
+        },
+        "naEnabled": false
+      },
+      "active": true
+    },
+    {
+      "psCode": "PS-05",
+      "requirement": "อาจารย์ผู้รับผิดชอบหลักสูตรต้องมีคุณวุฒิสูงสุดอย่างน้อยระดับปริญญาโท",
+      "config": {
+        "targetCollection": "educations",
+        "appointment": {
+          "role": "programmeResponsible"
+        },
+        "join": {
+          "from": "appointments.personId",
+          "to": "educations.personId"
+        },
+        "degree": {
+          "field": "degree",
+          "minimum": "master",
+          "ordering": [
+            "bachelor",
+            "master",
+            "Ph.D."
+          ],
+          "aliases": {
+            "bachelor": [
+              "วท.บ.",
+              "บธ.บ.",
+              "วบ.บ."
+            ],
+            "master": [
+              "วท.ม."
+            ],
+            "Ph.D.": [
+              "ปร.ด."
+            ]
+          },
+          "normalization": {
+            "enabled": true,
+            "remove": [
+              " ",
+              "."
+            ],
+            "caseInsensitive": true
+          }
+        },
+        "result": {
+          "pass": "PASS",
+          "fail": "FAIL",
+          "review": "REVIEW",
+          "na": "N/A"
+        },
+        "reviewCondition": [
+          "ไม่สามารถระบุระดับคุณวุฒิได้"
+        ],
+        "naEnabled": false
+      },
+      "active": true
+    },
+    {
+      "psCode": "PS-06",
+      "requirement": "คุณวุฒิของอาจารย์สัมพันธ์กับสาขาของหลักสูตร",
+      "config": {
+        "targetCollection": "educations",
+        "appointment": {
+          "role": "programmeResponsible"
+        },
+        "join": {
+          "appointmentPersonId": "appointments.personId",
+          "educationPersonId": "educations.personId",
+          "curriculumId": "appointments.curriculumId"
+        },
+        "qualification": {
+          "source": "educations.degree",
+          "required": true
+        },
+        "qualificationField": {
+          "source": "educations.field",
+          "required": true
+        },
+        "institution": {
+          "source": "educations.institution",
+          "required": true
+        },
+        "review": {
+          "required": true,
+          "reviewByUser": true,
+          "allowManualResult": [
+            "PASS",
+            "FAIL"
+          ]
+        },
+        "result": {
+          "pass": "PASS",
+          "fail": "FAIL",
+          "review": "REVIEW",
+          "na": "N/A"
+        },
+        "naEnabled": false
+      },
+      "active": true
+    },
+    {
+      "psCode": "PS-07",
+      "requirement": "อาจารย์ผู้รับผิดชอบหรืออาจารย์ประจำหลักสูตรต้องมีผลงานวิชาการย้อนหลัง 5 ปี",
+      "config": {
+        "targetCollections": [
+          "academic_works",
+          "appointments"
+        ],
+        "targetRoles": [
+          "programmeResponsible",
+          "programmeStaff"
+        ],
+        "join": {
+          "from": "appointments.personId",
+          "to": "academic_works.personId"
+        },
+        "publicationYear": {
+          "field": "publicationYear",
+          "period": "previous5Years"
+        },
+        "minimumCount": 1,
+        "result": {
+          "pass": "PASS",
+          "fail": "FAIL",
+          "review": "REVIEW",
+          "na": "N/A"
+        },
+        "reviewCondition": [
+          "ไม่สามารถตรวจสอบ publicationYear ได้"
+        ],
+        "naEnabled": false
+      },
+      "active": true
+    },
+    {
+      "psCode": "PS-08",
+      "requirement": "อาจารย์พิเศษต้องมีคุณวุฒิและประสบการณ์ที่เหมาะสม",
+      "config": {
+        "targetCollection": "appointments",
+        "targetRole": "specialInstructor",
+        "join": {
+          "appointmentPersonId": "appointments.personId",
+          "educationPersonId": "educations.personId"
+        },
+        "qualification": {
+          "source": "educations.degree",
+          "required": true,
+          "condition": {
+            "operator": "EXISTS"
+          }
+        },
+        "experience": {
+          "required": true,
+          "source": "persons.hasTeachingExperience",
+          "condition": {
+            "operator": "==",
+            "value": true
+          }
+        },
+        "result": {
+          "pass": "PASS",
+          "fail": "FAIL",
+          "review": "REVIEW",
+          "na": "N/A"
+        },
+        "conditions": {
+          "noSpecialInstructor": "N/A",
+          "qualifiedAndSuitable": "PASS",
+          "notQualifiedOrNotSuitable": "FAIL",
+          "insufficientInformation": "REVIEW"
+        },
+        "naEnabled": true
+      },
+      "active": true
+    },
+    {
+      "psCode": "PS-09",
+      "requirement": "หลักสูตรต้องมีการปรับปรุงล่าสุดไม่เกิน 5 ปี",
+      "config": {
+        "targetCollection": "curricula",
+        "year": {
+          "field": "curriculumYear"
+        },
+        "comparison": {
+          "operator": "<=",
+          "value": 5,
+          "reference": "currentYear"
+        },
+        "calculation": {
+          "formula": "currentYear - curriculumYear"
+        },
+        "result": {
+          "pass": "PASS",
+          "fail": "FAIL",
+          "review": "REVIEW",
+          "na": "N/A"
+        },
+        "reviewCondition": [
+          "ไม่สามารถระบุ curriculumYear ได้"
+        ],
+        "naEnabled": false
+      },
+      "active": true
+    }
+  ],
+  "generationReadinessDocument": {
+    "configType": "generationReadiness",
+    "generationReadiness": {
+      "requiredPS": [
+        "PS-01",
+        "PS-02",
+        "PS-03",
+        "PS-04",
+        "PS-05",
+        "PS-06",
+        "PS-07",
+        "PS-08",
+        "PS-09"
+      ],
+      "readyWhen": {
+        "allowedStatus": [
+          "PASS",
+          "N/A"
+        ],
+        "blockedStatus": [
+          "FAIL",
+          "REVIEW"
+        ]
+      },
+      "requiredAll": true
+    }
+  }
+}

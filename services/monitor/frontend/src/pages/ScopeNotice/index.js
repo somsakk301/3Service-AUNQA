@@ -1,0 +1,1 @@
+export { ScopeNoticePage } from "./ScopeNoticePage";

@@ -1,0 +1,97 @@
+name: aunqa-import-service
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    environment:
+      MONGODB_URI: ${MONGODB_URI:-mongodb://mongodb:27017/aunqa_ps}
+      CHROMADB_HOST: ${CHROMADB_HOST:-chromadb}
+      CHROMADB_PORT: ${CHROMADB_PORT:-8000}
+      PROJECT_DATA_ROOT: /app/project-data
+      EMBEDDING_MODEL: ${EMBEDDING_MODEL:-BAAI/bge-m3}
+      EMBEDDING_DIMENSION: ${EMBEDDING_DIMENSION:-1024}
+      CHUNK_SIZE: ${CHUNK_SIZE:-500}
+      CHUNK_OVERLAP: ${CHUNK_OVERLAP:-100}
+      LOG_LEVEL: ${LOG_LEVEL:-INFO}
+      ANONYMIZED_TELEMETRY: "FALSE"
+      HF_HOME: /app/project-data/models/huggingface
+      HF_HUB_DISABLE_XET: "1"
+    ports:
+      - "${BACKEND_HOST_PORT:-8080}:8000"
+    volumes:
+      - type: bind
+        source: ./project-data
+        target: /app/project-data
+    depends_on:
+      mongodb:
+        condition: service_healthy
+      chromadb:
+        condition: service_healthy
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health', timeout=5)"
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    init: true
+    restart: unless-stopped
+    networks:
+      - import-service-network
+
+  mongodb:
+    image: mongo:8.0.32-noble
+    command: ["mongod", "--bind_ip_all"]
+    ports:
+      - "${MONGODB_HOST_PORT:-27017}:27017"
+    volumes:
+      - type: bind
+        source: ./project-data/mongodb
+        target: /data/db
+    healthcheck:
+      test:
+        - CMD
+        - mongosh
+        - --quiet
+        - --eval
+        - "quit(db.adminCommand({ ping: 1 }).ok ? 0 : 2)"
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 15s
+    restart: unless-stopped
+    networks:
+      - import-service-network
+
+  chromadb:
+    image: chromadb/chroma:1.4.1
+    environment:
+      IS_PERSISTENT: "TRUE"
+      PERSIST_DIRECTORY: /data
+      ANONYMIZED_TELEMETRY: "FALSE"
+    ports:
+      - "${CHROMADB_HOST_PORT:-8000}:8000"
+    volumes:
+      - type: bind
+        source: ./project-data/chromadb
+        target: /data
+    healthcheck:
+      # Chroma 1.4.1 is a minimal image without curl. The backend performs the
+      # application-level heartbeat; this check gates startup on the TCP listener.
+      test: ["CMD", "bash", "-ec", "exec 3<>/dev/tcp/127.0.0.1/8000"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 15s
+    restart: unless-stopped
+    networks:
+      - import-service-network
+
+networks:
+  import-service-network:
+    driver: bridge

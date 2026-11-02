@@ -1,0 +1,645 @@
+{
+  "_provenance": "Captured from the backend (GET /api/monitor/ps/PS-05, ACTIVE config backend/tests/fixtures/ps_config_v1.json, backend test data with test persons) by the engine of 2026-09-27. Degree patterns: the real responsible lecturers' (all_pass) and variants (mixed). Nothing is edited by hand.",
+  "all_pass": {
+    "psCode": "PS-05",
+    "status": "PASS",
+    "requirement": "อาจารย์ผู้รับผิดชอบหลักสูตรต้องมีคุณวุฒิสูงสุดอย่างน้อยระดับปริญญาโท",
+    "checks": [
+      "targetCollection: \"educations\"",
+      "appointment.role: \"programmeResponsible\"",
+      "join.from: \"appointments.personId\"",
+      "join.to: \"educations.personId\"",
+      "degree.field: \"degree\"",
+      "degree.minimum: \"master\"",
+      "degree.ordering: \"bachelor\", \"master\", \"Ph.D.\"",
+      "degree.aliases.bachelor: \"วท.บ.\", \"บธ.บ.\", \"วบ.บ.\"",
+      "degree.aliases.master: \"วท.ม.\"",
+      "degree.aliases.Ph.D.: \"ปร.ด.\"",
+      "degree.normalization.enabled: true",
+      "degree.normalization.remove: \" \", \".\"",
+      "degree.normalization.caseInsensitive: true",
+      "result.pass: \"PASS\"",
+      "result.fail: \"FAIL\"",
+      "result.review: \"REVIEW\"",
+      "result.na: \"N/A\"",
+      "reviewCondition: \"ไม่สามารถระบุระดับคุณวุฒิได้\"",
+      "naEnabled: false"
+    ],
+    "dataSummary": [
+      {
+        "label": "Operation",
+        "value": "for each distinct (personId) of appointments where role = 'programmeResponsible': join educations on personId = educations.personId; checks: AtLeastCheck"
+      },
+      {
+        "label": "Subjects",
+        "value": "5"
+      },
+      {
+        "label": "Subjects PASS",
+        "value": "5"
+      }
+    ],
+    "dataFound": [
+      {
+        "label": "อาจารย์ทดสอบ 1",
+        "items": [
+          "degree: ปร.ด. → Ph.D.; วท.บ. → bachelor (highest 'Ph.D.' is at least 'master') -> PASS"
+        ]
+      },
+      {
+        "label": "อาจารย์ทดสอบ 2",
+        "items": [
+          "degree: Ph.D. → Ph.D.; วท.บ. → bachelor; วท.ม. → master (highest 'Ph.D.' is at least 'master') -> PASS"
+        ]
+      },
+      {
+        "label": "อาจารย์ทดสอบ 3",
+        "items": [
+          "degree: บธ.บ. → bachelor; วท.ม. → master (highest 'master' is at least 'master') -> PASS"
+        ]
+      },
+      {
+        "label": "อาจารย์ทดสอบ 4",
+        "items": [
+          "degree: at → not in the ordering; heuristic approach. Journal of Sensor and Actuator → not in the ordering; วท.บ. → bachelor; วท.ม. → master (highest 'master' is at least 'master') -> PASS"
+        ]
+      },
+      {
+        "label": "อาจารย์ทดสอบ 5",
+        "items": [
+          "degree: ปร.ด. → Ph.D.; วท.บ. → bachelor; วท.ม. → master; วบ.บ. → bachelor (highest 'Ph.D.' is at least 'master') -> PASS"
+        ]
+      }
+    ],
+    "verification": {
+      "found": 25,
+      "verified": null,
+      "approved": null,
+      "verifiedAt": null
+    },
+    "missingInformation": [],
+    "evidence": [],
+    "traceability": [
+      {
+        "collection": "appointments",
+        "recordId": "6ab9048a2610565dd51731c9",
+        "fields": [
+          "personId",
+          "role"
+        ],
+        "values": {
+          "personId": "6ab9048a2610565dd51731c4",
+          "role": "programmeResponsible"
+        }
+      },
+      {
+        "collection": "appointments",
+        "recordId": "6ab9048a2610565dd51731cb",
+        "fields": [
+          "personId",
+          "role"
+        ],
+        "values": {
+          "personId": "6ab9048a2610565dd51731c5",
+          "role": "programmeResponsible"
+        }
+      },
+      {
+        "collection": "appointments",
+        "recordId": "6ab9048a2610565dd51731cd",
+        "fields": [
+          "personId",
+          "role"
+        ],
+        "values": {
+          "personId": "6ab9048a2610565dd51731c6",
+          "role": "programmeResponsible"
+        }
+      },
+      {
+        "collection": "appointments",
+        "recordId": "6ab9048a2610565dd51731cf",
+        "fields": [
+          "personId",
+          "role"
+        ],
+        "values": {
+          "personId": "6ab9048a2610565dd51731c7",
+          "role": "programmeResponsible"
+        }
+      },
+      {
+        "collection": "appointments",
+        "recordId": "6ab9048a2610565dd51731d1",
+        "fields": [
+          "personId",
+          "role"
+        ],
+        "values": {
+          "personId": "6ab9048a2610565dd51731c8",
+          "role": "programmeResponsible"
+        }
+      },
+      {
+        "collection": "educations",
+        "recordId": "6ab9048a2610565dd51731dd",
+        "fields": [
+          "degree",
+          "personId"
+        ],
+        "values": {
+          "personId": "6ab9048a2610565dd51731c4",
+          "degree": "ปร.ด."
+        }
+      },
+      {
+        "collection": "educations",
+        "recordId": "6ab9048a2610565dd51731de",
+        "fields": [
+          "degree",
+          "personId"
+        ],
+        "values": {
+          "personId": "6ab9048a2610565dd51731c4",
+          "degree": "วท.บ."
+        }
+      },
+      {
+        "collection": "educations",
+        "recordId": "6ab9048a2610565dd51731df",
+        "fields": [
+          "degree",
+          "personId"
+        ],
+        "values": {
+          "personId": "6ab9048a2610565dd51731c4",
+          "degree": "ปร.ด."
+        }
+      },
+      {
+        "collection": "educations",
+        "recordId": "6ab9048a2610565dd51731e0",
+        "fields": [
+          "degree",
+          "personId"
+        ],
+        "values": {
+          "personId": "6ab9048a2610565dd51731c4",
+          "degree": "วท.บ."
+        }
+      },
+      {
+        "collection": "educations",
+        "recordId": "6ab9048a2610565dd51731e1",
+        "fields": [
+          "degree",
+          "personId"
+        ],
+        "values": {
+          "personId": "6ab9048a2610565dd51731c5",
+          "degree": "Ph.D."
+        }
+      },
+      {
+        "collection": "educations",
+        "recordId": "6ab9048a2610565dd51731e2",
+        "fields": [
+          "degree",
+          "personId"
+        ],
+        "values": {
+          "personId": "6ab9048a2610565dd51731c5",
+          "degree": "วท.ม."
+        }
+      },
+      {
+        "collection": "educations",
+        "recordId": "6ab9048a2610565dd51731e3",
+        "fields": [
+          "degree",
+          "personId"
+        ],
+        "values": {
+          "personId": "6ab9048a2610565dd51731c5",
+          "degree": "วท.บ."
+        }
+      },
+      {
+        "collection": "educations",
+        "recordId": "6ab9048a2610565dd51731e4",
+        "fields": [
+          "degree",
+          "personId"
+        ],
+        "values": {
+          "personId": "6ab9048a2610565dd51731c5",
+          "degree": "Ph.D."
+        }
+      },
+      {
+        "collection": "educations",
+        "recordId": "6ab9048a2610565dd51731e5",
+        "fields": [
+          "degree",
+          "personId"
+        ],
+        "values": {
+          "personId": "6ab9048a2610565dd51731c6",
+          "degree": "วท.ม."
+        }
+      },
+      {
+        "collection": "educations",
+        "recordId": "6ab9048a2610565dd51731e6",
+        "fields": [
+          "degree",
+          "personId"
+        ],
+        "values": {
+          "personId": "6ab9048a2610565dd51731c6",
+          "degree": "บธ.บ."
+        }
+      },
+      {
+        "collection": "educations",
+        "recordId": "6ab9048a2610565dd51731e7",
+        "fields": [
+          "degree",
+          "personId"
+        ],
+        "values": {
+          "personId": "6ab9048a2610565dd51731c7",
+          "degree": "วท.ม."
+        }
+      },
+      {
+        "collection": "educations",
+        "recordId": "6ab9048a2610565dd51731e8",
+        "fields": [
+          "degree",
+          "personId"
+        ],
+        "values": {
+          "personId": "6ab9048a2610565dd51731c7",
+          "degree": "วท.บ."
+        }
+      },
+      {
+        "collection": "educations",
+        "recordId": "6ab9048a2610565dd51731e9",
+        "fields": [
+          "degree",
+          "personId"
+        ],
+        "values": {
+          "personId": "6ab9048a2610565dd51731c7",
+          "degree": "วท.ม."
+        }
+      },
+      {
+        "collection": "educations",
+        "recordId": "6ab9048a2610565dd51731ea",
+        "fields": [
+          "degree",
+          "personId"
+        ],
+        "values": {
+          "personId": "6ab9048a2610565dd51731c7",
+          "degree": "วท.บ."
+        }
+      },
+      {
+        "collection": "educations",
+        "recordId": "6ab9048a2610565dd51731eb",
+        "fields": [
+          "degree",
+          "personId"
+        ],
+        "values": {
+          "personId": "6ab9048a2610565dd51731c7",
+          "degree": "heuristic approach. Journal of Sensor and Actuator"
+        }
+      },
+      {
+        "collection": "educations",
+        "recordId": "6ab9048a2610565dd51731ec",
+        "fields": [
+          "degree",
+          "personId"
+        ],
+        "values": {
+          "personId": "6ab9048a2610565dd51731c7",
+          "degree": "at"
+        }
+      },
+      {
+        "collection": "educations",
+        "recordId": "6ab9048a2610565dd51731ed",
+        "fields": [
+          "degree",
+          "personId"
+        ],
+        "values": {
+          "personId": "6ab9048a2610565dd51731c8",
+          "degree": "ปร.ด."
+        }
+      },
+      {
+        "collection": "educations",
+        "recordId": "6ab9048a2610565dd51731ee",
+        "fields": [
+          "degree",
+          "personId"
+        ],
+        "values": {
+          "personId": "6ab9048a2610565dd51731c8",
+          "degree": "วท.ม."
+        }
+      },
+      {
+        "collection": "educations",
+        "recordId": "6ab9048a2610565dd51731ef",
+        "fields": [
+          "degree",
+          "personId"
+        ],
+        "values": {
+          "personId": "6ab9048a2610565dd51731c8",
+          "degree": "วท.บ."
+        }
+      },
+      {
+        "collection": "educations",
+        "recordId": "6ab9048a2610565dd51731f0",
+        "fields": [
+          "degree",
+          "personId"
+        ],
+        "values": {
+          "personId": "6ab9048a2610565dd51731c8",
+          "degree": "วบ.บ."
+        }
+      }
+    ],
+    "dataCompleteness": "complete",
+    "issue": null,
+    "reviewRequired": null,
+    "reviewByUser": null,
+    "review": null,
+    "persistedResult": null
+  },
+  "mixed": {
+    "psCode": "PS-05",
+    "status": "FAIL",
+    "requirement": "อาจารย์ผู้รับผิดชอบหลักสูตรต้องมีคุณวุฒิสูงสุดอย่างน้อยระดับปริญญาโท",
+    "checks": [
+      "targetCollection: \"educations\"",
+      "appointment.role: \"programmeResponsible\"",
+      "join.from: \"appointments.personId\"",
+      "join.to: \"educations.personId\"",
+      "degree.field: \"degree\"",
+      "degree.minimum: \"master\"",
+      "degree.ordering: \"bachelor\", \"master\", \"Ph.D.\"",
+      "degree.aliases.bachelor: \"วท.บ.\", \"บธ.บ.\", \"วบ.บ.\"",
+      "degree.aliases.master: \"วท.ม.\"",
+      "degree.aliases.Ph.D.: \"ปร.ด.\"",
+      "degree.normalization.enabled: true",
+      "degree.normalization.remove: \" \", \".\"",
+      "degree.normalization.caseInsensitive: true",
+      "result.pass: \"PASS\"",
+      "result.fail: \"FAIL\"",
+      "result.review: \"REVIEW\"",
+      "result.na: \"N/A\"",
+      "reviewCondition: \"ไม่สามารถระบุระดับคุณวุฒิได้\"",
+      "naEnabled: false"
+    ],
+    "dataSummary": [
+      {
+        "label": "Operation",
+        "value": "for each distinct (personId) of appointments where role = 'programmeResponsible': join educations on personId = educations.personId; checks: AtLeastCheck"
+      },
+      {
+        "label": "Subjects",
+        "value": "5"
+      },
+      {
+        "label": "Subjects PASS",
+        "value": "3"
+      },
+      {
+        "label": "Subjects FAIL",
+        "value": "1"
+      },
+      {
+        "label": "Subjects REVIEW",
+        "value": "1"
+      }
+    ],
+    "dataFound": [
+      {
+        "label": "อาจารย์ทดสอบ 1",
+        "items": [
+          "degree: ปร. ด. → Ph.D. (highest 'Ph.D.' is at least 'master') -> PASS"
+        ]
+      },
+      {
+        "label": "อาจารย์ทดสอบ 2",
+        "items": [
+          "degree: PhD. → Ph.D.; at → not in the ordering (highest 'Ph.D.' is at least 'master') -> PASS"
+        ]
+      },
+      {
+        "label": "อาจารย์ทดสอบ 3",
+        "items": [
+          "degree: วท. ม. → master (highest 'master' is at least 'master') -> PASS"
+        ]
+      },
+      {
+        "label": "อาจารย์ทดสอบ 4",
+        "items": [
+          "degree: บธ.บ. → bachelor; วท.บ. → bachelor (highest 'bachelor' is below 'master') -> FAIL"
+        ]
+      },
+      {
+        "label": "อาจารย์ทดสอบ 5",
+        "items": [
+          "degree: at → not in the ordering; heuristic approach. Journal of Sensor and Actuator → not in the ordering -> REVIEW"
+        ]
+      }
+    ],
+    "verification": {
+      "found": 13,
+      "verified": null,
+      "approved": null,
+      "verifiedAt": null
+    },
+    "missingInformation": [
+      "degree value(s) not in the configured ordering: at, heuristic approach. Journal of Sensor and Actuator"
+    ],
+    "evidence": [],
+    "traceability": [
+      {
+        "collection": "appointments",
+        "recordId": "6ab9048a2610565dd51731f7",
+        "fields": [
+          "personId",
+          "role"
+        ],
+        "values": {
+          "personId": "6ab9048a2610565dd51731f2",
+          "role": "programmeResponsible"
+        }
+      },
+      {
+        "collection": "appointments",
+        "recordId": "6ab9048a2610565dd51731f9",
+        "fields": [
+          "personId",
+          "role"
+        ],
+        "values": {
+          "personId": "6ab9048a2610565dd51731f3",
+          "role": "programmeResponsible"
+        }
+      },
+      {
+        "collection": "appointments",
+        "recordId": "6ab9048a2610565dd51731fb",
+        "fields": [
+          "personId",
+          "role"
+        ],
+        "values": {
+          "personId": "6ab9048a2610565dd51731f4",
+          "role": "programmeResponsible"
+        }
+      },
+      {
+        "collection": "appointments",
+        "recordId": "6ab9048a2610565dd51731fd",
+        "fields": [
+          "personId",
+          "role"
+        ],
+        "values": {
+          "personId": "6ab9048a2610565dd51731f5",
+          "role": "programmeResponsible"
+        }
+      },
+      {
+        "collection": "appointments",
+        "recordId": "6ab9048a2610565dd51731ff",
+        "fields": [
+          "personId",
+          "role"
+        ],
+        "values": {
+          "personId": "6ab9048a2610565dd51731f6",
+          "role": "programmeResponsible"
+        }
+      },
+      {
+        "collection": "educations",
+        "recordId": "6ab9048a2610565dd517320b",
+        "fields": [
+          "degree",
+          "personId"
+        ],
+        "values": {
+          "personId": "6ab9048a2610565dd51731f2",
+          "degree": "ปร. ด."
+        }
+      },
+      {
+        "collection": "educations",
+        "recordId": "6ab9048a2610565dd517320c",
+        "fields": [
+          "degree",
+          "personId"
+        ],
+        "values": {
+          "personId": "6ab9048a2610565dd51731f3",
+          "degree": "PhD."
+        }
+      },
+      {
+        "collection": "educations",
+        "recordId": "6ab9048a2610565dd517320d",
+        "fields": [
+          "degree",
+          "personId"
+        ],
+        "values": {
+          "personId": "6ab9048a2610565dd51731f3",
+          "degree": "at"
+        }
+      },
+      {
+        "collection": "educations",
+        "recordId": "6ab9048a2610565dd517320e",
+        "fields": [
+          "degree",
+          "personId"
+        ],
+        "values": {
+          "personId": "6ab9048a2610565dd51731f4",
+          "degree": "วท. ม."
+        }
+      },
+      {
+        "collection": "educations",
+        "recordId": "6ab9048a2610565dd517320f",
+        "fields": [
+          "degree",
+          "personId"
+        ],
+        "values": {
+          "personId": "6ab9048a2610565dd51731f5",
+          "degree": "วท.บ."
+        }
+      },
+      {
+        "collection": "educations",
+        "recordId": "6ab9048a2610565dd5173210",
+        "fields": [
+          "degree",
+          "personId"
+        ],
+        "values": {
+          "personId": "6ab9048a2610565dd51731f5",
+          "degree": "บธ.บ."
+        }
+      },
+      {
+        "collection": "educations",
+        "recordId": "6ab9048a2610565dd5173211",
+        "fields": [
+          "degree",
+          "personId"
+        ],
+        "values": {
+          "personId": "6ab9048a2610565dd51731f6",
+          "degree": "heuristic approach. Journal of Sensor and Actuator"
+        }
+      },
+      {
+        "collection": "educations",
+        "recordId": "6ab9048a2610565dd5173212",
+        "fields": [
+          "degree",
+          "personId"
+        ],
+        "values": {
+          "personId": "6ab9048a2610565dd51731f6",
+          "degree": "at"
+        }
+      }
+    ],
+    "dataCompleteness": "incomplete",
+    "issue": null,
+    "reviewRequired": null,
+    "reviewByUser": null,
+    "review": null,
+    "persistedResult": null
+  }
+}

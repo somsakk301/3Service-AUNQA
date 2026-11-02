@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="th">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Import documents into the AUN-QA / PS system" />
+    <title>Import Document — AUN-QA / PS</title>
+    <link rel="stylesheet" href="/static/app.css" />
+    <script src="/static/app.js" defer></script>
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="site-header" aria-label="Application header">
+        <a class="brand" href="/" aria-label="AUN-QA Import Service">
+          <span class="brand-mark" aria-hidden="true">AQ</span>
+          <span>
+            <strong>AUN-QA / PS</strong>
+            <small>Import Service</small>
+          </span>
+        </a>
+        <div class="service-state">
+          <span class="state-dot" aria-hidden="true"></span>
+          Import workspace
+        </div>
+      </header>
+
+      <main>
+        <section class="intro" aria-labelledby="page-title">
+          <p class="eyebrow">DOCUMENT INTAKE</p>
+          <h1 id="page-title">Import Document</h1>
+          <p class="intro-copy">
+            นำเข้าเอกสารหลักสูตร ประวัติอาจารย์ หรือคำสั่งแต่งตั้ง
+            เพื่อจัดเก็บข้อมูลและหลักฐานสำหรับระบบ AUN-QA
+          </p>
+        </section>
+
+        <div class="workspace-grid">
+          <section class="panel import-panel" aria-labelledby="form-title">
+            <div class="panel-heading">
+              <div>
+                <span class="step-label">01 — DOCUMENT DETAILS</span>
+                <h2 id="form-title">รายละเอียดเอกสาร</h2>
+              </div>
+              <span class="required-note">ทุกช่องจำเป็น</span>
+            </div>
+
+            <form id="import-form" novalidate>
+              <fieldset>
+                <legend>Document type</legend>
+                <div class="type-grid">
+                  <label class="type-option">
+                    <input type="radio" name="documentType" value="curriculum" checked />
+                    <span class="type-card">
+                      <span class="type-icon" aria-hidden="true">CU</span>
+                      <span><strong>Curriculum</strong><small>เอกสารหลักสูตร</small></span>
+                    </span>
+                  </label>
+                  <label class="type-option">
+                    <input type="radio" name="documentType" value="cv" />
+                    <span class="type-card">
+                      <span class="type-icon" aria-hidden="true">CV</span>
+                      <span><strong>CV</strong><small>ประวัติอาจารย์</small></span>
+                    </span>
+                  </label>
+                  <label class="type-option">
+                    <input type="radio" name="documentType" value="appointment" />
+                    <span class="type-card">
+                      <span class="type-icon" aria-hidden="true">AP</span>
+                      <span><strong>Appointment</strong><small>คำสั่งแต่งตั้ง</small></span>
+                    </span>
+                  </label>
+                  <label class="type-option">
+                    <input type="radio" name="documentType" value="template" />
+                    <span class="type-card">
+                      <span class="type-icon" aria-hidden="true">TP</span>
+                      <span><strong>Template</strong><small>แม่แบบเอกสาร PS</small></span>
+                    </span>
+                  </label>
+                </div>
+              </fieldset>
+
+              <div class="field-group">
+                <label for="curriculum">Curriculum</label>
+                <div class="select-wrap">
+                  <select id="curriculum" name="curriculumId" required disabled>
+                    <option value="">กำลังโหลดหลักสูตร…</option>
+                  </select>
+                </div>
+                <p id="curriculum-help" class="field-help">เลือกหลักสูตรที่เอกสารนี้เกี่ยวข้อง</p>
+              </div>
+
+              <div id="curriculum-metadata-group" class="field-group" hidden>
+                <label for="curriculum-version">Curriculum version</label>
+                <input id="curriculum-version" name="curriculumVersion" type="number" min="1" step="1" inputmode="numeric" />
+                <p class="field-help">ระบุเวอร์ชันของหลักสูตร เพราะไฟล์อาจไม่มีค่านี้ เช่น 1</p>
+                <label for="curriculum-status">Curriculum status</label>
+                <select id="curriculum-status" name="curriculumStatus">
+                  <option value="">เลือกสถานะ</option>
+                  <option value="active">active</option>
+                  <option value="inactive">inactive</option>
+                </select>
+                <p class="field-help">ค่านี้จะถูกแสดงใน Preview ให้ตรวจสอบก่อนบันทึก</p>
+              </div>
+
+              <div id="template-version-group" class="field-group" hidden>
+                <label for="template-version">Template version</label>
+                <input id="template-version" name="templateVersion" type="number" min="1" step="1" inputmode="numeric" />
+                <p class="field-help">ระบุเลขเวอร์ชันที่ยังไม่เคยใช้ เช่น 1, 2 หรือ 3</p>
+              </div>
+
+              <div class="field-group">
+                <label for="file-input">Document file</label>
+                <div id="drop-zone" class="drop-zone" tabindex="0" role="button" aria-describedby="file-help">
+                  <input id="file-input" type="file" accept=".pdf,.doc,.docx" multiple hidden />
+                  <div class="upload-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" role="img">
+                      <path d="M12 16V4m0 0L7.5 8.5M12 4l4.5 4.5M5 14v4a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-4" />
+                    </svg>
+                  </div>
+                  <div id="drop-copy">
+                    <strong>วางไฟล์ที่นี่ หรือ <span>เลือกหลายไฟล์</span></strong>
+                    <small id="file-help">รองรับ PDF, DOC และ DOCX · นำเข้าเป็นคิวทีละไฟล์</small>
+                  </div>
+                  <ul id="file-list" class="file-list" aria-label="Selected files" hidden></ul>
+                </div>
+              </div>
+
+              <div id="form-error" class="inline-message error-message" role="alert" hidden></div>
+              <button id="submit-button" class="primary-button" type="submit">
+                <span id="submit-label">Preview Data</span>
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5" /></svg>
+              </button>
+            </form>
+          </section>
+
+          <aside class="panel status-panel" aria-labelledby="status-title">
+            <div class="panel-heading">
+              <div>
+                <span class="step-label">02 — PROCESSING STATUS</span>
+                <h2 id="status-title">สถานะการนำเข้า</h2>
+              </div>
+              <span id="status-pill" class="status-pill idle">Ready</span>
+            </div>
+
+            <ol id="progress-list" class="progress-list">
+              <li data-progress="upload"><span class="progress-marker"></span><span><strong>File Upload</strong><small>รับไฟล์จากเครื่องผู้ใช้</small></span></li>
+              <li data-progress="validation"><span class="progress-marker"></span><span><strong>File Validation</strong><small>ตรวจชนิดและความสมบูรณ์</small></span></li>
+              <li data-progress="storage"><span class="progress-marker"></span><span><strong>Original File Storage</strong><small>จัดเก็บไฟล์ต้นฉบับ</small></span></li>
+              <li data-progress="extraction"><span class="progress-marker"></span><span><strong>Text Extraction</strong><small>อ่านเนื้อหาและเลขหน้า</small></span></li>
+              <li data-progress="structured"><span class="progress-marker"></span><span><strong>Structured Data</strong><small>แปลงและตรวจข้อมูล</small></span></li>
+              <li data-progress="mongodb"><span class="progress-marker"></span><span><strong>MongoDB</strong><small>บันทึกข้อมูลแบบมีโครงสร้าง</small></span></li>
+              <li data-progress="chunking"><span class="progress-marker"></span><span><strong>Chunking</strong><small>แบ่งข้อความพร้อมแหล่งอ้างอิง</small></span></li>
+              <li data-progress="embedding"><span class="progress-marker"></span><span><strong>Embedding</strong><small>สร้างเวกเตอร์ด้วย BGE-M3</small></span></li>
+              <li data-progress="chromadb"><span class="progress-marker"></span><span><strong>ChromaDB</strong><small>จัดเก็บเวกเตอร์หลักฐาน</small></span></li>
+            </ol>
+
+            <div id="result-card" class="result-card" aria-live="polite">
+              <span class="result-icon" aria-hidden="true">→</span>
+              <div>
+                <strong id="result-title">พร้อมนำเข้าเอกสาร</strong>
+                <p id="result-message">กรอกรายละเอียดและเลือกไฟล์เพื่อเริ่มต้น</p>
+                <dl id="result-meta" hidden>
+                  <div><dt id="result-id-label">Document ID</dt><dd id="result-document-id"></dd></div>
+                  <div><dt>Chunks</dt><dd id="result-chunks"></dd></div>
+                </dl>
+              </div>
+            </div>
+          </aside>
+        </div>
+
+        <section id="preview-panel" class="panel preview-panel" aria-labelledby="preview-title" hidden>
+          <div class="panel-heading preview-heading">
+            <div>
+              <span class="step-label">03 — REVIEW BEFORE SAVE</span>
+              <h2 id="preview-title">ตรวจสอบข้อมูลก่อนบันทึก</h2>
+              <p class="preview-intro">ข้อมูลส่วนนี้ยังไม่ถูกบันทึกลง MongoDB หรือ ChromaDB คุณสามารถเพิ่ม แก้ไข หรือลบรายการก่อนยืนยัน</p>
+            </div>
+            <span class="status-pill review">Waiting for confirmation</span>
+          </div>
+          <div id="preview-error" class="inline-message error-message" role="alert" hidden></div>
+          <div id="preview-files" class="preview-files"></div>
+          <div class="preview-actions">
+            <button id="cancel-preview" class="secondary-button" type="button">ยกเลิก</button>
+            <button id="confirm-preview" class="primary-button" type="button">
+              <span>Confirm Import</span>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5" /></svg>
+            </button>
+          </div>
+        </section>
+      </main>
+
+      <footer>
+        <span>AUN-QA / PS Import Service</span>
+        <span>PDF · DOC · DOCX</span>
+      </footer>
+    </div>
+  </body>
+</html>

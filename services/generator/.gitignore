@@ -1,0 +1,16 @@
+.venv/
+__pycache__/
+*.pyc
+.env
+.env.realdata
+backend/output/*.docx
+backend/output/drafts/
+backend/output/versions/
+backend/output/audit/
+backend/output/backups/
+!backend/output/.gitkeep
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
+frontend/.env

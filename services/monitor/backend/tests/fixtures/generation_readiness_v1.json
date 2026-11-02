@@ -1,0 +1,27 @@
+{
+  "configType": "generationReadiness",
+  "generationReadiness": {
+    "requiredPS": [
+      "PS-01",
+      "PS-02",
+      "PS-03",
+      "PS-04",
+      "PS-05",
+      "PS-06",
+      "PS-07",
+      "PS-08",
+      "PS-09"
+    ],
+    "readyWhen": {
+      "allowedStatus": [
+        "PASS",
+        "N/A"
+      ],
+      "blockedStatus": [
+        "FAIL",
+        "REVIEW"
+      ]
+    },
+    "requiredAll": true
+  }
+}

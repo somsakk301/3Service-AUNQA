@@ -1,0 +1,25 @@
+# Mornitor: backend (FastAPI) + frontend (nginx). MongoDB is not started here: Mornitor reads the Import
+# Service's database, set in .env (copy .env.example). Web: http://localhost:8080  API: http://localhost:8000
+name: mornitor
+
+services:
+  backend:
+    build: ./backend
+    env_file:
+      - path: .env        # optional settings (config / results database, year offset)
+        required: false
+    environment:
+      # Inside a container "localhost" is the container itself; host.docker.internal is this computer.
+      MORNITOR_DB_URI: ${MORNITOR_DB_URI:-mongodb://host.docker.internal:27017}
+      MORNITOR_DB_NAME: ${MORNITOR_DB_NAME:-mornitor_source}
+    extra_hosts:
+      - "host.docker.internal:host-gateway"   # Linux; Docker Desktop already provides the name
+    ports:
+      - "127.0.0.1:${MORNITOR_API_PORT:-8000}:8000"   # this computer only: the API has no authentication
+
+  frontend:
+    build: ./frontend
+    depends_on:
+      - backend
+    ports:
+      - "127.0.0.1:${MORNITOR_WEB_PORT:-8080}:80"

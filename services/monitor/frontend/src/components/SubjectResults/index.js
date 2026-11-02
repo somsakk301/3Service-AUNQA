@@ -1,0 +1,1 @@
+export { SubjectResults } from "./SubjectResults";

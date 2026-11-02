@@ -1,0 +1,6 @@
+# Local Compass access. Compose loads this automatically for `docker compose up`.
+# Production uses explicit -f docker-compose.yml -f docker-compose.https.yml.
+services:
+  mongodb:
+    ports:
+      - "127.0.0.1:27018:27017"

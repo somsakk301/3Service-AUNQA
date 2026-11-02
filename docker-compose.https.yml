@@ -1,0 +1,10 @@
+services:
+  gateway:
+    ports: ["443:443"]
+    volumes:
+      - ./deploy/nginx.https.conf:/etc/nginx/nginx.conf:ro
+      - ./deploy/certs:/etc/nginx/certs:ro
+  monitor-backend:
+    environment:
+      MORNITOR_COOKIE_SECURE: "true"
+

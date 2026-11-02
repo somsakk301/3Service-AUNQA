@@ -1,0 +1,6812 @@
+{
+ "_provenance": "Captured from the backend in memory (no database): GET /api/monitor and /api/monitor/ps/PS-08 with the ACTIVE config backend/tests/fixtures/ps_config_v1.json and backend test data, one special instructor per case (NA: none). Engine of 2026-09-28. Nothing is edited by hand.",
+ "NA": {
+  "monitor": {
+   "curriculum": {
+    "curriculumCode": "25500231104894",
+    "curriculumName": "วิทยาศาสตรบัณฑิต สาขาวิชาวิทยาการคอมพิวเตอร์",
+    "curriculumYear": "2567",
+    "version": "1",
+    "status": "latest"
+   },
+   "overallStatus": null,
+   "dataCompleteness": "complete",
+   "results": [
+    {
+     "psCode": "PS-01",
+     "status": "PASS",
+     "requirement": "หลักสูตรต้องมีอาจารย์ผู้รับผิดชอบหลักสูตรอย่างน้อย 5 คน",
+     "checks": [
+      "targetCollection: \"appointments\"",
+      "filter.role: \"programmeResponsible\"",
+      "count.field: \"personId\"",
+      "count.distinct: true",
+      "condition.operator: \">=\"",
+      "condition.value: 5",
+      "result.pass: \"PASS\"",
+      "result.fail: \"FAIL\"",
+      "result.review: \"REVIEW\"",
+      "result.na: \"N/A\"",
+      "reviewCondition: \"จำนวนข้อมูลไม่ชัดเจน\"",
+      "naEnabled: false"
+     ],
+     "dataSummary": [
+      {
+       "label": "Operation",
+       "value": "distinct count of personId in appointments where role = 'programmeResponsible'; compare >= 5"
+      },
+      {
+       "label": "Distinct personId count",
+       "value": "5"
+      },
+      {
+       "label": "Condition",
+       "value": ">= 5"
+      }
+     ],
+     "dataFound": [
+      {
+       "label": "personId",
+       "items": [
+        "x (6ab97bb6588c9dc1fccd822d)",
+        "x (6ab97bb6588c9dc1fccd822e)",
+        "x (6ab97bb6588c9dc1fccd822f)",
+        "x (6ab97bb6588c9dc1fccd8230)",
+        "x (6ab97bb6588c9dc1fccd8231)"
+       ]
+      }
+     ],
+     "verification": {
+      "found": 5,
+      "verified": null,
+      "approved": null,
+      "verifiedAt": null
+     },
+     "missingInformation": [],
+     "evidence": [],
+     "traceability": [
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd8232",
+       "fields": [
+        "personId",
+        "role"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd822d",
+        "role": "programmeResponsible"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd8234",
+       "fields": [
+        "personId",
+        "role"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd822e",
+        "role": "programmeResponsible"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd8236",
+       "fields": [
+        "personId",
+        "role"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd822f",
+        "role": "programmeResponsible"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd8238",
+       "fields": [
+        "personId",
+        "role"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8230",
+        "role": "programmeResponsible"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd823a",
+       "fields": [
+        "personId",
+        "role"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8231",
+        "role": "programmeResponsible"
+       }
+      }
+     ],
+     "dataCompleteness": "complete",
+     "issue": null,
+     "reviewRequired": null,
+     "reviewByUser": null,
+     "review": null,
+     "persistedResult": null
+    },
+    {
+     "psCode": "PS-02",
+     "status": "PASS",
+     "requirement": "อาจารย์ผู้รับผิดชอบหลักสูตรต้องมีสถานะอาจารย์ประจำ",
+     "checks": [
+      "targetCollection: \"appointments\"",
+      "responsibleRole: \"programmeResponsible\"",
+      "permanentRole: \"programmeStaff\"",
+      "matching.sameCurriculum: true",
+      "matching.samePerson: true",
+      "condition.operator: \"EXISTS\"",
+      "condition.field: \"programmeStaff\"",
+      "result.pass: \"PASS\"",
+      "result.fail: \"FAIL\"",
+      "result.review: \"REVIEW\"",
+      "result.na: \"N/A\"",
+      "reviewCondition: \"ไม่สามารถตรวจสอบสถานะอาจารย์ประจำได้\"",
+      "naEnabled: false"
+     ],
+     "dataSummary": [
+      {
+       "label": "Operation",
+       "value": "for each distinct (curriculumId, personId) of appointments where role = 'programmeResponsible': join appointments where role = 'programmeStaff' on curriculumId = appointments.curriculumId, personId = appointments.personId; checks: ExistsCheck"
+      },
+      {
+       "label": "Subjects",
+       "value": "5"
+      },
+      {
+       "label": "Subjects PASS",
+       "value": "5"
+      }
+     ],
+     "dataFound": [
+      {
+       "label": "x (6ab97bb6588c9dc1fccd822d)",
+       "items": [
+        "1 matching record(s) -> PASS"
+       ]
+      },
+      {
+       "label": "x (6ab97bb6588c9dc1fccd822e)",
+       "items": [
+        "1 matching record(s) -> PASS"
+       ]
+      },
+      {
+       "label": "x (6ab97bb6588c9dc1fccd822f)",
+       "items": [
+        "1 matching record(s) -> PASS"
+       ]
+      },
+      {
+       "label": "x (6ab97bb6588c9dc1fccd8230)",
+       "items": [
+        "1 matching record(s) -> PASS"
+       ]
+      },
+      {
+       "label": "x (6ab97bb6588c9dc1fccd8231)",
+       "items": [
+        "1 matching record(s) -> PASS"
+       ]
+      }
+     ],
+     "verification": {
+      "found": 10,
+      "verified": null,
+      "approved": null,
+      "verifiedAt": null
+     },
+     "missingInformation": [],
+     "evidence": [],
+     "traceability": [
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd8232",
+       "fields": [
+        "curriculumId",
+        "personId",
+        "role"
+       ],
+       "values": {
+        "curriculumId": "6ab97bb6588c9dc1fccd822c",
+        "personId": "6ab97bb6588c9dc1fccd822d",
+        "role": "programmeResponsible"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd8234",
+       "fields": [
+        "curriculumId",
+        "personId",
+        "role"
+       ],
+       "values": {
+        "curriculumId": "6ab97bb6588c9dc1fccd822c",
+        "personId": "6ab97bb6588c9dc1fccd822e",
+        "role": "programmeResponsible"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd8236",
+       "fields": [
+        "curriculumId",
+        "personId",
+        "role"
+       ],
+       "values": {
+        "curriculumId": "6ab97bb6588c9dc1fccd822c",
+        "personId": "6ab97bb6588c9dc1fccd822f",
+        "role": "programmeResponsible"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd8238",
+       "fields": [
+        "curriculumId",
+        "personId",
+        "role"
+       ],
+       "values": {
+        "curriculumId": "6ab97bb6588c9dc1fccd822c",
+        "personId": "6ab97bb6588c9dc1fccd8230",
+        "role": "programmeResponsible"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd823a",
+       "fields": [
+        "curriculumId",
+        "personId",
+        "role"
+       ],
+       "values": {
+        "curriculumId": "6ab97bb6588c9dc1fccd822c",
+        "personId": "6ab97bb6588c9dc1fccd8231",
+        "role": "programmeResponsible"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd8233",
+       "fields": [
+        "curriculumId",
+        "personId",
+        "role"
+       ],
+       "values": {
+        "curriculumId": "6ab97bb6588c9dc1fccd822c",
+        "personId": "6ab97bb6588c9dc1fccd822d",
+        "role": "programmeStaff"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd8235",
+       "fields": [
+        "curriculumId",
+        "personId",
+        "role"
+       ],
+       "values": {
+        "curriculumId": "6ab97bb6588c9dc1fccd822c",
+        "personId": "6ab97bb6588c9dc1fccd822e",
+        "role": "programmeStaff"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd8237",
+       "fields": [
+        "curriculumId",
+        "personId",
+        "role"
+       ],
+       "values": {
+        "curriculumId": "6ab97bb6588c9dc1fccd822c",
+        "personId": "6ab97bb6588c9dc1fccd822f",
+        "role": "programmeStaff"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd8239",
+       "fields": [
+        "curriculumId",
+        "personId",
+        "role"
+       ],
+       "values": {
+        "curriculumId": "6ab97bb6588c9dc1fccd822c",
+        "personId": "6ab97bb6588c9dc1fccd8230",
+        "role": "programmeStaff"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd823b",
+       "fields": [
+        "curriculumId",
+        "personId",
+        "role"
+       ],
+       "values": {
+        "curriculumId": "6ab97bb6588c9dc1fccd822c",
+        "personId": "6ab97bb6588c9dc1fccd8231",
+        "role": "programmeStaff"
+       }
+      }
+     ],
+     "dataCompleteness": "complete",
+     "issue": null,
+     "reviewRequired": null,
+     "reviewByUser": null,
+     "review": null,
+     "persistedResult": null
+    },
+    {
+     "psCode": "PS-03",
+     "status": "REVIEW",
+     "requirement": "อาจารย์ผู้รับผิดชอบหลักสูตรต้องไม่รับผิดชอบเกิน 1 หลักสูตร",
+     "checks": [
+      "targetCollection: \"appointments\"",
+      "targetRole: \"programmeResponsible\"",
+      "review.required: true",
+      "review.reviewByUser: true",
+      "review.allowManualResult: \"PASS\", \"FAIL\", \"REVIEW\"",
+      "result.pass: \"PASS\"",
+      "result.fail: \"FAIL\"",
+      "result.review: \"REVIEW\"",
+      "result.na: \"N/A\"",
+      "naEnabled: false"
+     ],
+     "dataSummary": [
+      {
+       "label": "Operation",
+       "value": "review required by configuration"
+      },
+      {
+       "label": "Review",
+       "value": "Review by user required by configuration"
+      }
+     ],
+     "dataFound": [
+      {
+       "label": "appointments",
+       "items": [
+        "x (6ab97bb6588c9dc1fccd822d)",
+        "x (6ab97bb6588c9dc1fccd822e)",
+        "x (6ab97bb6588c9dc1fccd822f)",
+        "x (6ab97bb6588c9dc1fccd8230)",
+        "x (6ab97bb6588c9dc1fccd8231)"
+       ]
+      }
+     ],
+     "verification": {
+      "found": 5,
+      "verified": null,
+      "approved": null,
+      "verifiedAt": null
+     },
+     "missingInformation": [],
+     "evidence": [],
+     "traceability": [
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd8232",
+       "fields": [
+        "role"
+       ],
+       "values": {
+        "role": "programmeResponsible"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd8234",
+       "fields": [
+        "role"
+       ],
+       "values": {
+        "role": "programmeResponsible"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd8236",
+       "fields": [
+        "role"
+       ],
+       "values": {
+        "role": "programmeResponsible"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd8238",
+       "fields": [
+        "role"
+       ],
+       "values": {
+        "role": "programmeResponsible"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd823a",
+       "fields": [
+        "role"
+       ],
+       "values": {
+        "role": "programmeResponsible"
+       }
+      }
+     ],
+     "dataCompleteness": "complete",
+     "issue": null,
+     "reviewRequired": true,
+     "reviewByUser": true,
+     "review": {
+      "allowManualResult": [
+       "PASS",
+       "FAIL",
+       "REVIEW"
+      ],
+      "status": null,
+      "reviewedAt": null
+     },
+     "persistedResult": null
+    },
+    {
+     "psCode": "PS-04",
+     "status": "PASS",
+     "requirement": "หลักสูตรต้องมีคำสั่งแต่งตั้งและระบุบทบาทการบริหารหลักสูตรอย่างชัดเจน",
+     "checks": [
+      "targetCollection: \"appointments\"",
+      "requiredFields: \"personId\", \"role\", \"roleName\", \"appointmentOrder\"",
+      "appointmentOrder.required: true",
+      "appointmentOrder.requiredFields: \"orderNumber\", \"orderDate\"",
+      "role.required: true",
+      "role.roleNameRequired: true",
+      "result.pass: \"PASS\"",
+      "result.fail: \"FAIL\"",
+      "result.review: \"REVIEW\"",
+      "result.na: \"N/A\"",
+      "conditions.pass: \"ข้อมูลการแต่งตั้งครบและระบุบทบาทชัดเจน\"",
+      "conditions.fail: \"ไม่มีคำสั่งแต่งตั้งหรือข้อมูลไม่ครบ\"",
+      "conditions.review: \"มีข้อมูลแต่ไม่สามารถระบุความครบถ้วนหรือความชัดเจนได้\"",
+      "naEnabled: false"
+     ],
+     "dataSummary": [
+      {
+       "label": "Operation",
+       "value": "fields present in appointments: personId, role, roleName, appointmentOrder, appointmentOrder.orderNumber, appointmentOrder.orderDate"
+      },
+      {
+       "label": "Records checked",
+       "value": "10"
+      },
+      {
+       "label": "Records with missing fields",
+       "value": "0"
+      }
+     ],
+     "dataFound": [
+      {
+       "label": "Records",
+       "items": [
+        "x (6ab97bb6588c9dc1fccd822d) (6ab97bb6588c9dc1fccd8232): complete",
+        "x (6ab97bb6588c9dc1fccd822d) (6ab97bb6588c9dc1fccd8233): complete",
+        "x (6ab97bb6588c9dc1fccd822e) (6ab97bb6588c9dc1fccd8234): complete",
+        "x (6ab97bb6588c9dc1fccd822e) (6ab97bb6588c9dc1fccd8235): complete",
+        "x (6ab97bb6588c9dc1fccd822f) (6ab97bb6588c9dc1fccd8236): complete",
+        "x (6ab97bb6588c9dc1fccd822f) (6ab97bb6588c9dc1fccd8237): complete",
+        "x (6ab97bb6588c9dc1fccd8230) (6ab97bb6588c9dc1fccd8238): complete",
+        "x (6ab97bb6588c9dc1fccd8230) (6ab97bb6588c9dc1fccd8239): complete",
+        "x (6ab97bb6588c9dc1fccd8231) (6ab97bb6588c9dc1fccd823a): complete",
+        "x (6ab97bb6588c9dc1fccd8231) (6ab97bb6588c9dc1fccd823b): complete"
+       ]
+      }
+     ],
+     "verification": {
+      "found": 10,
+      "verified": null,
+      "approved": null,
+      "verifiedAt": null
+     },
+     "missingInformation": [],
+     "evidence": [],
+     "traceability": [
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd8232",
+       "fields": [
+        "appointmentOrder",
+        "appointmentOrder.orderDate",
+        "appointmentOrder.orderNumber",
+        "personId",
+        "role",
+        "roleName"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd822d",
+        "role": "programmeResponsible",
+        "roleName": "อาจารย์ผู้รับผิดชอบหลักสูตร",
+        "appointmentOrder": "{'orderNumber': '350/2568', 'orderDate': '2568-02-04'}",
+        "appointmentOrder.orderNumber": "350/2568",
+        "appointmentOrder.orderDate": "2568-02-04"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd8233",
+       "fields": [
+        "appointmentOrder",
+        "appointmentOrder.orderDate",
+        "appointmentOrder.orderNumber",
+        "personId",
+        "role",
+        "roleName"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd822d",
+        "role": "programmeStaff",
+        "roleName": "อาจารย์ประจำหลักสูตร",
+        "appointmentOrder": "{'orderNumber': '350/2568', 'orderDate': '2568-02-04'}",
+        "appointmentOrder.orderNumber": "350/2568",
+        "appointmentOrder.orderDate": "2568-02-04"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd8234",
+       "fields": [
+        "appointmentOrder",
+        "appointmentOrder.orderDate",
+        "appointmentOrder.orderNumber",
+        "personId",
+        "role",
+        "roleName"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd822e",
+        "role": "programmeResponsible",
+        "roleName": "อาจารย์ผู้รับผิดชอบหลักสูตร",
+        "appointmentOrder": "{'orderNumber': '350/2568', 'orderDate': '2568-02-04'}",
+        "appointmentOrder.orderNumber": "350/2568",
+        "appointmentOrder.orderDate": "2568-02-04"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd8235",
+       "fields": [
+        "appointmentOrder",
+        "appointmentOrder.orderDate",
+        "appointmentOrder.orderNumber",
+        "personId",
+        "role",
+        "roleName"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd822e",
+        "role": "programmeStaff",
+        "roleName": "อาจารย์ประจำหลักสูตร",
+        "appointmentOrder": "{'orderNumber': '350/2568', 'orderDate': '2568-02-04'}",
+        "appointmentOrder.orderNumber": "350/2568",
+        "appointmentOrder.orderDate": "2568-02-04"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd8236",
+       "fields": [
+        "appointmentOrder",
+        "appointmentOrder.orderDate",
+        "appointmentOrder.orderNumber",
+        "personId",
+        "role",
+        "roleName"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd822f",
+        "role": "programmeResponsible",
+        "roleName": "อาจารย์ผู้รับผิดชอบหลักสูตร",
+        "appointmentOrder": "{'orderNumber': '350/2568', 'orderDate': '2568-02-04'}",
+        "appointmentOrder.orderNumber": "350/2568",
+        "appointmentOrder.orderDate": "2568-02-04"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd8237",
+       "fields": [
+        "appointmentOrder",
+        "appointmentOrder.orderDate",
+        "appointmentOrder.orderNumber",
+        "personId",
+        "role",
+        "roleName"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd822f",
+        "role": "programmeStaff",
+        "roleName": "อาจารย์ประจำหลักสูตร",
+        "appointmentOrder": "{'orderNumber': '350/2568', 'orderDate': '2568-02-04'}",
+        "appointmentOrder.orderNumber": "350/2568",
+        "appointmentOrder.orderDate": "2568-02-04"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd8238",
+       "fields": [
+        "appointmentOrder",
+        "appointmentOrder.orderDate",
+        "appointmentOrder.orderNumber",
+        "personId",
+        "role",
+        "roleName"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8230",
+        "role": "programmeResponsible",
+        "roleName": "อาจารย์ผู้รับผิดชอบหลักสูตร",
+        "appointmentOrder": "{'orderNumber': '350/2568', 'orderDate': '2568-02-04'}",
+        "appointmentOrder.orderNumber": "350/2568",
+        "appointmentOrder.orderDate": "2568-02-04"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd8239",
+       "fields": [
+        "appointmentOrder",
+        "appointmentOrder.orderDate",
+        "appointmentOrder.orderNumber",
+        "personId",
+        "role",
+        "roleName"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8230",
+        "role": "programmeStaff",
+        "roleName": "อาจารย์ประจำหลักสูตร",
+        "appointmentOrder": "{'orderNumber': '350/2568', 'orderDate': '2568-02-04'}",
+        "appointmentOrder.orderNumber": "350/2568",
+        "appointmentOrder.orderDate": "2568-02-04"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd823a",
+       "fields": [
+        "appointmentOrder",
+        "appointmentOrder.orderDate",
+        "appointmentOrder.orderNumber",
+        "personId",
+        "role",
+        "roleName"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8231",
+        "role": "programmeResponsible",
+        "roleName": "อาจารย์ผู้รับผิดชอบหลักสูตร",
+        "appointmentOrder": "{'orderNumber': '350/2568', 'orderDate': '2568-02-04'}",
+        "appointmentOrder.orderNumber": "350/2568",
+        "appointmentOrder.orderDate": "2568-02-04"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd823b",
+       "fields": [
+        "appointmentOrder",
+        "appointmentOrder.orderDate",
+        "appointmentOrder.orderNumber",
+        "personId",
+        "role",
+        "roleName"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8231",
+        "role": "programmeStaff",
+        "roleName": "อาจารย์ประจำหลักสูตร",
+        "appointmentOrder": "{'orderNumber': '350/2568', 'orderDate': '2568-02-04'}",
+        "appointmentOrder.orderNumber": "350/2568",
+        "appointmentOrder.orderDate": "2568-02-04"
+       }
+      }
+     ],
+     "dataCompleteness": "complete",
+     "issue": null,
+     "reviewRequired": null,
+     "reviewByUser": null,
+     "review": null,
+     "persistedResult": null
+    },
+    {
+     "psCode": "PS-05",
+     "status": "PASS",
+     "requirement": "อาจารย์ผู้รับผิดชอบหลักสูตรต้องมีคุณวุฒิสูงสุดอย่างน้อยระดับปริญญาโท",
+     "checks": [
+      "targetCollection: \"educations\"",
+      "appointment.role: \"programmeResponsible\"",
+      "join.from: \"appointments.personId\"",
+      "join.to: \"educations.personId\"",
+      "degree.field: \"degree\"",
+      "degree.minimum: \"master\"",
+      "degree.ordering: \"bachelor\", \"master\", \"Ph.D.\"",
+      "degree.aliases.bachelor: \"วท.บ.\", \"บธ.บ.\", \"วบ.บ.\"",
+      "degree.aliases.master: \"วท.ม.\"",
+      "degree.aliases.Ph.D.: \"ปร.ด.\"",
+      "degree.normalization.enabled: true",
+      "degree.normalization.remove: \" \", \".\"",
+      "degree.normalization.caseInsensitive: true",
+      "result.pass: \"PASS\"",
+      "result.fail: \"FAIL\"",
+      "result.review: \"REVIEW\"",
+      "result.na: \"N/A\"",
+      "reviewCondition: \"ไม่สามารถระบุระดับคุณวุฒิได้\"",
+      "naEnabled: false"
+     ],
+     "dataSummary": [
+      {
+       "label": "Operation",
+       "value": "for each distinct (personId) of appointments where role = 'programmeResponsible': join educations on personId = educations.personId; checks: AtLeastCheck"
+      },
+      {
+       "label": "Subjects",
+       "value": "5"
+      },
+      {
+       "label": "Subjects PASS",
+       "value": "5"
+      }
+     ],
+     "dataFound": [
+      {
+       "label": "x (6ab97bb6588c9dc1fccd822d)",
+       "items": [
+        "degree: master → master (highest 'master' is at least 'master') -> PASS"
+       ]
+      },
+      {
+       "label": "x (6ab97bb6588c9dc1fccd822e)",
+       "items": [
+        "degree: master → master (highest 'master' is at least 'master') -> PASS"
+       ]
+      },
+      {
+       "label": "x (6ab97bb6588c9dc1fccd822f)",
+       "items": [
+        "degree: master → master (highest 'master' is at least 'master') -> PASS"
+       ]
+      },
+      {
+       "label": "x (6ab97bb6588c9dc1fccd8230)",
+       "items": [
+        "degree: master → master (highest 'master' is at least 'master') -> PASS"
+       ]
+      },
+      {
+       "label": "x (6ab97bb6588c9dc1fccd8231)",
+       "items": [
+        "degree: master → master (highest 'master' is at least 'master') -> PASS"
+       ]
+      }
+     ],
+     "verification": {
+      "found": 10,
+      "verified": null,
+      "approved": null,
+      "verifiedAt": null
+     },
+     "missingInformation": [],
+     "evidence": [],
+     "traceability": [
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd8232",
+       "fields": [
+        "personId",
+        "role"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd822d",
+        "role": "programmeResponsible"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd8234",
+       "fields": [
+        "personId",
+        "role"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd822e",
+        "role": "programmeResponsible"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd8236",
+       "fields": [
+        "personId",
+        "role"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd822f",
+        "role": "programmeResponsible"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd8238",
+       "fields": [
+        "personId",
+        "role"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8230",
+        "role": "programmeResponsible"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd823a",
+       "fields": [
+        "personId",
+        "role"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8231",
+        "role": "programmeResponsible"
+       }
+      },
+      {
+       "collection": "educations",
+       "recordId": "6ab97bb6588c9dc1fccd823c",
+       "fields": [
+        "degree",
+        "personId"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd822d",
+        "degree": "master"
+       }
+      },
+      {
+       "collection": "educations",
+       "recordId": "6ab97bb6588c9dc1fccd823d",
+       "fields": [
+        "degree",
+        "personId"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd822e",
+        "degree": "master"
+       }
+      },
+      {
+       "collection": "educations",
+       "recordId": "6ab97bb6588c9dc1fccd823e",
+       "fields": [
+        "degree",
+        "personId"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd822f",
+        "degree": "master"
+       }
+      },
+      {
+       "collection": "educations",
+       "recordId": "6ab97bb6588c9dc1fccd823f",
+       "fields": [
+        "degree",
+        "personId"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8230",
+        "degree": "master"
+       }
+      },
+      {
+       "collection": "educations",
+       "recordId": "6ab97bb6588c9dc1fccd8240",
+       "fields": [
+        "degree",
+        "personId"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8231",
+        "degree": "master"
+       }
+      }
+     ],
+     "dataCompleteness": "complete",
+     "issue": null,
+     "reviewRequired": null,
+     "reviewByUser": null,
+     "review": null,
+     "persistedResult": null
+    },
+    {
+     "psCode": "PS-06",
+     "status": "PASS",
+     "requirement": "คุณวุฒิของอาจารย์สัมพันธ์กับสาขาของหลักสูตร",
+     "checks": [
+      "targetCollection: \"educations\"",
+      "appointment.role: \"programmeResponsible\"",
+      "join.appointmentPersonId: \"appointments.personId\"",
+      "join.educationPersonId: \"educations.personId\"",
+      "join.curriculumId: \"appointments.curriculumId\"",
+      "programmeField.source: \"curricula.curriculumName\"",
+      "programmeField.method: \"extract\"",
+      "qualificationField.source: \"educations.field\"",
+      "normalization.enabled: true",
+      "normalization.remove: \"สาขาวิชา\", \"สาขา\", \"หลักสูตร\", \"วิชา\", \" \", \"-\"",
+      "normalization.caseInsensitive: true",
+      "comparison.method: \"mapping\"",
+      "comparison.allowExactMatch: true",
+      "comparison.allowRelatedMatch: true",
+      "fieldMappings: 8 item(s)",
+      "result.exact: \"PASS\"",
+      "result.related: \"PASS\"",
+      "result.unrelated: \"FAIL\"",
+      "result.unknown: \"REVIEW\"",
+      "reviewCondition: \"ไม่พบข้อมูล education.field\", \"ไม่สามารถระบุ programme field ได้\", \"ไม่มี Mapping สำหรับ programme field\", \"ไม่สามารถตัดสินความสัมพันธ์ได้\"",
+      "naEnabled: false"
+     ],
+     "dataSummary": [
+      {
+       "label": "Operation",
+       "value": "for each distinct (personId) of appointments where role = 'programmeResponsible': join educations on personId = educations.personId; checks: MappingCheck"
+      },
+      {
+       "label": "Subjects",
+       "value": "5"
+      },
+      {
+       "label": "Subjects PASS",
+       "value": "5"
+      }
+     ],
+     "dataFound": [
+      {
+       "label": "x (6ab97bb6588c9dc1fccd822d)",
+       "items": [
+        "field: Computer Science -> exact (วิทยาการคอมพิวเตอร์) -> PASS"
+       ]
+      },
+      {
+       "label": "x (6ab97bb6588c9dc1fccd822e)",
+       "items": [
+        "field: Computer Science -> exact (วิทยาการคอมพิวเตอร์) -> PASS"
+       ]
+      },
+      {
+       "label": "x (6ab97bb6588c9dc1fccd822f)",
+       "items": [
+        "field: Computer Science -> exact (วิทยาการคอมพิวเตอร์) -> PASS"
+       ]
+      },
+      {
+       "label": "x (6ab97bb6588c9dc1fccd8230)",
+       "items": [
+        "field: Computer Science -> exact (วิทยาการคอมพิวเตอร์) -> PASS"
+       ]
+      },
+      {
+       "label": "x (6ab97bb6588c9dc1fccd8231)",
+       "items": [
+        "field: Computer Science -> exact (วิทยาการคอมพิวเตอร์) -> PASS"
+       ]
+      }
+     ],
+     "verification": {
+      "found": 11,
+      "verified": null,
+      "approved": null,
+      "verifiedAt": null
+     },
+     "missingInformation": [],
+     "evidence": [],
+     "traceability": [
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd8232",
+       "fields": [
+        "personId",
+        "role"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd822d",
+        "role": "programmeResponsible"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd8234",
+       "fields": [
+        "personId",
+        "role"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd822e",
+        "role": "programmeResponsible"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd8236",
+       "fields": [
+        "personId",
+        "role"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd822f",
+        "role": "programmeResponsible"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd8238",
+       "fields": [
+        "personId",
+        "role"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8230",
+        "role": "programmeResponsible"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd823a",
+       "fields": [
+        "personId",
+        "role"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8231",
+        "role": "programmeResponsible"
+       }
+      },
+      {
+       "collection": "curricula",
+       "recordId": "6ab97bb6588c9dc1fccd822c",
+       "fields": [
+        "curriculumName"
+       ],
+       "values": {
+        "curriculumName": "วิทยาศาสตรบัณฑิต สาขาวิชาวิทยาการคอมพิวเตอร์"
+       }
+      },
+      {
+       "collection": "educations",
+       "recordId": "6ab97bb6588c9dc1fccd823c",
+       "fields": [
+        "field",
+        "personId"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd822d",
+        "field": "Computer Science"
+       }
+      },
+      {
+       "collection": "educations",
+       "recordId": "6ab97bb6588c9dc1fccd823d",
+       "fields": [
+        "field",
+        "personId"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd822e",
+        "field": "Computer Science"
+       }
+      },
+      {
+       "collection": "educations",
+       "recordId": "6ab97bb6588c9dc1fccd823e",
+       "fields": [
+        "field",
+        "personId"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd822f",
+        "field": "Computer Science"
+       }
+      },
+      {
+       "collection": "educations",
+       "recordId": "6ab97bb6588c9dc1fccd823f",
+       "fields": [
+        "field",
+        "personId"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8230",
+        "field": "Computer Science"
+       }
+      },
+      {
+       "collection": "educations",
+       "recordId": "6ab97bb6588c9dc1fccd8240",
+       "fields": [
+        "field",
+        "personId"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8231",
+        "field": "Computer Science"
+       }
+      }
+     ],
+     "dataCompleteness": "complete",
+     "issue": null,
+     "reviewRequired": null,
+     "reviewByUser": null,
+     "review": null,
+     "persistedResult": null
+    },
+    {
+     "psCode": "PS-07",
+     "status": "PASS",
+     "requirement": "อาจารย์ผู้รับผิดชอบหรืออาจารย์ประจำหลักสูตรต้องมีผลงานวิชาการย้อนหลัง 5 ปี",
+     "checks": [
+      "targetCollections: \"academic_works\", \"appointments\"",
+      "targetRoles: \"programmeResponsible\", \"programmeStaff\"",
+      "join.from: \"appointments.personId\"",
+      "join.to: \"academic_works.personId\"",
+      "publicationYear.field: \"publicationYear\"",
+      "publicationYear.period: \"previous5Years\"",
+      "minimumCount: 1",
+      "result.pass: \"PASS\"",
+      "result.fail: \"FAIL\"",
+      "result.review: \"REVIEW\"",
+      "result.na: \"N/A\"",
+      "reviewCondition: \"ไม่สามารถตรวจสอบ publicationYear ได้\"",
+      "naEnabled: false"
+     ],
+     "dataSummary": [
+      {
+       "label": "Operation",
+       "value": "for each distinct (personId) of appointments where role in ['programmeResponsible', 'programmeStaff']: join academic_works on personId = academic_works.personId; checks: CountCheck"
+      },
+      {
+       "label": "Subjects",
+       "value": "5"
+      },
+      {
+       "label": "Subjects PASS",
+       "value": "5"
+      }
+     ],
+     "dataFound": [
+      {
+       "label": "x (6ab97bb6588c9dc1fccd822d)",
+       "items": [
+        "1 in window -> PASS"
+       ]
+      },
+      {
+       "label": "x (6ab97bb6588c9dc1fccd822e)",
+       "items": [
+        "1 in window -> PASS"
+       ]
+      },
+      {
+       "label": "x (6ab97bb6588c9dc1fccd822f)",
+       "items": [
+        "1 in window -> PASS"
+       ]
+      },
+      {
+       "label": "x (6ab97bb6588c9dc1fccd8230)",
+       "items": [
+        "1 in window -> PASS"
+       ]
+      },
+      {
+       "label": "x (6ab97bb6588c9dc1fccd8231)",
+       "items": [
+        "1 in window -> PASS"
+       ]
+      }
+     ],
+     "verification": {
+      "found": 15,
+      "verified": null,
+      "approved": null,
+      "verifiedAt": null
+     },
+     "missingInformation": [],
+     "evidence": [],
+     "traceability": [
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd8232",
+       "fields": [
+        "personId",
+        "role"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd822d",
+        "role": "programmeResponsible"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd8233",
+       "fields": [
+        "personId",
+        "role"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd822d",
+        "role": "programmeStaff"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd8234",
+       "fields": [
+        "personId",
+        "role"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd822e",
+        "role": "programmeResponsible"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd8235",
+       "fields": [
+        "personId",
+        "role"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd822e",
+        "role": "programmeStaff"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd8236",
+       "fields": [
+        "personId",
+        "role"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd822f",
+        "role": "programmeResponsible"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd8237",
+       "fields": [
+        "personId",
+        "role"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd822f",
+        "role": "programmeStaff"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd8238",
+       "fields": [
+        "personId",
+        "role"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8230",
+        "role": "programmeResponsible"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd8239",
+       "fields": [
+        "personId",
+        "role"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8230",
+        "role": "programmeStaff"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd823a",
+       "fields": [
+        "personId",
+        "role"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8231",
+        "role": "programmeResponsible"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd823b",
+       "fields": [
+        "personId",
+        "role"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8231",
+        "role": "programmeStaff"
+       }
+      },
+      {
+       "collection": "academic_works",
+       "recordId": "6ab97bb6588c9dc1fccd8241",
+       "fields": [
+        "personId",
+        "publicationYear"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd822d",
+        "publicationYear": "2569"
+       }
+      },
+      {
+       "collection": "academic_works",
+       "recordId": "6ab97bb6588c9dc1fccd8242",
+       "fields": [
+        "personId",
+        "publicationYear"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd822e",
+        "publicationYear": "2569"
+       }
+      },
+      {
+       "collection": "academic_works",
+       "recordId": "6ab97bb6588c9dc1fccd8243",
+       "fields": [
+        "personId",
+        "publicationYear"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd822f",
+        "publicationYear": "2569"
+       }
+      },
+      {
+       "collection": "academic_works",
+       "recordId": "6ab97bb6588c9dc1fccd8244",
+       "fields": [
+        "personId",
+        "publicationYear"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8230",
+        "publicationYear": "2569"
+       }
+      },
+      {
+       "collection": "academic_works",
+       "recordId": "6ab97bb6588c9dc1fccd8245",
+       "fields": [
+        "personId",
+        "publicationYear"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8231",
+        "publicationYear": "2569"
+       }
+      }
+     ],
+     "dataCompleteness": "complete",
+     "issue": null,
+     "reviewRequired": null,
+     "reviewByUser": null,
+     "review": null,
+     "persistedResult": null
+    },
+    {
+     "psCode": "PS-08",
+     "status": "N/A",
+     "requirement": "อาจารย์พิเศษต้องมีคุณวุฒิและประสบการณ์ที่เหมาะสม",
+     "checks": [
+      "targetCollection: \"appointments\"",
+      "targetRole: \"specialInstructor\"",
+      "join.appointmentPersonId: \"appointments.personId\"",
+      "join.educationPersonId: \"educations.personId\"",
+      "qualification.source: \"educations.degree\"",
+      "qualification.required: true",
+      "qualification.condition.operator: \"EXISTS\"",
+      "experience.required: true",
+      "experience.source: \"persons.hasTeachingExperience\"",
+      "experience.condition.operator: \"==\"",
+      "experience.condition.value: true",
+      "result.pass: \"PASS\"",
+      "result.fail: \"FAIL\"",
+      "result.review: \"REVIEW\"",
+      "result.na: \"N/A\"",
+      "conditions.noSpecialInstructor: \"N/A\"",
+      "conditions.qualifiedAndSuitable: \"PASS\"",
+      "conditions.notQualifiedOrNotSuitable: \"FAIL\"",
+      "conditions.insufficientInformation: \"REVIEW\"",
+      "naEnabled: true"
+     ],
+     "dataSummary": [
+      {
+       "label": "Operation",
+       "value": "for each distinct (personId) of appointments where role = 'specialInstructor': join educations on personId = educations.personId; checks: ShowCheck; ShowCheck"
+      },
+      {
+       "label": "Subjects",
+       "value": "0"
+      },
+      {
+       "label": "Not applicable",
+       "value": "no appointments record is selected"
+      }
+     ],
+     "dataFound": [],
+     "verification": {
+      "found": 0,
+      "verified": null,
+      "approved": null,
+      "verifiedAt": null
+     },
+     "missingInformation": [],
+     "evidence": [],
+     "traceability": [],
+     "dataCompleteness": "complete",
+     "issue": null,
+     "reviewRequired": null,
+     "reviewByUser": null,
+     "review": null,
+     "persistedResult": null
+    },
+    {
+     "psCode": "PS-09",
+     "status": "PASS",
+     "requirement": "หลักสูตรต้องมีการปรับปรุงล่าสุดไม่เกิน 5 ปี",
+     "checks": [
+      "targetCollection: \"curricula\"",
+      "year.field: \"curriculumYear\"",
+      "comparison.operator: \"<=\"",
+      "comparison.value: 5",
+      "comparison.reference: \"currentYear\"",
+      "calculation.formula: \"currentYear - curriculumYear\"",
+      "result.pass: \"PASS\"",
+      "result.fail: \"FAIL\"",
+      "result.review: \"REVIEW\"",
+      "result.na: \"N/A\"",
+      "reviewCondition: \"ไม่สามารถระบุ curriculumYear ได้\"",
+      "naEnabled: false"
+     ],
+     "dataSummary": [
+      {
+       "label": "Operation",
+       "value": "currentYear - curriculumYear over curricula; compare <= 5"
+      },
+      {
+       "label": "curriculumYear",
+       "value": "2567"
+      }
+     ],
+     "dataFound": [
+      {
+       "label": "25500231104894",
+       "items": [
+        "currentYear = 2569",
+        "currentYear - curriculumYear = 2"
+       ]
+      }
+     ],
+     "verification": {
+      "found": 1,
+      "verified": null,
+      "approved": null,
+      "verifiedAt": null
+     },
+     "missingInformation": [],
+     "evidence": [],
+     "traceability": [
+      {
+       "collection": "curricula",
+       "recordId": "6ab97bb6588c9dc1fccd822c",
+       "fields": [
+        "curriculumYear"
+       ],
+       "values": {
+        "curriculumYear": "2567"
+       }
+      }
+     ],
+     "dataCompleteness": "complete",
+     "issue": null,
+     "reviewRequired": null,
+     "reviewByUser": null,
+     "review": null,
+     "persistedResult": null
+    }
+   ],
+   "generationReadiness": {
+    "status": null,
+    "blockingPS": [],
+    "issue": "configuration_error",
+    "detail": "no configuration document with configType 'generationReadiness' was found"
+   },
+   "programmeReadiness": {
+    "percentage": 77.78,
+    "passCount": 7,
+    "totalPS": 9
+   }
+  },
+  "detail": {
+   "psCode": "PS-08",
+   "status": "N/A",
+   "requirement": "อาจารย์พิเศษต้องมีคุณวุฒิและประสบการณ์ที่เหมาะสม",
+   "checks": [
+    "targetCollection: \"appointments\"",
+    "targetRole: \"specialInstructor\"",
+    "join.appointmentPersonId: \"appointments.personId\"",
+    "join.educationPersonId: \"educations.personId\"",
+    "qualification.source: \"educations.degree\"",
+    "qualification.required: true",
+    "qualification.condition.operator: \"EXISTS\"",
+    "experience.required: true",
+    "experience.source: \"persons.hasTeachingExperience\"",
+    "experience.condition.operator: \"==\"",
+    "experience.condition.value: true",
+    "result.pass: \"PASS\"",
+    "result.fail: \"FAIL\"",
+    "result.review: \"REVIEW\"",
+    "result.na: \"N/A\"",
+    "conditions.noSpecialInstructor: \"N/A\"",
+    "conditions.qualifiedAndSuitable: \"PASS\"",
+    "conditions.notQualifiedOrNotSuitable: \"FAIL\"",
+    "conditions.insufficientInformation: \"REVIEW\"",
+    "naEnabled: true"
+   ],
+   "dataSummary": [
+    {
+     "label": "Operation",
+     "value": "for each distinct (personId) of appointments where role = 'specialInstructor': join educations on personId = educations.personId; checks: ShowCheck; ShowCheck"
+    },
+    {
+     "label": "Subjects",
+     "value": "0"
+    },
+    {
+     "label": "Not applicable",
+     "value": "no appointments record is selected"
+    }
+   ],
+   "dataFound": [],
+   "verification": {
+    "found": 0,
+    "verified": null,
+    "approved": null,
+    "verifiedAt": null
+   },
+   "missingInformation": [],
+   "evidence": [],
+   "traceability": [],
+   "dataCompleteness": "complete",
+   "issue": null,
+   "reviewRequired": null,
+   "reviewByUser": null,
+   "review": null,
+   "persistedResult": null
+  }
+ },
+ "PASS": {
+  "monitor": {
+   "curriculum": {
+    "curriculumCode": "25500231104894",
+    "curriculumName": "วิทยาศาสตรบัณฑิต สาขาวิชาวิทยาการคอมพิวเตอร์",
+    "curriculumYear": "2567",
+    "version": "1",
+    "status": "latest"
+   },
+   "overallStatus": null,
+   "dataCompleteness": "complete",
+   "results": [
+    {
+     "psCode": "PS-01",
+     "status": "PASS",
+     "requirement": "หลักสูตรต้องมีอาจารย์ผู้รับผิดชอบหลักสูตรอย่างน้อย 5 คน",
+     "checks": [
+      "targetCollection: \"appointments\"",
+      "filter.role: \"programmeResponsible\"",
+      "count.field: \"personId\"",
+      "count.distinct: true",
+      "condition.operator: \">=\"",
+      "condition.value: 5",
+      "result.pass: \"PASS\"",
+      "result.fail: \"FAIL\"",
+      "result.review: \"REVIEW\"",
+      "result.na: \"N/A\"",
+      "reviewCondition: \"จำนวนข้อมูลไม่ชัดเจน\"",
+      "naEnabled: false"
+     ],
+     "dataSummary": [
+      {
+       "label": "Operation",
+       "value": "distinct count of personId in appointments where role = 'programmeResponsible'; compare >= 5"
+      },
+      {
+       "label": "Distinct personId count",
+       "value": "5"
+      },
+      {
+       "label": "Condition",
+       "value": ">= 5"
+      }
+     ],
+     "dataFound": [
+      {
+       "label": "personId",
+       "items": [
+        "x (6ab97bb6588c9dc1fccd8247)",
+        "x (6ab97bb6588c9dc1fccd8248)",
+        "x (6ab97bb6588c9dc1fccd8249)",
+        "x (6ab97bb6588c9dc1fccd824a)",
+        "x (6ab97bb6588c9dc1fccd824b)"
+       ]
+      }
+     ],
+     "verification": {
+      "found": 5,
+      "verified": null,
+      "approved": null,
+      "verifiedAt": null
+     },
+     "missingInformation": [],
+     "evidence": [],
+     "traceability": [
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd824c",
+       "fields": [
+        "personId",
+        "role"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8247",
+        "role": "programmeResponsible"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd824e",
+       "fields": [
+        "personId",
+        "role"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8248",
+        "role": "programmeResponsible"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd8250",
+       "fields": [
+        "personId",
+        "role"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8249",
+        "role": "programmeResponsible"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd8252",
+       "fields": [
+        "personId",
+        "role"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd824a",
+        "role": "programmeResponsible"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd8254",
+       "fields": [
+        "personId",
+        "role"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd824b",
+        "role": "programmeResponsible"
+       }
+      }
+     ],
+     "dataCompleteness": "complete",
+     "issue": null,
+     "reviewRequired": null,
+     "reviewByUser": null,
+     "review": null,
+     "persistedResult": null
+    },
+    {
+     "psCode": "PS-02",
+     "status": "PASS",
+     "requirement": "อาจารย์ผู้รับผิดชอบหลักสูตรต้องมีสถานะอาจารย์ประจำ",
+     "checks": [
+      "targetCollection: \"appointments\"",
+      "responsibleRole: \"programmeResponsible\"",
+      "permanentRole: \"programmeStaff\"",
+      "matching.sameCurriculum: true",
+      "matching.samePerson: true",
+      "condition.operator: \"EXISTS\"",
+      "condition.field: \"programmeStaff\"",
+      "result.pass: \"PASS\"",
+      "result.fail: \"FAIL\"",
+      "result.review: \"REVIEW\"",
+      "result.na: \"N/A\"",
+      "reviewCondition: \"ไม่สามารถตรวจสอบสถานะอาจารย์ประจำได้\"",
+      "naEnabled: false"
+     ],
+     "dataSummary": [
+      {
+       "label": "Operation",
+       "value": "for each distinct (curriculumId, personId) of appointments where role = 'programmeResponsible': join appointments where role = 'programmeStaff' on curriculumId = appointments.curriculumId, personId = appointments.personId; checks: ExistsCheck"
+      },
+      {
+       "label": "Subjects",
+       "value": "5"
+      },
+      {
+       "label": "Subjects PASS",
+       "value": "5"
+      }
+     ],
+     "dataFound": [
+      {
+       "label": "x (6ab97bb6588c9dc1fccd8247)",
+       "items": [
+        "1 matching record(s) -> PASS"
+       ]
+      },
+      {
+       "label": "x (6ab97bb6588c9dc1fccd8248)",
+       "items": [
+        "1 matching record(s) -> PASS"
+       ]
+      },
+      {
+       "label": "x (6ab97bb6588c9dc1fccd8249)",
+       "items": [
+        "1 matching record(s) -> PASS"
+       ]
+      },
+      {
+       "label": "x (6ab97bb6588c9dc1fccd824a)",
+       "items": [
+        "1 matching record(s) -> PASS"
+       ]
+      },
+      {
+       "label": "x (6ab97bb6588c9dc1fccd824b)",
+       "items": [
+        "1 matching record(s) -> PASS"
+       ]
+      }
+     ],
+     "verification": {
+      "found": 10,
+      "verified": null,
+      "approved": null,
+      "verifiedAt": null
+     },
+     "missingInformation": [],
+     "evidence": [],
+     "traceability": [
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd824c",
+       "fields": [
+        "curriculumId",
+        "personId",
+        "role"
+       ],
+       "values": {
+        "curriculumId": "6ab97bb6588c9dc1fccd8246",
+        "personId": "6ab97bb6588c9dc1fccd8247",
+        "role": "programmeResponsible"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd824e",
+       "fields": [
+        "curriculumId",
+        "personId",
+        "role"
+       ],
+       "values": {
+        "curriculumId": "6ab97bb6588c9dc1fccd8246",
+        "personId": "6ab97bb6588c9dc1fccd8248",
+        "role": "programmeResponsible"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd8250",
+       "fields": [
+        "curriculumId",
+        "personId",
+        "role"
+       ],
+       "values": {
+        "curriculumId": "6ab97bb6588c9dc1fccd8246",
+        "personId": "6ab97bb6588c9dc1fccd8249",
+        "role": "programmeResponsible"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd8252",
+       "fields": [
+        "curriculumId",
+        "personId",
+        "role"
+       ],
+       "values": {
+        "curriculumId": "6ab97bb6588c9dc1fccd8246",
+        "personId": "6ab97bb6588c9dc1fccd824a",
+        "role": "programmeResponsible"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd8254",
+       "fields": [
+        "curriculumId",
+        "personId",
+        "role"
+       ],
+       "values": {
+        "curriculumId": "6ab97bb6588c9dc1fccd8246",
+        "personId": "6ab97bb6588c9dc1fccd824b",
+        "role": "programmeResponsible"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd824d",
+       "fields": [
+        "curriculumId",
+        "personId",
+        "role"
+       ],
+       "values": {
+        "curriculumId": "6ab97bb6588c9dc1fccd8246",
+        "personId": "6ab97bb6588c9dc1fccd8247",
+        "role": "programmeStaff"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd824f",
+       "fields": [
+        "curriculumId",
+        "personId",
+        "role"
+       ],
+       "values": {
+        "curriculumId": "6ab97bb6588c9dc1fccd8246",
+        "personId": "6ab97bb6588c9dc1fccd8248",
+        "role": "programmeStaff"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd8251",
+       "fields": [
+        "curriculumId",
+        "personId",
+        "role"
+       ],
+       "values": {
+        "curriculumId": "6ab97bb6588c9dc1fccd8246",
+        "personId": "6ab97bb6588c9dc1fccd8249",
+        "role": "programmeStaff"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd8253",
+       "fields": [
+        "curriculumId",
+        "personId",
+        "role"
+       ],
+       "values": {
+        "curriculumId": "6ab97bb6588c9dc1fccd8246",
+        "personId": "6ab97bb6588c9dc1fccd824a",
+        "role": "programmeStaff"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd8255",
+       "fields": [
+        "curriculumId",
+        "personId",
+        "role"
+       ],
+       "values": {
+        "curriculumId": "6ab97bb6588c9dc1fccd8246",
+        "personId": "6ab97bb6588c9dc1fccd824b",
+        "role": "programmeStaff"
+       }
+      }
+     ],
+     "dataCompleteness": "complete",
+     "issue": null,
+     "reviewRequired": null,
+     "reviewByUser": null,
+     "review": null,
+     "persistedResult": null
+    },
+    {
+     "psCode": "PS-03",
+     "status": "REVIEW",
+     "requirement": "อาจารย์ผู้รับผิดชอบหลักสูตรต้องไม่รับผิดชอบเกิน 1 หลักสูตร",
+     "checks": [
+      "targetCollection: \"appointments\"",
+      "targetRole: \"programmeResponsible\"",
+      "review.required: true",
+      "review.reviewByUser: true",
+      "review.allowManualResult: \"PASS\", \"FAIL\", \"REVIEW\"",
+      "result.pass: \"PASS\"",
+      "result.fail: \"FAIL\"",
+      "result.review: \"REVIEW\"",
+      "result.na: \"N/A\"",
+      "naEnabled: false"
+     ],
+     "dataSummary": [
+      {
+       "label": "Operation",
+       "value": "review required by configuration"
+      },
+      {
+       "label": "Review",
+       "value": "Review by user required by configuration"
+      }
+     ],
+     "dataFound": [
+      {
+       "label": "appointments",
+       "items": [
+        "x (6ab97bb6588c9dc1fccd8247)",
+        "x (6ab97bb6588c9dc1fccd8248)",
+        "x (6ab97bb6588c9dc1fccd8249)",
+        "x (6ab97bb6588c9dc1fccd824a)",
+        "x (6ab97bb6588c9dc1fccd824b)"
+       ]
+      }
+     ],
+     "verification": {
+      "found": 5,
+      "verified": null,
+      "approved": null,
+      "verifiedAt": null
+     },
+     "missingInformation": [],
+     "evidence": [],
+     "traceability": [
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd824c",
+       "fields": [
+        "role"
+       ],
+       "values": {
+        "role": "programmeResponsible"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd824e",
+       "fields": [
+        "role"
+       ],
+       "values": {
+        "role": "programmeResponsible"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd8250",
+       "fields": [
+        "role"
+       ],
+       "values": {
+        "role": "programmeResponsible"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd8252",
+       "fields": [
+        "role"
+       ],
+       "values": {
+        "role": "programmeResponsible"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd8254",
+       "fields": [
+        "role"
+       ],
+       "values": {
+        "role": "programmeResponsible"
+       }
+      }
+     ],
+     "dataCompleteness": "complete",
+     "issue": null,
+     "reviewRequired": true,
+     "reviewByUser": true,
+     "review": {
+      "allowManualResult": [
+       "PASS",
+       "FAIL",
+       "REVIEW"
+      ],
+      "status": null,
+      "reviewedAt": null
+     },
+     "persistedResult": null
+    },
+    {
+     "psCode": "PS-04",
+     "status": "PASS",
+     "requirement": "หลักสูตรต้องมีคำสั่งแต่งตั้งและระบุบทบาทการบริหารหลักสูตรอย่างชัดเจน",
+     "checks": [
+      "targetCollection: \"appointments\"",
+      "requiredFields: \"personId\", \"role\", \"roleName\", \"appointmentOrder\"",
+      "appointmentOrder.required: true",
+      "appointmentOrder.requiredFields: \"orderNumber\", \"orderDate\"",
+      "role.required: true",
+      "role.roleNameRequired: true",
+      "result.pass: \"PASS\"",
+      "result.fail: \"FAIL\"",
+      "result.review: \"REVIEW\"",
+      "result.na: \"N/A\"",
+      "conditions.pass: \"ข้อมูลการแต่งตั้งครบและระบุบทบาทชัดเจน\"",
+      "conditions.fail: \"ไม่มีคำสั่งแต่งตั้งหรือข้อมูลไม่ครบ\"",
+      "conditions.review: \"มีข้อมูลแต่ไม่สามารถระบุความครบถ้วนหรือความชัดเจนได้\"",
+      "naEnabled: false"
+     ],
+     "dataSummary": [
+      {
+       "label": "Operation",
+       "value": "fields present in appointments: personId, role, roleName, appointmentOrder, appointmentOrder.orderNumber, appointmentOrder.orderDate"
+      },
+      {
+       "label": "Records checked",
+       "value": "11"
+      },
+      {
+       "label": "Records with missing fields",
+       "value": "0"
+      }
+     ],
+     "dataFound": [
+      {
+       "label": "Records",
+       "items": [
+        "x (6ab97bb6588c9dc1fccd8247) (6ab97bb6588c9dc1fccd824c): complete",
+        "x (6ab97bb6588c9dc1fccd8247) (6ab97bb6588c9dc1fccd824d): complete",
+        "x (6ab97bb6588c9dc1fccd8248) (6ab97bb6588c9dc1fccd824e): complete",
+        "x (6ab97bb6588c9dc1fccd8248) (6ab97bb6588c9dc1fccd824f): complete",
+        "x (6ab97bb6588c9dc1fccd8249) (6ab97bb6588c9dc1fccd8250): complete",
+        "x (6ab97bb6588c9dc1fccd8249) (6ab97bb6588c9dc1fccd8251): complete",
+        "x (6ab97bb6588c9dc1fccd824a) (6ab97bb6588c9dc1fccd8252): complete",
+        "x (6ab97bb6588c9dc1fccd824a) (6ab97bb6588c9dc1fccd8253): complete",
+        "x (6ab97bb6588c9dc1fccd824b) (6ab97bb6588c9dc1fccd8254): complete",
+        "x (6ab97bb6588c9dc1fccd824b) (6ab97bb6588c9dc1fccd8255): complete",
+        "อาจารย์พิเศษทดสอบ (6ab97bb6588c9dc1fccd8261): complete"
+       ]
+      }
+     ],
+     "verification": {
+      "found": 11,
+      "verified": null,
+      "approved": null,
+      "verifiedAt": null
+     },
+     "missingInformation": [],
+     "evidence": [],
+     "traceability": [
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd824c",
+       "fields": [
+        "appointmentOrder",
+        "appointmentOrder.orderDate",
+        "appointmentOrder.orderNumber",
+        "personId",
+        "role",
+        "roleName"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8247",
+        "role": "programmeResponsible",
+        "roleName": "อาจารย์ผู้รับผิดชอบหลักสูตร",
+        "appointmentOrder": "{'orderNumber': '350/2568', 'orderDate': '2568-02-04'}",
+        "appointmentOrder.orderNumber": "350/2568",
+        "appointmentOrder.orderDate": "2568-02-04"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd824d",
+       "fields": [
+        "appointmentOrder",
+        "appointmentOrder.orderDate",
+        "appointmentOrder.orderNumber",
+        "personId",
+        "role",
+        "roleName"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8247",
+        "role": "programmeStaff",
+        "roleName": "อาจารย์ประจำหลักสูตร",
+        "appointmentOrder": "{'orderNumber': '350/2568', 'orderDate': '2568-02-04'}",
+        "appointmentOrder.orderNumber": "350/2568",
+        "appointmentOrder.orderDate": "2568-02-04"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd824e",
+       "fields": [
+        "appointmentOrder",
+        "appointmentOrder.orderDate",
+        "appointmentOrder.orderNumber",
+        "personId",
+        "role",
+        "roleName"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8248",
+        "role": "programmeResponsible",
+        "roleName": "อาจารย์ผู้รับผิดชอบหลักสูตร",
+        "appointmentOrder": "{'orderNumber': '350/2568', 'orderDate': '2568-02-04'}",
+        "appointmentOrder.orderNumber": "350/2568",
+        "appointmentOrder.orderDate": "2568-02-04"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd824f",
+       "fields": [
+        "appointmentOrder",
+        "appointmentOrder.orderDate",
+        "appointmentOrder.orderNumber",
+        "personId",
+        "role",
+        "roleName"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8248",
+        "role": "programmeStaff",
+        "roleName": "อาจารย์ประจำหลักสูตร",
+        "appointmentOrder": "{'orderNumber': '350/2568', 'orderDate': '2568-02-04'}",
+        "appointmentOrder.orderNumber": "350/2568",
+        "appointmentOrder.orderDate": "2568-02-04"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd8250",
+       "fields": [
+        "appointmentOrder",
+        "appointmentOrder.orderDate",
+        "appointmentOrder.orderNumber",
+        "personId",
+        "role",
+        "roleName"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8249",
+        "role": "programmeResponsible",
+        "roleName": "อาจารย์ผู้รับผิดชอบหลักสูตร",
+        "appointmentOrder": "{'orderNumber': '350/2568', 'orderDate': '2568-02-04'}",
+        "appointmentOrder.orderNumber": "350/2568",
+        "appointmentOrder.orderDate": "2568-02-04"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd8251",
+       "fields": [
+        "appointmentOrder",
+        "appointmentOrder.orderDate",
+        "appointmentOrder.orderNumber",
+        "personId",
+        "role",
+        "roleName"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8249",
+        "role": "programmeStaff",
+        "roleName": "อาจารย์ประจำหลักสูตร",
+        "appointmentOrder": "{'orderNumber': '350/2568', 'orderDate': '2568-02-04'}",
+        "appointmentOrder.orderNumber": "350/2568",
+        "appointmentOrder.orderDate": "2568-02-04"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd8252",
+       "fields": [
+        "appointmentOrder",
+        "appointmentOrder.orderDate",
+        "appointmentOrder.orderNumber",
+        "personId",
+        "role",
+        "roleName"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd824a",
+        "role": "programmeResponsible",
+        "roleName": "อาจารย์ผู้รับผิดชอบหลักสูตร",
+        "appointmentOrder": "{'orderNumber': '350/2568', 'orderDate': '2568-02-04'}",
+        "appointmentOrder.orderNumber": "350/2568",
+        "appointmentOrder.orderDate": "2568-02-04"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd8253",
+       "fields": [
+        "appointmentOrder",
+        "appointmentOrder.orderDate",
+        "appointmentOrder.orderNumber",
+        "personId",
+        "role",
+        "roleName"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd824a",
+        "role": "programmeStaff",
+        "roleName": "อาจารย์ประจำหลักสูตร",
+        "appointmentOrder": "{'orderNumber': '350/2568', 'orderDate': '2568-02-04'}",
+        "appointmentOrder.orderNumber": "350/2568",
+        "appointmentOrder.orderDate": "2568-02-04"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd8254",
+       "fields": [
+        "appointmentOrder",
+        "appointmentOrder.orderDate",
+        "appointmentOrder.orderNumber",
+        "personId",
+        "role",
+        "roleName"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd824b",
+        "role": "programmeResponsible",
+        "roleName": "อาจารย์ผู้รับผิดชอบหลักสูตร",
+        "appointmentOrder": "{'orderNumber': '350/2568', 'orderDate': '2568-02-04'}",
+        "appointmentOrder.orderNumber": "350/2568",
+        "appointmentOrder.orderDate": "2568-02-04"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd8255",
+       "fields": [
+        "appointmentOrder",
+        "appointmentOrder.orderDate",
+        "appointmentOrder.orderNumber",
+        "personId",
+        "role",
+        "roleName"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd824b",
+        "role": "programmeStaff",
+        "roleName": "อาจารย์ประจำหลักสูตร",
+        "appointmentOrder": "{'orderNumber': '350/2568', 'orderDate': '2568-02-04'}",
+        "appointmentOrder.orderNumber": "350/2568",
+        "appointmentOrder.orderDate": "2568-02-04"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd8261",
+       "fields": [
+        "appointmentOrder",
+        "appointmentOrder.orderDate",
+        "appointmentOrder.orderNumber",
+        "personId",
+        "role",
+        "roleName"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8260",
+        "role": "specialInstructor",
+        "roleName": "specialInstructor",
+        "appointmentOrder": "{'orderNumber': '350/2568', 'orderDate': '2568-02-04'}",
+        "appointmentOrder.orderNumber": "350/2568",
+        "appointmentOrder.orderDate": "2568-02-04"
+       }
+      }
+     ],
+     "dataCompleteness": "complete",
+     "issue": null,
+     "reviewRequired": null,
+     "reviewByUser": null,
+     "review": null,
+     "persistedResult": null
+    },
+    {
+     "psCode": "PS-05",
+     "status": "PASS",
+     "requirement": "อาจารย์ผู้รับผิดชอบหลักสูตรต้องมีคุณวุฒิสูงสุดอย่างน้อยระดับปริญญาโท",
+     "checks": [
+      "targetCollection: \"educations\"",
+      "appointment.role: \"programmeResponsible\"",
+      "join.from: \"appointments.personId\"",
+      "join.to: \"educations.personId\"",
+      "degree.field: \"degree\"",
+      "degree.minimum: \"master\"",
+      "degree.ordering: \"bachelor\", \"master\", \"Ph.D.\"",
+      "degree.aliases.bachelor: \"วท.บ.\", \"บธ.บ.\", \"วบ.บ.\"",
+      "degree.aliases.master: \"วท.ม.\"",
+      "degree.aliases.Ph.D.: \"ปร.ด.\"",
+      "degree.normalization.enabled: true",
+      "degree.normalization.remove: \" \", \".\"",
+      "degree.normalization.caseInsensitive: true",
+      "result.pass: \"PASS\"",
+      "result.fail: \"FAIL\"",
+      "result.review: \"REVIEW\"",
+      "result.na: \"N/A\"",
+      "reviewCondition: \"ไม่สามารถระบุระดับคุณวุฒิได้\"",
+      "naEnabled: false"
+     ],
+     "dataSummary": [
+      {
+       "label": "Operation",
+       "value": "for each distinct (personId) of appointments where role = 'programmeResponsible': join educations on personId = educations.personId; checks: AtLeastCheck"
+      },
+      {
+       "label": "Subjects",
+       "value": "5"
+      },
+      {
+       "label": "Subjects PASS",
+       "value": "5"
+      }
+     ],
+     "dataFound": [
+      {
+       "label": "x (6ab97bb6588c9dc1fccd8247)",
+       "items": [
+        "degree: master → master (highest 'master' is at least 'master') -> PASS"
+       ]
+      },
+      {
+       "label": "x (6ab97bb6588c9dc1fccd8248)",
+       "items": [
+        "degree: master → master (highest 'master' is at least 'master') -> PASS"
+       ]
+      },
+      {
+       "label": "x (6ab97bb6588c9dc1fccd8249)",
+       "items": [
+        "degree: master → master (highest 'master' is at least 'master') -> PASS"
+       ]
+      },
+      {
+       "label": "x (6ab97bb6588c9dc1fccd824a)",
+       "items": [
+        "degree: master → master (highest 'master' is at least 'master') -> PASS"
+       ]
+      },
+      {
+       "label": "x (6ab97bb6588c9dc1fccd824b)",
+       "items": [
+        "degree: master → master (highest 'master' is at least 'master') -> PASS"
+       ]
+      }
+     ],
+     "verification": {
+      "found": 10,
+      "verified": null,
+      "approved": null,
+      "verifiedAt": null
+     },
+     "missingInformation": [],
+     "evidence": [],
+     "traceability": [
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd824c",
+       "fields": [
+        "personId",
+        "role"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8247",
+        "role": "programmeResponsible"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd824e",
+       "fields": [
+        "personId",
+        "role"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8248",
+        "role": "programmeResponsible"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd8250",
+       "fields": [
+        "personId",
+        "role"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8249",
+        "role": "programmeResponsible"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd8252",
+       "fields": [
+        "personId",
+        "role"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd824a",
+        "role": "programmeResponsible"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd8254",
+       "fields": [
+        "personId",
+        "role"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd824b",
+        "role": "programmeResponsible"
+       }
+      },
+      {
+       "collection": "educations",
+       "recordId": "6ab97bb6588c9dc1fccd8256",
+       "fields": [
+        "degree",
+        "personId"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8247",
+        "degree": "master"
+       }
+      },
+      {
+       "collection": "educations",
+       "recordId": "6ab97bb6588c9dc1fccd8257",
+       "fields": [
+        "degree",
+        "personId"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8248",
+        "degree": "master"
+       }
+      },
+      {
+       "collection": "educations",
+       "recordId": "6ab97bb6588c9dc1fccd8258",
+       "fields": [
+        "degree",
+        "personId"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8249",
+        "degree": "master"
+       }
+      },
+      {
+       "collection": "educations",
+       "recordId": "6ab97bb6588c9dc1fccd8259",
+       "fields": [
+        "degree",
+        "personId"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd824a",
+        "degree": "master"
+       }
+      },
+      {
+       "collection": "educations",
+       "recordId": "6ab97bb6588c9dc1fccd825a",
+       "fields": [
+        "degree",
+        "personId"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd824b",
+        "degree": "master"
+       }
+      }
+     ],
+     "dataCompleteness": "complete",
+     "issue": null,
+     "reviewRequired": null,
+     "reviewByUser": null,
+     "review": null,
+     "persistedResult": null
+    },
+    {
+     "psCode": "PS-06",
+     "status": "PASS",
+     "requirement": "คุณวุฒิของอาจารย์สัมพันธ์กับสาขาของหลักสูตร",
+     "checks": [
+      "targetCollection: \"educations\"",
+      "appointment.role: \"programmeResponsible\"",
+      "join.appointmentPersonId: \"appointments.personId\"",
+      "join.educationPersonId: \"educations.personId\"",
+      "join.curriculumId: \"appointments.curriculumId\"",
+      "programmeField.source: \"curricula.curriculumName\"",
+      "programmeField.method: \"extract\"",
+      "qualificationField.source: \"educations.field\"",
+      "normalization.enabled: true",
+      "normalization.remove: \"สาขาวิชา\", \"สาขา\", \"หลักสูตร\", \"วิชา\", \" \", \"-\"",
+      "normalization.caseInsensitive: true",
+      "comparison.method: \"mapping\"",
+      "comparison.allowExactMatch: true",
+      "comparison.allowRelatedMatch: true",
+      "fieldMappings: 8 item(s)",
+      "result.exact: \"PASS\"",
+      "result.related: \"PASS\"",
+      "result.unrelated: \"FAIL\"",
+      "result.unknown: \"REVIEW\"",
+      "reviewCondition: \"ไม่พบข้อมูล education.field\", \"ไม่สามารถระบุ programme field ได้\", \"ไม่มี Mapping สำหรับ programme field\", \"ไม่สามารถตัดสินความสัมพันธ์ได้\"",
+      "naEnabled: false"
+     ],
+     "dataSummary": [
+      {
+       "label": "Operation",
+       "value": "for each distinct (personId) of appointments where role = 'programmeResponsible': join educations on personId = educations.personId; checks: MappingCheck"
+      },
+      {
+       "label": "Subjects",
+       "value": "5"
+      },
+      {
+       "label": "Subjects PASS",
+       "value": "5"
+      }
+     ],
+     "dataFound": [
+      {
+       "label": "x (6ab97bb6588c9dc1fccd8247)",
+       "items": [
+        "field: Computer Science -> exact (วิทยาการคอมพิวเตอร์) -> PASS"
+       ]
+      },
+      {
+       "label": "x (6ab97bb6588c9dc1fccd8248)",
+       "items": [
+        "field: Computer Science -> exact (วิทยาการคอมพิวเตอร์) -> PASS"
+       ]
+      },
+      {
+       "label": "x (6ab97bb6588c9dc1fccd8249)",
+       "items": [
+        "field: Computer Science -> exact (วิทยาการคอมพิวเตอร์) -> PASS"
+       ]
+      },
+      {
+       "label": "x (6ab97bb6588c9dc1fccd824a)",
+       "items": [
+        "field: Computer Science -> exact (วิทยาการคอมพิวเตอร์) -> PASS"
+       ]
+      },
+      {
+       "label": "x (6ab97bb6588c9dc1fccd824b)",
+       "items": [
+        "field: Computer Science -> exact (วิทยาการคอมพิวเตอร์) -> PASS"
+       ]
+      }
+     ],
+     "verification": {
+      "found": 11,
+      "verified": null,
+      "approved": null,
+      "verifiedAt": null
+     },
+     "missingInformation": [],
+     "evidence": [],
+     "traceability": [
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd824c",
+       "fields": [
+        "personId",
+        "role"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8247",
+        "role": "programmeResponsible"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd824e",
+       "fields": [
+        "personId",
+        "role"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8248",
+        "role": "programmeResponsible"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd8250",
+       "fields": [
+        "personId",
+        "role"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8249",
+        "role": "programmeResponsible"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd8252",
+       "fields": [
+        "personId",
+        "role"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd824a",
+        "role": "programmeResponsible"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd8254",
+       "fields": [
+        "personId",
+        "role"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd824b",
+        "role": "programmeResponsible"
+       }
+      },
+      {
+       "collection": "curricula",
+       "recordId": "6ab97bb6588c9dc1fccd8246",
+       "fields": [
+        "curriculumName"
+       ],
+       "values": {
+        "curriculumName": "วิทยาศาสตรบัณฑิต สาขาวิชาวิทยาการคอมพิวเตอร์"
+       }
+      },
+      {
+       "collection": "educations",
+       "recordId": "6ab97bb6588c9dc1fccd8256",
+       "fields": [
+        "field",
+        "personId"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8247",
+        "field": "Computer Science"
+       }
+      },
+      {
+       "collection": "educations",
+       "recordId": "6ab97bb6588c9dc1fccd8257",
+       "fields": [
+        "field",
+        "personId"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8248",
+        "field": "Computer Science"
+       }
+      },
+      {
+       "collection": "educations",
+       "recordId": "6ab97bb6588c9dc1fccd8258",
+       "fields": [
+        "field",
+        "personId"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8249",
+        "field": "Computer Science"
+       }
+      },
+      {
+       "collection": "educations",
+       "recordId": "6ab97bb6588c9dc1fccd8259",
+       "fields": [
+        "field",
+        "personId"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd824a",
+        "field": "Computer Science"
+       }
+      },
+      {
+       "collection": "educations",
+       "recordId": "6ab97bb6588c9dc1fccd825a",
+       "fields": [
+        "field",
+        "personId"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd824b",
+        "field": "Computer Science"
+       }
+      }
+     ],
+     "dataCompleteness": "complete",
+     "issue": null,
+     "reviewRequired": null,
+     "reviewByUser": null,
+     "review": null,
+     "persistedResult": null
+    },
+    {
+     "psCode": "PS-07",
+     "status": "PASS",
+     "requirement": "อาจารย์ผู้รับผิดชอบหรืออาจารย์ประจำหลักสูตรต้องมีผลงานวิชาการย้อนหลัง 5 ปี",
+     "checks": [
+      "targetCollections: \"academic_works\", \"appointments\"",
+      "targetRoles: \"programmeResponsible\", \"programmeStaff\"",
+      "join.from: \"appointments.personId\"",
+      "join.to: \"academic_works.personId\"",
+      "publicationYear.field: \"publicationYear\"",
+      "publicationYear.period: \"previous5Years\"",
+      "minimumCount: 1",
+      "result.pass: \"PASS\"",
+      "result.fail: \"FAIL\"",
+      "result.review: \"REVIEW\"",
+      "result.na: \"N/A\"",
+      "reviewCondition: \"ไม่สามารถตรวจสอบ publicationYear ได้\"",
+      "naEnabled: false"
+     ],
+     "dataSummary": [
+      {
+       "label": "Operation",
+       "value": "for each distinct (personId) of appointments where role in ['programmeResponsible', 'programmeStaff']: join academic_works on personId = academic_works.personId; checks: CountCheck"
+      },
+      {
+       "label": "Subjects",
+       "value": "5"
+      },
+      {
+       "label": "Subjects PASS",
+       "value": "5"
+      }
+     ],
+     "dataFound": [
+      {
+       "label": "x (6ab97bb6588c9dc1fccd8247)",
+       "items": [
+        "1 in window -> PASS"
+       ]
+      },
+      {
+       "label": "x (6ab97bb6588c9dc1fccd8248)",
+       "items": [
+        "1 in window -> PASS"
+       ]
+      },
+      {
+       "label": "x (6ab97bb6588c9dc1fccd8249)",
+       "items": [
+        "1 in window -> PASS"
+       ]
+      },
+      {
+       "label": "x (6ab97bb6588c9dc1fccd824a)",
+       "items": [
+        "1 in window -> PASS"
+       ]
+      },
+      {
+       "label": "x (6ab97bb6588c9dc1fccd824b)",
+       "items": [
+        "1 in window -> PASS"
+       ]
+      }
+     ],
+     "verification": {
+      "found": 15,
+      "verified": null,
+      "approved": null,
+      "verifiedAt": null
+     },
+     "missingInformation": [],
+     "evidence": [],
+     "traceability": [
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd824c",
+       "fields": [
+        "personId",
+        "role"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8247",
+        "role": "programmeResponsible"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd824d",
+       "fields": [
+        "personId",
+        "role"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8247",
+        "role": "programmeStaff"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd824e",
+       "fields": [
+        "personId",
+        "role"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8248",
+        "role": "programmeResponsible"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd824f",
+       "fields": [
+        "personId",
+        "role"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8248",
+        "role": "programmeStaff"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd8250",
+       "fields": [
+        "personId",
+        "role"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8249",
+        "role": "programmeResponsible"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd8251",
+       "fields": [
+        "personId",
+        "role"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8249",
+        "role": "programmeStaff"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd8252",
+       "fields": [
+        "personId",
+        "role"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd824a",
+        "role": "programmeResponsible"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd8253",
+       "fields": [
+        "personId",
+        "role"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd824a",
+        "role": "programmeStaff"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd8254",
+       "fields": [
+        "personId",
+        "role"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd824b",
+        "role": "programmeResponsible"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd8255",
+       "fields": [
+        "personId",
+        "role"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd824b",
+        "role": "programmeStaff"
+       }
+      },
+      {
+       "collection": "academic_works",
+       "recordId": "6ab97bb6588c9dc1fccd825b",
+       "fields": [
+        "personId",
+        "publicationYear"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8247",
+        "publicationYear": "2569"
+       }
+      },
+      {
+       "collection": "academic_works",
+       "recordId": "6ab97bb6588c9dc1fccd825c",
+       "fields": [
+        "personId",
+        "publicationYear"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8248",
+        "publicationYear": "2569"
+       }
+      },
+      {
+       "collection": "academic_works",
+       "recordId": "6ab97bb6588c9dc1fccd825d",
+       "fields": [
+        "personId",
+        "publicationYear"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8249",
+        "publicationYear": "2569"
+       }
+      },
+      {
+       "collection": "academic_works",
+       "recordId": "6ab97bb6588c9dc1fccd825e",
+       "fields": [
+        "personId",
+        "publicationYear"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd824a",
+        "publicationYear": "2569"
+       }
+      },
+      {
+       "collection": "academic_works",
+       "recordId": "6ab97bb6588c9dc1fccd825f",
+       "fields": [
+        "personId",
+        "publicationYear"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd824b",
+        "publicationYear": "2569"
+       }
+      }
+     ],
+     "dataCompleteness": "complete",
+     "issue": null,
+     "reviewRequired": null,
+     "reviewByUser": null,
+     "review": null,
+     "persistedResult": null
+    },
+    {
+     "psCode": "PS-08",
+     "status": "PASS",
+     "requirement": "อาจารย์พิเศษต้องมีคุณวุฒิและประสบการณ์ที่เหมาะสม",
+     "checks": [
+      "targetCollection: \"appointments\"",
+      "targetRole: \"specialInstructor\"",
+      "join.appointmentPersonId: \"appointments.personId\"",
+      "join.educationPersonId: \"educations.personId\"",
+      "qualification.source: \"educations.degree\"",
+      "qualification.required: true",
+      "qualification.condition.operator: \"EXISTS\"",
+      "experience.required: true",
+      "experience.source: \"persons.hasTeachingExperience\"",
+      "experience.condition.operator: \"==\"",
+      "experience.condition.value: true",
+      "result.pass: \"PASS\"",
+      "result.fail: \"FAIL\"",
+      "result.review: \"REVIEW\"",
+      "result.na: \"N/A\"",
+      "conditions.noSpecialInstructor: \"N/A\"",
+      "conditions.qualifiedAndSuitable: \"PASS\"",
+      "conditions.notQualifiedOrNotSuitable: \"FAIL\"",
+      "conditions.insufficientInformation: \"REVIEW\"",
+      "naEnabled: true"
+     ],
+     "dataSummary": [
+      {
+       "label": "Operation",
+       "value": "for each distinct (personId) of appointments where role = 'specialInstructor': join educations on personId = educations.personId; checks: ShowCheck; ShowCheck"
+      },
+      {
+       "label": "Subjects",
+       "value": "1"
+      },
+      {
+       "label": "Subjects PASS",
+       "value": "1"
+      }
+     ],
+     "dataFound": [
+      {
+       "label": "อาจารย์พิเศษทดสอบ",
+       "items": [
+        "qualification: master -> PASS",
+        "experience: true -> PASS"
+       ]
+      }
+     ],
+     "verification": {
+      "found": 3,
+      "verified": null,
+      "approved": null,
+      "verifiedAt": null
+     },
+     "missingInformation": [],
+     "evidence": [],
+     "traceability": [
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd8261",
+       "fields": [
+        "personId",
+        "role"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8260",
+        "role": "specialInstructor"
+       }
+      },
+      {
+       "collection": "educations",
+       "recordId": "6ab97bb6588c9dc1fccd8262",
+       "fields": [
+        "degree",
+        "personId"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8260",
+        "degree": "master"
+       }
+      },
+      {
+       "collection": "persons",
+       "recordId": "6ab97bb6588c9dc1fccd8260",
+       "fields": [
+        "_id",
+        "hasTeachingExperience"
+       ],
+       "values": {
+        "_id": "6ab97bb6588c9dc1fccd8260",
+        "hasTeachingExperience": "true"
+       }
+      }
+     ],
+     "dataCompleteness": "complete",
+     "issue": null,
+     "reviewRequired": null,
+     "reviewByUser": null,
+     "review": null,
+     "persistedResult": null
+    },
+    {
+     "psCode": "PS-09",
+     "status": "PASS",
+     "requirement": "หลักสูตรต้องมีการปรับปรุงล่าสุดไม่เกิน 5 ปี",
+     "checks": [
+      "targetCollection: \"curricula\"",
+      "year.field: \"curriculumYear\"",
+      "comparison.operator: \"<=\"",
+      "comparison.value: 5",
+      "comparison.reference: \"currentYear\"",
+      "calculation.formula: \"currentYear - curriculumYear\"",
+      "result.pass: \"PASS\"",
+      "result.fail: \"FAIL\"",
+      "result.review: \"REVIEW\"",
+      "result.na: \"N/A\"",
+      "reviewCondition: \"ไม่สามารถระบุ curriculumYear ได้\"",
+      "naEnabled: false"
+     ],
+     "dataSummary": [
+      {
+       "label": "Operation",
+       "value": "currentYear - curriculumYear over curricula; compare <= 5"
+      },
+      {
+       "label": "curriculumYear",
+       "value": "2567"
+      }
+     ],
+     "dataFound": [
+      {
+       "label": "25500231104894",
+       "items": [
+        "currentYear = 2569",
+        "currentYear - curriculumYear = 2"
+       ]
+      }
+     ],
+     "verification": {
+      "found": 1,
+      "verified": null,
+      "approved": null,
+      "verifiedAt": null
+     },
+     "missingInformation": [],
+     "evidence": [],
+     "traceability": [
+      {
+       "collection": "curricula",
+       "recordId": "6ab97bb6588c9dc1fccd8246",
+       "fields": [
+        "curriculumYear"
+       ],
+       "values": {
+        "curriculumYear": "2567"
+       }
+      }
+     ],
+     "dataCompleteness": "complete",
+     "issue": null,
+     "reviewRequired": null,
+     "reviewByUser": null,
+     "review": null,
+     "persistedResult": null
+    }
+   ],
+   "generationReadiness": {
+    "status": null,
+    "blockingPS": [],
+    "issue": "configuration_error",
+    "detail": "no configuration document with configType 'generationReadiness' was found"
+   },
+   "programmeReadiness": {
+    "percentage": 88.89,
+    "passCount": 8,
+    "totalPS": 9
+   }
+  },
+  "detail": {
+   "psCode": "PS-08",
+   "status": "PASS",
+   "requirement": "อาจารย์พิเศษต้องมีคุณวุฒิและประสบการณ์ที่เหมาะสม",
+   "checks": [
+    "targetCollection: \"appointments\"",
+    "targetRole: \"specialInstructor\"",
+    "join.appointmentPersonId: \"appointments.personId\"",
+    "join.educationPersonId: \"educations.personId\"",
+    "qualification.source: \"educations.degree\"",
+    "qualification.required: true",
+    "qualification.condition.operator: \"EXISTS\"",
+    "experience.required: true",
+    "experience.source: \"persons.hasTeachingExperience\"",
+    "experience.condition.operator: \"==\"",
+    "experience.condition.value: true",
+    "result.pass: \"PASS\"",
+    "result.fail: \"FAIL\"",
+    "result.review: \"REVIEW\"",
+    "result.na: \"N/A\"",
+    "conditions.noSpecialInstructor: \"N/A\"",
+    "conditions.qualifiedAndSuitable: \"PASS\"",
+    "conditions.notQualifiedOrNotSuitable: \"FAIL\"",
+    "conditions.insufficientInformation: \"REVIEW\"",
+    "naEnabled: true"
+   ],
+   "dataSummary": [
+    {
+     "label": "Operation",
+     "value": "for each distinct (personId) of appointments where role = 'specialInstructor': join educations on personId = educations.personId; checks: ShowCheck; ShowCheck"
+    },
+    {
+     "label": "Subjects",
+     "value": "1"
+    },
+    {
+     "label": "Subjects PASS",
+     "value": "1"
+    }
+   ],
+   "dataFound": [
+    {
+     "label": "อาจารย์พิเศษทดสอบ",
+     "items": [
+      "qualification: master -> PASS",
+      "experience: true -> PASS"
+     ]
+    }
+   ],
+   "verification": {
+    "found": 3,
+    "verified": null,
+    "approved": null,
+    "verifiedAt": null
+   },
+   "missingInformation": [],
+   "evidence": [],
+   "traceability": [
+    {
+     "collection": "appointments",
+     "recordId": "6ab97bb6588c9dc1fccd8261",
+     "fields": [
+      "personId",
+      "role"
+     ],
+     "values": {
+      "personId": "6ab97bb6588c9dc1fccd8260",
+      "role": "specialInstructor"
+     }
+    },
+    {
+     "collection": "educations",
+     "recordId": "6ab97bb6588c9dc1fccd8262",
+     "fields": [
+      "degree",
+      "personId"
+     ],
+     "values": {
+      "personId": "6ab97bb6588c9dc1fccd8260",
+      "degree": "master"
+     }
+    },
+    {
+     "collection": "persons",
+     "recordId": "6ab97bb6588c9dc1fccd8260",
+     "fields": [
+      "_id",
+      "hasTeachingExperience"
+     ],
+     "values": {
+      "_id": "6ab97bb6588c9dc1fccd8260",
+      "hasTeachingExperience": "true"
+     }
+    }
+   ],
+   "dataCompleteness": "complete",
+   "issue": null,
+   "reviewRequired": null,
+   "reviewByUser": null,
+   "review": null,
+   "persistedResult": null
+  }
+ },
+ "FAIL": {
+  "monitor": {
+   "curriculum": {
+    "curriculumCode": "25500231104894",
+    "curriculumName": "วิทยาศาสตรบัณฑิต สาขาวิชาวิทยาการคอมพิวเตอร์",
+    "curriculumYear": "2567",
+    "version": "1",
+    "status": "latest"
+   },
+   "overallStatus": null,
+   "dataCompleteness": "complete",
+   "results": [
+    {
+     "psCode": "PS-01",
+     "status": "PASS",
+     "requirement": "หลักสูตรต้องมีอาจารย์ผู้รับผิดชอบหลักสูตรอย่างน้อย 5 คน",
+     "checks": [
+      "targetCollection: \"appointments\"",
+      "filter.role: \"programmeResponsible\"",
+      "count.field: \"personId\"",
+      "count.distinct: true",
+      "condition.operator: \">=\"",
+      "condition.value: 5",
+      "result.pass: \"PASS\"",
+      "result.fail: \"FAIL\"",
+      "result.review: \"REVIEW\"",
+      "result.na: \"N/A\"",
+      "reviewCondition: \"จำนวนข้อมูลไม่ชัดเจน\"",
+      "naEnabled: false"
+     ],
+     "dataSummary": [
+      {
+       "label": "Operation",
+       "value": "distinct count of personId in appointments where role = 'programmeResponsible'; compare >= 5"
+      },
+      {
+       "label": "Distinct personId count",
+       "value": "5"
+      },
+      {
+       "label": "Condition",
+       "value": ">= 5"
+      }
+     ],
+     "dataFound": [
+      {
+       "label": "personId",
+       "items": [
+        "x (6ab97bb6588c9dc1fccd8264)",
+        "x (6ab97bb6588c9dc1fccd8265)",
+        "x (6ab97bb6588c9dc1fccd8266)",
+        "x (6ab97bb6588c9dc1fccd8267)",
+        "x (6ab97bb6588c9dc1fccd8268)"
+       ]
+      }
+     ],
+     "verification": {
+      "found": 5,
+      "verified": null,
+      "approved": null,
+      "verifiedAt": null
+     },
+     "missingInformation": [],
+     "evidence": [],
+     "traceability": [
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd8269",
+       "fields": [
+        "personId",
+        "role"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8264",
+        "role": "programmeResponsible"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd826b",
+       "fields": [
+        "personId",
+        "role"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8265",
+        "role": "programmeResponsible"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd826d",
+       "fields": [
+        "personId",
+        "role"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8266",
+        "role": "programmeResponsible"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd826f",
+       "fields": [
+        "personId",
+        "role"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8267",
+        "role": "programmeResponsible"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd8271",
+       "fields": [
+        "personId",
+        "role"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8268",
+        "role": "programmeResponsible"
+       }
+      }
+     ],
+     "dataCompleteness": "complete",
+     "issue": null,
+     "reviewRequired": null,
+     "reviewByUser": null,
+     "review": null,
+     "persistedResult": null
+    },
+    {
+     "psCode": "PS-02",
+     "status": "PASS",
+     "requirement": "อาจารย์ผู้รับผิดชอบหลักสูตรต้องมีสถานะอาจารย์ประจำ",
+     "checks": [
+      "targetCollection: \"appointments\"",
+      "responsibleRole: \"programmeResponsible\"",
+      "permanentRole: \"programmeStaff\"",
+      "matching.sameCurriculum: true",
+      "matching.samePerson: true",
+      "condition.operator: \"EXISTS\"",
+      "condition.field: \"programmeStaff\"",
+      "result.pass: \"PASS\"",
+      "result.fail: \"FAIL\"",
+      "result.review: \"REVIEW\"",
+      "result.na: \"N/A\"",
+      "reviewCondition: \"ไม่สามารถตรวจสอบสถานะอาจารย์ประจำได้\"",
+      "naEnabled: false"
+     ],
+     "dataSummary": [
+      {
+       "label": "Operation",
+       "value": "for each distinct (curriculumId, personId) of appointments where role = 'programmeResponsible': join appointments where role = 'programmeStaff' on curriculumId = appointments.curriculumId, personId = appointments.personId; checks: ExistsCheck"
+      },
+      {
+       "label": "Subjects",
+       "value": "5"
+      },
+      {
+       "label": "Subjects PASS",
+       "value": "5"
+      }
+     ],
+     "dataFound": [
+      {
+       "label": "x (6ab97bb6588c9dc1fccd8264)",
+       "items": [
+        "1 matching record(s) -> PASS"
+       ]
+      },
+      {
+       "label": "x (6ab97bb6588c9dc1fccd8265)",
+       "items": [
+        "1 matching record(s) -> PASS"
+       ]
+      },
+      {
+       "label": "x (6ab97bb6588c9dc1fccd8266)",
+       "items": [
+        "1 matching record(s) -> PASS"
+       ]
+      },
+      {
+       "label": "x (6ab97bb6588c9dc1fccd8267)",
+       "items": [
+        "1 matching record(s) -> PASS"
+       ]
+      },
+      {
+       "label": "x (6ab97bb6588c9dc1fccd8268)",
+       "items": [
+        "1 matching record(s) -> PASS"
+       ]
+      }
+     ],
+     "verification": {
+      "found": 10,
+      "verified": null,
+      "approved": null,
+      "verifiedAt": null
+     },
+     "missingInformation": [],
+     "evidence": [],
+     "traceability": [
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd8269",
+       "fields": [
+        "curriculumId",
+        "personId",
+        "role"
+       ],
+       "values": {
+        "curriculumId": "6ab97bb6588c9dc1fccd8263",
+        "personId": "6ab97bb6588c9dc1fccd8264",
+        "role": "programmeResponsible"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd826b",
+       "fields": [
+        "curriculumId",
+        "personId",
+        "role"
+       ],
+       "values": {
+        "curriculumId": "6ab97bb6588c9dc1fccd8263",
+        "personId": "6ab97bb6588c9dc1fccd8265",
+        "role": "programmeResponsible"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd826d",
+       "fields": [
+        "curriculumId",
+        "personId",
+        "role"
+       ],
+       "values": {
+        "curriculumId": "6ab97bb6588c9dc1fccd8263",
+        "personId": "6ab97bb6588c9dc1fccd8266",
+        "role": "programmeResponsible"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd826f",
+       "fields": [
+        "curriculumId",
+        "personId",
+        "role"
+       ],
+       "values": {
+        "curriculumId": "6ab97bb6588c9dc1fccd8263",
+        "personId": "6ab97bb6588c9dc1fccd8267",
+        "role": "programmeResponsible"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd8271",
+       "fields": [
+        "curriculumId",
+        "personId",
+        "role"
+       ],
+       "values": {
+        "curriculumId": "6ab97bb6588c9dc1fccd8263",
+        "personId": "6ab97bb6588c9dc1fccd8268",
+        "role": "programmeResponsible"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd826a",
+       "fields": [
+        "curriculumId",
+        "personId",
+        "role"
+       ],
+       "values": {
+        "curriculumId": "6ab97bb6588c9dc1fccd8263",
+        "personId": "6ab97bb6588c9dc1fccd8264",
+        "role": "programmeStaff"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd826c",
+       "fields": [
+        "curriculumId",
+        "personId",
+        "role"
+       ],
+       "values": {
+        "curriculumId": "6ab97bb6588c9dc1fccd8263",
+        "personId": "6ab97bb6588c9dc1fccd8265",
+        "role": "programmeStaff"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd826e",
+       "fields": [
+        "curriculumId",
+        "personId",
+        "role"
+       ],
+       "values": {
+        "curriculumId": "6ab97bb6588c9dc1fccd8263",
+        "personId": "6ab97bb6588c9dc1fccd8266",
+        "role": "programmeStaff"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd8270",
+       "fields": [
+        "curriculumId",
+        "personId",
+        "role"
+       ],
+       "values": {
+        "curriculumId": "6ab97bb6588c9dc1fccd8263",
+        "personId": "6ab97bb6588c9dc1fccd8267",
+        "role": "programmeStaff"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd8272",
+       "fields": [
+        "curriculumId",
+        "personId",
+        "role"
+       ],
+       "values": {
+        "curriculumId": "6ab97bb6588c9dc1fccd8263",
+        "personId": "6ab97bb6588c9dc1fccd8268",
+        "role": "programmeStaff"
+       }
+      }
+     ],
+     "dataCompleteness": "complete",
+     "issue": null,
+     "reviewRequired": null,
+     "reviewByUser": null,
+     "review": null,
+     "persistedResult": null
+    },
+    {
+     "psCode": "PS-03",
+     "status": "REVIEW",
+     "requirement": "อาจารย์ผู้รับผิดชอบหลักสูตรต้องไม่รับผิดชอบเกิน 1 หลักสูตร",
+     "checks": [
+      "targetCollection: \"appointments\"",
+      "targetRole: \"programmeResponsible\"",
+      "review.required: true",
+      "review.reviewByUser: true",
+      "review.allowManualResult: \"PASS\", \"FAIL\", \"REVIEW\"",
+      "result.pass: \"PASS\"",
+      "result.fail: \"FAIL\"",
+      "result.review: \"REVIEW\"",
+      "result.na: \"N/A\"",
+      "naEnabled: false"
+     ],
+     "dataSummary": [
+      {
+       "label": "Operation",
+       "value": "review required by configuration"
+      },
+      {
+       "label": "Review",
+       "value": "Review by user required by configuration"
+      }
+     ],
+     "dataFound": [
+      {
+       "label": "appointments",
+       "items": [
+        "x (6ab97bb6588c9dc1fccd8264)",
+        "x (6ab97bb6588c9dc1fccd8265)",
+        "x (6ab97bb6588c9dc1fccd8266)",
+        "x (6ab97bb6588c9dc1fccd8267)",
+        "x (6ab97bb6588c9dc1fccd8268)"
+       ]
+      }
+     ],
+     "verification": {
+      "found": 5,
+      "verified": null,
+      "approved": null,
+      "verifiedAt": null
+     },
+     "missingInformation": [],
+     "evidence": [],
+     "traceability": [
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd8269",
+       "fields": [
+        "role"
+       ],
+       "values": {
+        "role": "programmeResponsible"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd826b",
+       "fields": [
+        "role"
+       ],
+       "values": {
+        "role": "programmeResponsible"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd826d",
+       "fields": [
+        "role"
+       ],
+       "values": {
+        "role": "programmeResponsible"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd826f",
+       "fields": [
+        "role"
+       ],
+       "values": {
+        "role": "programmeResponsible"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd8271",
+       "fields": [
+        "role"
+       ],
+       "values": {
+        "role": "programmeResponsible"
+       }
+      }
+     ],
+     "dataCompleteness": "complete",
+     "issue": null,
+     "reviewRequired": true,
+     "reviewByUser": true,
+     "review": {
+      "allowManualResult": [
+       "PASS",
+       "FAIL",
+       "REVIEW"
+      ],
+      "status": null,
+      "reviewedAt": null
+     },
+     "persistedResult": null
+    },
+    {
+     "psCode": "PS-04",
+     "status": "PASS",
+     "requirement": "หลักสูตรต้องมีคำสั่งแต่งตั้งและระบุบทบาทการบริหารหลักสูตรอย่างชัดเจน",
+     "checks": [
+      "targetCollection: \"appointments\"",
+      "requiredFields: \"personId\", \"role\", \"roleName\", \"appointmentOrder\"",
+      "appointmentOrder.required: true",
+      "appointmentOrder.requiredFields: \"orderNumber\", \"orderDate\"",
+      "role.required: true",
+      "role.roleNameRequired: true",
+      "result.pass: \"PASS\"",
+      "result.fail: \"FAIL\"",
+      "result.review: \"REVIEW\"",
+      "result.na: \"N/A\"",
+      "conditions.pass: \"ข้อมูลการแต่งตั้งครบและระบุบทบาทชัดเจน\"",
+      "conditions.fail: \"ไม่มีคำสั่งแต่งตั้งหรือข้อมูลไม่ครบ\"",
+      "conditions.review: \"มีข้อมูลแต่ไม่สามารถระบุความครบถ้วนหรือความชัดเจนได้\"",
+      "naEnabled: false"
+     ],
+     "dataSummary": [
+      {
+       "label": "Operation",
+       "value": "fields present in appointments: personId, role, roleName, appointmentOrder, appointmentOrder.orderNumber, appointmentOrder.orderDate"
+      },
+      {
+       "label": "Records checked",
+       "value": "11"
+      },
+      {
+       "label": "Records with missing fields",
+       "value": "0"
+      }
+     ],
+     "dataFound": [
+      {
+       "label": "Records",
+       "items": [
+        "x (6ab97bb6588c9dc1fccd8264) (6ab97bb6588c9dc1fccd8269): complete",
+        "x (6ab97bb6588c9dc1fccd8264) (6ab97bb6588c9dc1fccd826a): complete",
+        "x (6ab97bb6588c9dc1fccd8265) (6ab97bb6588c9dc1fccd826b): complete",
+        "x (6ab97bb6588c9dc1fccd8265) (6ab97bb6588c9dc1fccd826c): complete",
+        "x (6ab97bb6588c9dc1fccd8266) (6ab97bb6588c9dc1fccd826d): complete",
+        "x (6ab97bb6588c9dc1fccd8266) (6ab97bb6588c9dc1fccd826e): complete",
+        "x (6ab97bb6588c9dc1fccd8267) (6ab97bb6588c9dc1fccd826f): complete",
+        "x (6ab97bb6588c9dc1fccd8267) (6ab97bb6588c9dc1fccd8270): complete",
+        "x (6ab97bb6588c9dc1fccd8268) (6ab97bb6588c9dc1fccd8271): complete",
+        "x (6ab97bb6588c9dc1fccd8268) (6ab97bb6588c9dc1fccd8272): complete",
+        "อาจารย์พิเศษทดสอบ (6ab97bb6588c9dc1fccd827e): complete"
+       ]
+      }
+     ],
+     "verification": {
+      "found": 11,
+      "verified": null,
+      "approved": null,
+      "verifiedAt": null
+     },
+     "missingInformation": [],
+     "evidence": [],
+     "traceability": [
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd8269",
+       "fields": [
+        "appointmentOrder",
+        "appointmentOrder.orderDate",
+        "appointmentOrder.orderNumber",
+        "personId",
+        "role",
+        "roleName"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8264",
+        "role": "programmeResponsible",
+        "roleName": "อาจารย์ผู้รับผิดชอบหลักสูตร",
+        "appointmentOrder": "{'orderNumber': '350/2568', 'orderDate': '2568-02-04'}",
+        "appointmentOrder.orderNumber": "350/2568",
+        "appointmentOrder.orderDate": "2568-02-04"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd826a",
+       "fields": [
+        "appointmentOrder",
+        "appointmentOrder.orderDate",
+        "appointmentOrder.orderNumber",
+        "personId",
+        "role",
+        "roleName"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8264",
+        "role": "programmeStaff",
+        "roleName": "อาจารย์ประจำหลักสูตร",
+        "appointmentOrder": "{'orderNumber': '350/2568', 'orderDate': '2568-02-04'}",
+        "appointmentOrder.orderNumber": "350/2568",
+        "appointmentOrder.orderDate": "2568-02-04"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd826b",
+       "fields": [
+        "appointmentOrder",
+        "appointmentOrder.orderDate",
+        "appointmentOrder.orderNumber",
+        "personId",
+        "role",
+        "roleName"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8265",
+        "role": "programmeResponsible",
+        "roleName": "อาจารย์ผู้รับผิดชอบหลักสูตร",
+        "appointmentOrder": "{'orderNumber': '350/2568', 'orderDate': '2568-02-04'}",
+        "appointmentOrder.orderNumber": "350/2568",
+        "appointmentOrder.orderDate": "2568-02-04"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd826c",
+       "fields": [
+        "appointmentOrder",
+        "appointmentOrder.orderDate",
+        "appointmentOrder.orderNumber",
+        "personId",
+        "role",
+        "roleName"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8265",
+        "role": "programmeStaff",
+        "roleName": "อาจารย์ประจำหลักสูตร",
+        "appointmentOrder": "{'orderNumber': '350/2568', 'orderDate': '2568-02-04'}",
+        "appointmentOrder.orderNumber": "350/2568",
+        "appointmentOrder.orderDate": "2568-02-04"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd826d",
+       "fields": [
+        "appointmentOrder",
+        "appointmentOrder.orderDate",
+        "appointmentOrder.orderNumber",
+        "personId",
+        "role",
+        "roleName"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8266",
+        "role": "programmeResponsible",
+        "roleName": "อาจารย์ผู้รับผิดชอบหลักสูตร",
+        "appointmentOrder": "{'orderNumber': '350/2568', 'orderDate': '2568-02-04'}",
+        "appointmentOrder.orderNumber": "350/2568",
+        "appointmentOrder.orderDate": "2568-02-04"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd826e",
+       "fields": [
+        "appointmentOrder",
+        "appointmentOrder.orderDate",
+        "appointmentOrder.orderNumber",
+        "personId",
+        "role",
+        "roleName"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8266",
+        "role": "programmeStaff",
+        "roleName": "อาจารย์ประจำหลักสูตร",
+        "appointmentOrder": "{'orderNumber': '350/2568', 'orderDate': '2568-02-04'}",
+        "appointmentOrder.orderNumber": "350/2568",
+        "appointmentOrder.orderDate": "2568-02-04"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd826f",
+       "fields": [
+        "appointmentOrder",
+        "appointmentOrder.orderDate",
+        "appointmentOrder.orderNumber",
+        "personId",
+        "role",
+        "roleName"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8267",
+        "role": "programmeResponsible",
+        "roleName": "อาจารย์ผู้รับผิดชอบหลักสูตร",
+        "appointmentOrder": "{'orderNumber': '350/2568', 'orderDate': '2568-02-04'}",
+        "appointmentOrder.orderNumber": "350/2568",
+        "appointmentOrder.orderDate": "2568-02-04"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd8270",
+       "fields": [
+        "appointmentOrder",
+        "appointmentOrder.orderDate",
+        "appointmentOrder.orderNumber",
+        "personId",
+        "role",
+        "roleName"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8267",
+        "role": "programmeStaff",
+        "roleName": "อาจารย์ประจำหลักสูตร",
+        "appointmentOrder": "{'orderNumber': '350/2568', 'orderDate': '2568-02-04'}",
+        "appointmentOrder.orderNumber": "350/2568",
+        "appointmentOrder.orderDate": "2568-02-04"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd8271",
+       "fields": [
+        "appointmentOrder",
+        "appointmentOrder.orderDate",
+        "appointmentOrder.orderNumber",
+        "personId",
+        "role",
+        "roleName"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8268",
+        "role": "programmeResponsible",
+        "roleName": "อาจารย์ผู้รับผิดชอบหลักสูตร",
+        "appointmentOrder": "{'orderNumber': '350/2568', 'orderDate': '2568-02-04'}",
+        "appointmentOrder.orderNumber": "350/2568",
+        "appointmentOrder.orderDate": "2568-02-04"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd8272",
+       "fields": [
+        "appointmentOrder",
+        "appointmentOrder.orderDate",
+        "appointmentOrder.orderNumber",
+        "personId",
+        "role",
+        "roleName"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8268",
+        "role": "programmeStaff",
+        "roleName": "อาจารย์ประจำหลักสูตร",
+        "appointmentOrder": "{'orderNumber': '350/2568', 'orderDate': '2568-02-04'}",
+        "appointmentOrder.orderNumber": "350/2568",
+        "appointmentOrder.orderDate": "2568-02-04"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd827e",
+       "fields": [
+        "appointmentOrder",
+        "appointmentOrder.orderDate",
+        "appointmentOrder.orderNumber",
+        "personId",
+        "role",
+        "roleName"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd827d",
+        "role": "specialInstructor",
+        "roleName": "specialInstructor",
+        "appointmentOrder": "{'orderNumber': '350/2568', 'orderDate': '2568-02-04'}",
+        "appointmentOrder.orderNumber": "350/2568",
+        "appointmentOrder.orderDate": "2568-02-04"
+       }
+      }
+     ],
+     "dataCompleteness": "complete",
+     "issue": null,
+     "reviewRequired": null,
+     "reviewByUser": null,
+     "review": null,
+     "persistedResult": null
+    },
+    {
+     "psCode": "PS-05",
+     "status": "PASS",
+     "requirement": "อาจารย์ผู้รับผิดชอบหลักสูตรต้องมีคุณวุฒิสูงสุดอย่างน้อยระดับปริญญาโท",
+     "checks": [
+      "targetCollection: \"educations\"",
+      "appointment.role: \"programmeResponsible\"",
+      "join.from: \"appointments.personId\"",
+      "join.to: \"educations.personId\"",
+      "degree.field: \"degree\"",
+      "degree.minimum: \"master\"",
+      "degree.ordering: \"bachelor\", \"master\", \"Ph.D.\"",
+      "degree.aliases.bachelor: \"วท.บ.\", \"บธ.บ.\", \"วบ.บ.\"",
+      "degree.aliases.master: \"วท.ม.\"",
+      "degree.aliases.Ph.D.: \"ปร.ด.\"",
+      "degree.normalization.enabled: true",
+      "degree.normalization.remove: \" \", \".\"",
+      "degree.normalization.caseInsensitive: true",
+      "result.pass: \"PASS\"",
+      "result.fail: \"FAIL\"",
+      "result.review: \"REVIEW\"",
+      "result.na: \"N/A\"",
+      "reviewCondition: \"ไม่สามารถระบุระดับคุณวุฒิได้\"",
+      "naEnabled: false"
+     ],
+     "dataSummary": [
+      {
+       "label": "Operation",
+       "value": "for each distinct (personId) of appointments where role = 'programmeResponsible': join educations on personId = educations.personId; checks: AtLeastCheck"
+      },
+      {
+       "label": "Subjects",
+       "value": "5"
+      },
+      {
+       "label": "Subjects PASS",
+       "value": "5"
+      }
+     ],
+     "dataFound": [
+      {
+       "label": "x (6ab97bb6588c9dc1fccd8264)",
+       "items": [
+        "degree: master → master (highest 'master' is at least 'master') -> PASS"
+       ]
+      },
+      {
+       "label": "x (6ab97bb6588c9dc1fccd8265)",
+       "items": [
+        "degree: master → master (highest 'master' is at least 'master') -> PASS"
+       ]
+      },
+      {
+       "label": "x (6ab97bb6588c9dc1fccd8266)",
+       "items": [
+        "degree: master → master (highest 'master' is at least 'master') -> PASS"
+       ]
+      },
+      {
+       "label": "x (6ab97bb6588c9dc1fccd8267)",
+       "items": [
+        "degree: master → master (highest 'master' is at least 'master') -> PASS"
+       ]
+      },
+      {
+       "label": "x (6ab97bb6588c9dc1fccd8268)",
+       "items": [
+        "degree: master → master (highest 'master' is at least 'master') -> PASS"
+       ]
+      }
+     ],
+     "verification": {
+      "found": 10,
+      "verified": null,
+      "approved": null,
+      "verifiedAt": null
+     },
+     "missingInformation": [],
+     "evidence": [],
+     "traceability": [
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd8269",
+       "fields": [
+        "personId",
+        "role"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8264",
+        "role": "programmeResponsible"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd826b",
+       "fields": [
+        "personId",
+        "role"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8265",
+        "role": "programmeResponsible"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd826d",
+       "fields": [
+        "personId",
+        "role"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8266",
+        "role": "programmeResponsible"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd826f",
+       "fields": [
+        "personId",
+        "role"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8267",
+        "role": "programmeResponsible"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd8271",
+       "fields": [
+        "personId",
+        "role"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8268",
+        "role": "programmeResponsible"
+       }
+      },
+      {
+       "collection": "educations",
+       "recordId": "6ab97bb6588c9dc1fccd8273",
+       "fields": [
+        "degree",
+        "personId"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8264",
+        "degree": "master"
+       }
+      },
+      {
+       "collection": "educations",
+       "recordId": "6ab97bb6588c9dc1fccd8274",
+       "fields": [
+        "degree",
+        "personId"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8265",
+        "degree": "master"
+       }
+      },
+      {
+       "collection": "educations",
+       "recordId": "6ab97bb6588c9dc1fccd8275",
+       "fields": [
+        "degree",
+        "personId"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8266",
+        "degree": "master"
+       }
+      },
+      {
+       "collection": "educations",
+       "recordId": "6ab97bb6588c9dc1fccd8276",
+       "fields": [
+        "degree",
+        "personId"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8267",
+        "degree": "master"
+       }
+      },
+      {
+       "collection": "educations",
+       "recordId": "6ab97bb6588c9dc1fccd8277",
+       "fields": [
+        "degree",
+        "personId"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8268",
+        "degree": "master"
+       }
+      }
+     ],
+     "dataCompleteness": "complete",
+     "issue": null,
+     "reviewRequired": null,
+     "reviewByUser": null,
+     "review": null,
+     "persistedResult": null
+    },
+    {
+     "psCode": "PS-06",
+     "status": "PASS",
+     "requirement": "คุณวุฒิของอาจารย์สัมพันธ์กับสาขาของหลักสูตร",
+     "checks": [
+      "targetCollection: \"educations\"",
+      "appointment.role: \"programmeResponsible\"",
+      "join.appointmentPersonId: \"appointments.personId\"",
+      "join.educationPersonId: \"educations.personId\"",
+      "join.curriculumId: \"appointments.curriculumId\"",
+      "programmeField.source: \"curricula.curriculumName\"",
+      "programmeField.method: \"extract\"",
+      "qualificationField.source: \"educations.field\"",
+      "normalization.enabled: true",
+      "normalization.remove: \"สาขาวิชา\", \"สาขา\", \"หลักสูตร\", \"วิชา\", \" \", \"-\"",
+      "normalization.caseInsensitive: true",
+      "comparison.method: \"mapping\"",
+      "comparison.allowExactMatch: true",
+      "comparison.allowRelatedMatch: true",
+      "fieldMappings: 8 item(s)",
+      "result.exact: \"PASS\"",
+      "result.related: \"PASS\"",
+      "result.unrelated: \"FAIL\"",
+      "result.unknown: \"REVIEW\"",
+      "reviewCondition: \"ไม่พบข้อมูล education.field\", \"ไม่สามารถระบุ programme field ได้\", \"ไม่มี Mapping สำหรับ programme field\", \"ไม่สามารถตัดสินความสัมพันธ์ได้\"",
+      "naEnabled: false"
+     ],
+     "dataSummary": [
+      {
+       "label": "Operation",
+       "value": "for each distinct (personId) of appointments where role = 'programmeResponsible': join educations on personId = educations.personId; checks: MappingCheck"
+      },
+      {
+       "label": "Subjects",
+       "value": "5"
+      },
+      {
+       "label": "Subjects PASS",
+       "value": "5"
+      }
+     ],
+     "dataFound": [
+      {
+       "label": "x (6ab97bb6588c9dc1fccd8264)",
+       "items": [
+        "field: Computer Science -> exact (วิทยาการคอมพิวเตอร์) -> PASS"
+       ]
+      },
+      {
+       "label": "x (6ab97bb6588c9dc1fccd8265)",
+       "items": [
+        "field: Computer Science -> exact (วิทยาการคอมพิวเตอร์) -> PASS"
+       ]
+      },
+      {
+       "label": "x (6ab97bb6588c9dc1fccd8266)",
+       "items": [
+        "field: Computer Science -> exact (วิทยาการคอมพิวเตอร์) -> PASS"
+       ]
+      },
+      {
+       "label": "x (6ab97bb6588c9dc1fccd8267)",
+       "items": [
+        "field: Computer Science -> exact (วิทยาการคอมพิวเตอร์) -> PASS"
+       ]
+      },
+      {
+       "label": "x (6ab97bb6588c9dc1fccd8268)",
+       "items": [
+        "field: Computer Science -> exact (วิทยาการคอมพิวเตอร์) -> PASS"
+       ]
+      }
+     ],
+     "verification": {
+      "found": 11,
+      "verified": null,
+      "approved": null,
+      "verifiedAt": null
+     },
+     "missingInformation": [],
+     "evidence": [],
+     "traceability": [
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd8269",
+       "fields": [
+        "personId",
+        "role"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8264",
+        "role": "programmeResponsible"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd826b",
+       "fields": [
+        "personId",
+        "role"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8265",
+        "role": "programmeResponsible"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd826d",
+       "fields": [
+        "personId",
+        "role"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8266",
+        "role": "programmeResponsible"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd826f",
+       "fields": [
+        "personId",
+        "role"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8267",
+        "role": "programmeResponsible"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd8271",
+       "fields": [
+        "personId",
+        "role"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8268",
+        "role": "programmeResponsible"
+       }
+      },
+      {
+       "collection": "curricula",
+       "recordId": "6ab97bb6588c9dc1fccd8263",
+       "fields": [
+        "curriculumName"
+       ],
+       "values": {
+        "curriculumName": "วิทยาศาสตรบัณฑิต สาขาวิชาวิทยาการคอมพิวเตอร์"
+       }
+      },
+      {
+       "collection": "educations",
+       "recordId": "6ab97bb6588c9dc1fccd8273",
+       "fields": [
+        "field",
+        "personId"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8264",
+        "field": "Computer Science"
+       }
+      },
+      {
+       "collection": "educations",
+       "recordId": "6ab97bb6588c9dc1fccd8274",
+       "fields": [
+        "field",
+        "personId"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8265",
+        "field": "Computer Science"
+       }
+      },
+      {
+       "collection": "educations",
+       "recordId": "6ab97bb6588c9dc1fccd8275",
+       "fields": [
+        "field",
+        "personId"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8266",
+        "field": "Computer Science"
+       }
+      },
+      {
+       "collection": "educations",
+       "recordId": "6ab97bb6588c9dc1fccd8276",
+       "fields": [
+        "field",
+        "personId"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8267",
+        "field": "Computer Science"
+       }
+      },
+      {
+       "collection": "educations",
+       "recordId": "6ab97bb6588c9dc1fccd8277",
+       "fields": [
+        "field",
+        "personId"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8268",
+        "field": "Computer Science"
+       }
+      }
+     ],
+     "dataCompleteness": "complete",
+     "issue": null,
+     "reviewRequired": null,
+     "reviewByUser": null,
+     "review": null,
+     "persistedResult": null
+    },
+    {
+     "psCode": "PS-07",
+     "status": "PASS",
+     "requirement": "อาจารย์ผู้รับผิดชอบหรืออาจารย์ประจำหลักสูตรต้องมีผลงานวิชาการย้อนหลัง 5 ปี",
+     "checks": [
+      "targetCollections: \"academic_works\", \"appointments\"",
+      "targetRoles: \"programmeResponsible\", \"programmeStaff\"",
+      "join.from: \"appointments.personId\"",
+      "join.to: \"academic_works.personId\"",
+      "publicationYear.field: \"publicationYear\"",
+      "publicationYear.period: \"previous5Years\"",
+      "minimumCount: 1",
+      "result.pass: \"PASS\"",
+      "result.fail: \"FAIL\"",
+      "result.review: \"REVIEW\"",
+      "result.na: \"N/A\"",
+      "reviewCondition: \"ไม่สามารถตรวจสอบ publicationYear ได้\"",
+      "naEnabled: false"
+     ],
+     "dataSummary": [
+      {
+       "label": "Operation",
+       "value": "for each distinct (personId) of appointments where role in ['programmeResponsible', 'programmeStaff']: join academic_works on personId = academic_works.personId; checks: CountCheck"
+      },
+      {
+       "label": "Subjects",
+       "value": "5"
+      },
+      {
+       "label": "Subjects PASS",
+       "value": "5"
+      }
+     ],
+     "dataFound": [
+      {
+       "label": "x (6ab97bb6588c9dc1fccd8264)",
+       "items": [
+        "1 in window -> PASS"
+       ]
+      },
+      {
+       "label": "x (6ab97bb6588c9dc1fccd8265)",
+       "items": [
+        "1 in window -> PASS"
+       ]
+      },
+      {
+       "label": "x (6ab97bb6588c9dc1fccd8266)",
+       "items": [
+        "1 in window -> PASS"
+       ]
+      },
+      {
+       "label": "x (6ab97bb6588c9dc1fccd8267)",
+       "items": [
+        "1 in window -> PASS"
+       ]
+      },
+      {
+       "label": "x (6ab97bb6588c9dc1fccd8268)",
+       "items": [
+        "1 in window -> PASS"
+       ]
+      }
+     ],
+     "verification": {
+      "found": 15,
+      "verified": null,
+      "approved": null,
+      "verifiedAt": null
+     },
+     "missingInformation": [],
+     "evidence": [],
+     "traceability": [
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd8269",
+       "fields": [
+        "personId",
+        "role"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8264",
+        "role": "programmeResponsible"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd826a",
+       "fields": [
+        "personId",
+        "role"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8264",
+        "role": "programmeStaff"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd826b",
+       "fields": [
+        "personId",
+        "role"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8265",
+        "role": "programmeResponsible"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd826c",
+       "fields": [
+        "personId",
+        "role"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8265",
+        "role": "programmeStaff"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd826d",
+       "fields": [
+        "personId",
+        "role"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8266",
+        "role": "programmeResponsible"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd826e",
+       "fields": [
+        "personId",
+        "role"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8266",
+        "role": "programmeStaff"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd826f",
+       "fields": [
+        "personId",
+        "role"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8267",
+        "role": "programmeResponsible"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd8270",
+       "fields": [
+        "personId",
+        "role"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8267",
+        "role": "programmeStaff"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd8271",
+       "fields": [
+        "personId",
+        "role"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8268",
+        "role": "programmeResponsible"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd8272",
+       "fields": [
+        "personId",
+        "role"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8268",
+        "role": "programmeStaff"
+       }
+      },
+      {
+       "collection": "academic_works",
+       "recordId": "6ab97bb6588c9dc1fccd8278",
+       "fields": [
+        "personId",
+        "publicationYear"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8264",
+        "publicationYear": "2569"
+       }
+      },
+      {
+       "collection": "academic_works",
+       "recordId": "6ab97bb6588c9dc1fccd8279",
+       "fields": [
+        "personId",
+        "publicationYear"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8265",
+        "publicationYear": "2569"
+       }
+      },
+      {
+       "collection": "academic_works",
+       "recordId": "6ab97bb6588c9dc1fccd827a",
+       "fields": [
+        "personId",
+        "publicationYear"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8266",
+        "publicationYear": "2569"
+       }
+      },
+      {
+       "collection": "academic_works",
+       "recordId": "6ab97bb6588c9dc1fccd827b",
+       "fields": [
+        "personId",
+        "publicationYear"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8267",
+        "publicationYear": "2569"
+       }
+      },
+      {
+       "collection": "academic_works",
+       "recordId": "6ab97bb6588c9dc1fccd827c",
+       "fields": [
+        "personId",
+        "publicationYear"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8268",
+        "publicationYear": "2569"
+       }
+      }
+     ],
+     "dataCompleteness": "complete",
+     "issue": null,
+     "reviewRequired": null,
+     "reviewByUser": null,
+     "review": null,
+     "persistedResult": null
+    },
+    {
+     "psCode": "PS-08",
+     "status": "FAIL",
+     "requirement": "อาจารย์พิเศษต้องมีคุณวุฒิและประสบการณ์ที่เหมาะสม",
+     "checks": [
+      "targetCollection: \"appointments\"",
+      "targetRole: \"specialInstructor\"",
+      "join.appointmentPersonId: \"appointments.personId\"",
+      "join.educationPersonId: \"educations.personId\"",
+      "qualification.source: \"educations.degree\"",
+      "qualification.required: true",
+      "qualification.condition.operator: \"EXISTS\"",
+      "experience.required: true",
+      "experience.source: \"persons.hasTeachingExperience\"",
+      "experience.condition.operator: \"==\"",
+      "experience.condition.value: true",
+      "result.pass: \"PASS\"",
+      "result.fail: \"FAIL\"",
+      "result.review: \"REVIEW\"",
+      "result.na: \"N/A\"",
+      "conditions.noSpecialInstructor: \"N/A\"",
+      "conditions.qualifiedAndSuitable: \"PASS\"",
+      "conditions.notQualifiedOrNotSuitable: \"FAIL\"",
+      "conditions.insufficientInformation: \"REVIEW\"",
+      "naEnabled: true"
+     ],
+     "dataSummary": [
+      {
+       "label": "Operation",
+       "value": "for each distinct (personId) of appointments where role = 'specialInstructor': join educations on personId = educations.personId; checks: ShowCheck; ShowCheck"
+      },
+      {
+       "label": "Subjects",
+       "value": "1"
+      },
+      {
+       "label": "Subjects FAIL",
+       "value": "1"
+      }
+     ],
+     "dataFound": [
+      {
+       "label": "อาจารย์พิเศษทดสอบ",
+       "items": [
+        "qualification: master -> PASS",
+        "experience: false (not == true) -> FAIL"
+       ]
+      }
+     ],
+     "verification": {
+      "found": 3,
+      "verified": null,
+      "approved": null,
+      "verifiedAt": null
+     },
+     "missingInformation": [],
+     "evidence": [],
+     "traceability": [
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd827e",
+       "fields": [
+        "personId",
+        "role"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd827d",
+        "role": "specialInstructor"
+       }
+      },
+      {
+       "collection": "educations",
+       "recordId": "6ab97bb6588c9dc1fccd827f",
+       "fields": [
+        "degree",
+        "personId"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd827d",
+        "degree": "master"
+       }
+      },
+      {
+       "collection": "persons",
+       "recordId": "6ab97bb6588c9dc1fccd827d",
+       "fields": [
+        "_id",
+        "hasTeachingExperience"
+       ],
+       "values": {
+        "_id": "6ab97bb6588c9dc1fccd827d",
+        "hasTeachingExperience": "false"
+       }
+      }
+     ],
+     "dataCompleteness": "complete",
+     "issue": null,
+     "reviewRequired": null,
+     "reviewByUser": null,
+     "review": null,
+     "persistedResult": null
+    },
+    {
+     "psCode": "PS-09",
+     "status": "PASS",
+     "requirement": "หลักสูตรต้องมีการปรับปรุงล่าสุดไม่เกิน 5 ปี",
+     "checks": [
+      "targetCollection: \"curricula\"",
+      "year.field: \"curriculumYear\"",
+      "comparison.operator: \"<=\"",
+      "comparison.value: 5",
+      "comparison.reference: \"currentYear\"",
+      "calculation.formula: \"currentYear - curriculumYear\"",
+      "result.pass: \"PASS\"",
+      "result.fail: \"FAIL\"",
+      "result.review: \"REVIEW\"",
+      "result.na: \"N/A\"",
+      "reviewCondition: \"ไม่สามารถระบุ curriculumYear ได้\"",
+      "naEnabled: false"
+     ],
+     "dataSummary": [
+      {
+       "label": "Operation",
+       "value": "currentYear - curriculumYear over curricula; compare <= 5"
+      },
+      {
+       "label": "curriculumYear",
+       "value": "2567"
+      }
+     ],
+     "dataFound": [
+      {
+       "label": "25500231104894",
+       "items": [
+        "currentYear = 2569",
+        "currentYear - curriculumYear = 2"
+       ]
+      }
+     ],
+     "verification": {
+      "found": 1,
+      "verified": null,
+      "approved": null,
+      "verifiedAt": null
+     },
+     "missingInformation": [],
+     "evidence": [],
+     "traceability": [
+      {
+       "collection": "curricula",
+       "recordId": "6ab97bb6588c9dc1fccd8263",
+       "fields": [
+        "curriculumYear"
+       ],
+       "values": {
+        "curriculumYear": "2567"
+       }
+      }
+     ],
+     "dataCompleteness": "complete",
+     "issue": null,
+     "reviewRequired": null,
+     "reviewByUser": null,
+     "review": null,
+     "persistedResult": null
+    }
+   ],
+   "generationReadiness": {
+    "status": null,
+    "blockingPS": [],
+    "issue": "configuration_error",
+    "detail": "no configuration document with configType 'generationReadiness' was found"
+   },
+   "programmeReadiness": {
+    "percentage": 77.78,
+    "passCount": 7,
+    "totalPS": 9
+   }
+  },
+  "detail": {
+   "psCode": "PS-08",
+   "status": "FAIL",
+   "requirement": "อาจารย์พิเศษต้องมีคุณวุฒิและประสบการณ์ที่เหมาะสม",
+   "checks": [
+    "targetCollection: \"appointments\"",
+    "targetRole: \"specialInstructor\"",
+    "join.appointmentPersonId: \"appointments.personId\"",
+    "join.educationPersonId: \"educations.personId\"",
+    "qualification.source: \"educations.degree\"",
+    "qualification.required: true",
+    "qualification.condition.operator: \"EXISTS\"",
+    "experience.required: true",
+    "experience.source: \"persons.hasTeachingExperience\"",
+    "experience.condition.operator: \"==\"",
+    "experience.condition.value: true",
+    "result.pass: \"PASS\"",
+    "result.fail: \"FAIL\"",
+    "result.review: \"REVIEW\"",
+    "result.na: \"N/A\"",
+    "conditions.noSpecialInstructor: \"N/A\"",
+    "conditions.qualifiedAndSuitable: \"PASS\"",
+    "conditions.notQualifiedOrNotSuitable: \"FAIL\"",
+    "conditions.insufficientInformation: \"REVIEW\"",
+    "naEnabled: true"
+   ],
+   "dataSummary": [
+    {
+     "label": "Operation",
+     "value": "for each distinct (personId) of appointments where role = 'specialInstructor': join educations on personId = educations.personId; checks: ShowCheck; ShowCheck"
+    },
+    {
+     "label": "Subjects",
+     "value": "1"
+    },
+    {
+     "label": "Subjects FAIL",
+     "value": "1"
+    }
+   ],
+   "dataFound": [
+    {
+     "label": "อาจารย์พิเศษทดสอบ",
+     "items": [
+      "qualification: master -> PASS",
+      "experience: false (not == true) -> FAIL"
+     ]
+    }
+   ],
+   "verification": {
+    "found": 3,
+    "verified": null,
+    "approved": null,
+    "verifiedAt": null
+   },
+   "missingInformation": [],
+   "evidence": [],
+   "traceability": [
+    {
+     "collection": "appointments",
+     "recordId": "6ab97bb6588c9dc1fccd827e",
+     "fields": [
+      "personId",
+      "role"
+     ],
+     "values": {
+      "personId": "6ab97bb6588c9dc1fccd827d",
+      "role": "specialInstructor"
+     }
+    },
+    {
+     "collection": "educations",
+     "recordId": "6ab97bb6588c9dc1fccd827f",
+     "fields": [
+      "degree",
+      "personId"
+     ],
+     "values": {
+      "personId": "6ab97bb6588c9dc1fccd827d",
+      "degree": "master"
+     }
+    },
+    {
+     "collection": "persons",
+     "recordId": "6ab97bb6588c9dc1fccd827d",
+     "fields": [
+      "_id",
+      "hasTeachingExperience"
+     ],
+     "values": {
+      "_id": "6ab97bb6588c9dc1fccd827d",
+      "hasTeachingExperience": "false"
+     }
+    }
+   ],
+   "dataCompleteness": "complete",
+   "issue": null,
+   "reviewRequired": null,
+   "reviewByUser": null,
+   "review": null,
+   "persistedResult": null
+  }
+ },
+ "REVIEW": {
+  "monitor": {
+   "curriculum": {
+    "curriculumCode": "25500231104894",
+    "curriculumName": "วิทยาศาสตรบัณฑิต สาขาวิชาวิทยาการคอมพิวเตอร์",
+    "curriculumYear": "2567",
+    "version": "1",
+    "status": "latest"
+   },
+   "overallStatus": null,
+   "dataCompleteness": "incomplete",
+   "results": [
+    {
+     "psCode": "PS-01",
+     "status": "PASS",
+     "requirement": "หลักสูตรต้องมีอาจารย์ผู้รับผิดชอบหลักสูตรอย่างน้อย 5 คน",
+     "checks": [
+      "targetCollection: \"appointments\"",
+      "filter.role: \"programmeResponsible\"",
+      "count.field: \"personId\"",
+      "count.distinct: true",
+      "condition.operator: \">=\"",
+      "condition.value: 5",
+      "result.pass: \"PASS\"",
+      "result.fail: \"FAIL\"",
+      "result.review: \"REVIEW\"",
+      "result.na: \"N/A\"",
+      "reviewCondition: \"จำนวนข้อมูลไม่ชัดเจน\"",
+      "naEnabled: false"
+     ],
+     "dataSummary": [
+      {
+       "label": "Operation",
+       "value": "distinct count of personId in appointments where role = 'programmeResponsible'; compare >= 5"
+      },
+      {
+       "label": "Distinct personId count",
+       "value": "5"
+      },
+      {
+       "label": "Condition",
+       "value": ">= 5"
+      }
+     ],
+     "dataFound": [
+      {
+       "label": "personId",
+       "items": [
+        "x (6ab97bb6588c9dc1fccd8281)",
+        "x (6ab97bb6588c9dc1fccd8282)",
+        "x (6ab97bb6588c9dc1fccd8283)",
+        "x (6ab97bb6588c9dc1fccd8284)",
+        "x (6ab97bb6588c9dc1fccd8285)"
+       ]
+      }
+     ],
+     "verification": {
+      "found": 5,
+      "verified": null,
+      "approved": null,
+      "verifiedAt": null
+     },
+     "missingInformation": [],
+     "evidence": [],
+     "traceability": [
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd8286",
+       "fields": [
+        "personId",
+        "role"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8281",
+        "role": "programmeResponsible"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd8288",
+       "fields": [
+        "personId",
+        "role"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8282",
+        "role": "programmeResponsible"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd828a",
+       "fields": [
+        "personId",
+        "role"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8283",
+        "role": "programmeResponsible"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd828c",
+       "fields": [
+        "personId",
+        "role"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8284",
+        "role": "programmeResponsible"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd828e",
+       "fields": [
+        "personId",
+        "role"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8285",
+        "role": "programmeResponsible"
+       }
+      }
+     ],
+     "dataCompleteness": "complete",
+     "issue": null,
+     "reviewRequired": null,
+     "reviewByUser": null,
+     "review": null,
+     "persistedResult": null
+    },
+    {
+     "psCode": "PS-02",
+     "status": "PASS",
+     "requirement": "อาจารย์ผู้รับผิดชอบหลักสูตรต้องมีสถานะอาจารย์ประจำ",
+     "checks": [
+      "targetCollection: \"appointments\"",
+      "responsibleRole: \"programmeResponsible\"",
+      "permanentRole: \"programmeStaff\"",
+      "matching.sameCurriculum: true",
+      "matching.samePerson: true",
+      "condition.operator: \"EXISTS\"",
+      "condition.field: \"programmeStaff\"",
+      "result.pass: \"PASS\"",
+      "result.fail: \"FAIL\"",
+      "result.review: \"REVIEW\"",
+      "result.na: \"N/A\"",
+      "reviewCondition: \"ไม่สามารถตรวจสอบสถานะอาจารย์ประจำได้\"",
+      "naEnabled: false"
+     ],
+     "dataSummary": [
+      {
+       "label": "Operation",
+       "value": "for each distinct (curriculumId, personId) of appointments where role = 'programmeResponsible': join appointments where role = 'programmeStaff' on curriculumId = appointments.curriculumId, personId = appointments.personId; checks: ExistsCheck"
+      },
+      {
+       "label": "Subjects",
+       "value": "5"
+      },
+      {
+       "label": "Subjects PASS",
+       "value": "5"
+      }
+     ],
+     "dataFound": [
+      {
+       "label": "x (6ab97bb6588c9dc1fccd8281)",
+       "items": [
+        "1 matching record(s) -> PASS"
+       ]
+      },
+      {
+       "label": "x (6ab97bb6588c9dc1fccd8282)",
+       "items": [
+        "1 matching record(s) -> PASS"
+       ]
+      },
+      {
+       "label": "x (6ab97bb6588c9dc1fccd8283)",
+       "items": [
+        "1 matching record(s) -> PASS"
+       ]
+      },
+      {
+       "label": "x (6ab97bb6588c9dc1fccd8284)",
+       "items": [
+        "1 matching record(s) -> PASS"
+       ]
+      },
+      {
+       "label": "x (6ab97bb6588c9dc1fccd8285)",
+       "items": [
+        "1 matching record(s) -> PASS"
+       ]
+      }
+     ],
+     "verification": {
+      "found": 10,
+      "verified": null,
+      "approved": null,
+      "verifiedAt": null
+     },
+     "missingInformation": [],
+     "evidence": [],
+     "traceability": [
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd8286",
+       "fields": [
+        "curriculumId",
+        "personId",
+        "role"
+       ],
+       "values": {
+        "curriculumId": "6ab97bb6588c9dc1fccd8280",
+        "personId": "6ab97bb6588c9dc1fccd8281",
+        "role": "programmeResponsible"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd8288",
+       "fields": [
+        "curriculumId",
+        "personId",
+        "role"
+       ],
+       "values": {
+        "curriculumId": "6ab97bb6588c9dc1fccd8280",
+        "personId": "6ab97bb6588c9dc1fccd8282",
+        "role": "programmeResponsible"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd828a",
+       "fields": [
+        "curriculumId",
+        "personId",
+        "role"
+       ],
+       "values": {
+        "curriculumId": "6ab97bb6588c9dc1fccd8280",
+        "personId": "6ab97bb6588c9dc1fccd8283",
+        "role": "programmeResponsible"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd828c",
+       "fields": [
+        "curriculumId",
+        "personId",
+        "role"
+       ],
+       "values": {
+        "curriculumId": "6ab97bb6588c9dc1fccd8280",
+        "personId": "6ab97bb6588c9dc1fccd8284",
+        "role": "programmeResponsible"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd828e",
+       "fields": [
+        "curriculumId",
+        "personId",
+        "role"
+       ],
+       "values": {
+        "curriculumId": "6ab97bb6588c9dc1fccd8280",
+        "personId": "6ab97bb6588c9dc1fccd8285",
+        "role": "programmeResponsible"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd8287",
+       "fields": [
+        "curriculumId",
+        "personId",
+        "role"
+       ],
+       "values": {
+        "curriculumId": "6ab97bb6588c9dc1fccd8280",
+        "personId": "6ab97bb6588c9dc1fccd8281",
+        "role": "programmeStaff"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd8289",
+       "fields": [
+        "curriculumId",
+        "personId",
+        "role"
+       ],
+       "values": {
+        "curriculumId": "6ab97bb6588c9dc1fccd8280",
+        "personId": "6ab97bb6588c9dc1fccd8282",
+        "role": "programmeStaff"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd828b",
+       "fields": [
+        "curriculumId",
+        "personId",
+        "role"
+       ],
+       "values": {
+        "curriculumId": "6ab97bb6588c9dc1fccd8280",
+        "personId": "6ab97bb6588c9dc1fccd8283",
+        "role": "programmeStaff"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd828d",
+       "fields": [
+        "curriculumId",
+        "personId",
+        "role"
+       ],
+       "values": {
+        "curriculumId": "6ab97bb6588c9dc1fccd8280",
+        "personId": "6ab97bb6588c9dc1fccd8284",
+        "role": "programmeStaff"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd828f",
+       "fields": [
+        "curriculumId",
+        "personId",
+        "role"
+       ],
+       "values": {
+        "curriculumId": "6ab97bb6588c9dc1fccd8280",
+        "personId": "6ab97bb6588c9dc1fccd8285",
+        "role": "programmeStaff"
+       }
+      }
+     ],
+     "dataCompleteness": "complete",
+     "issue": null,
+     "reviewRequired": null,
+     "reviewByUser": null,
+     "review": null,
+     "persistedResult": null
+    },
+    {
+     "psCode": "PS-03",
+     "status": "REVIEW",
+     "requirement": "อาจารย์ผู้รับผิดชอบหลักสูตรต้องไม่รับผิดชอบเกิน 1 หลักสูตร",
+     "checks": [
+      "targetCollection: \"appointments\"",
+      "targetRole: \"programmeResponsible\"",
+      "review.required: true",
+      "review.reviewByUser: true",
+      "review.allowManualResult: \"PASS\", \"FAIL\", \"REVIEW\"",
+      "result.pass: \"PASS\"",
+      "result.fail: \"FAIL\"",
+      "result.review: \"REVIEW\"",
+      "result.na: \"N/A\"",
+      "naEnabled: false"
+     ],
+     "dataSummary": [
+      {
+       "label": "Operation",
+       "value": "review required by configuration"
+      },
+      {
+       "label": "Review",
+       "value": "Review by user required by configuration"
+      }
+     ],
+     "dataFound": [
+      {
+       "label": "appointments",
+       "items": [
+        "x (6ab97bb6588c9dc1fccd8281)",
+        "x (6ab97bb6588c9dc1fccd8282)",
+        "x (6ab97bb6588c9dc1fccd8283)",
+        "x (6ab97bb6588c9dc1fccd8284)",
+        "x (6ab97bb6588c9dc1fccd8285)"
+       ]
+      }
+     ],
+     "verification": {
+      "found": 5,
+      "verified": null,
+      "approved": null,
+      "verifiedAt": null
+     },
+     "missingInformation": [],
+     "evidence": [],
+     "traceability": [
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd8286",
+       "fields": [
+        "role"
+       ],
+       "values": {
+        "role": "programmeResponsible"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd8288",
+       "fields": [
+        "role"
+       ],
+       "values": {
+        "role": "programmeResponsible"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd828a",
+       "fields": [
+        "role"
+       ],
+       "values": {
+        "role": "programmeResponsible"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd828c",
+       "fields": [
+        "role"
+       ],
+       "values": {
+        "role": "programmeResponsible"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd828e",
+       "fields": [
+        "role"
+       ],
+       "values": {
+        "role": "programmeResponsible"
+       }
+      }
+     ],
+     "dataCompleteness": "complete",
+     "issue": null,
+     "reviewRequired": true,
+     "reviewByUser": true,
+     "review": {
+      "allowManualResult": [
+       "PASS",
+       "FAIL",
+       "REVIEW"
+      ],
+      "status": null,
+      "reviewedAt": null
+     },
+     "persistedResult": null
+    },
+    {
+     "psCode": "PS-04",
+     "status": "PASS",
+     "requirement": "หลักสูตรต้องมีคำสั่งแต่งตั้งและระบุบทบาทการบริหารหลักสูตรอย่างชัดเจน",
+     "checks": [
+      "targetCollection: \"appointments\"",
+      "requiredFields: \"personId\", \"role\", \"roleName\", \"appointmentOrder\"",
+      "appointmentOrder.required: true",
+      "appointmentOrder.requiredFields: \"orderNumber\", \"orderDate\"",
+      "role.required: true",
+      "role.roleNameRequired: true",
+      "result.pass: \"PASS\"",
+      "result.fail: \"FAIL\"",
+      "result.review: \"REVIEW\"",
+      "result.na: \"N/A\"",
+      "conditions.pass: \"ข้อมูลการแต่งตั้งครบและระบุบทบาทชัดเจน\"",
+      "conditions.fail: \"ไม่มีคำสั่งแต่งตั้งหรือข้อมูลไม่ครบ\"",
+      "conditions.review: \"มีข้อมูลแต่ไม่สามารถระบุความครบถ้วนหรือความชัดเจนได้\"",
+      "naEnabled: false"
+     ],
+     "dataSummary": [
+      {
+       "label": "Operation",
+       "value": "fields present in appointments: personId, role, roleName, appointmentOrder, appointmentOrder.orderNumber, appointmentOrder.orderDate"
+      },
+      {
+       "label": "Records checked",
+       "value": "11"
+      },
+      {
+       "label": "Records with missing fields",
+       "value": "0"
+      }
+     ],
+     "dataFound": [
+      {
+       "label": "Records",
+       "items": [
+        "x (6ab97bb6588c9dc1fccd8281) (6ab97bb6588c9dc1fccd8286): complete",
+        "x (6ab97bb6588c9dc1fccd8281) (6ab97bb6588c9dc1fccd8287): complete",
+        "x (6ab97bb6588c9dc1fccd8282) (6ab97bb6588c9dc1fccd8288): complete",
+        "x (6ab97bb6588c9dc1fccd8282) (6ab97bb6588c9dc1fccd8289): complete",
+        "x (6ab97bb6588c9dc1fccd8283) (6ab97bb6588c9dc1fccd828a): complete",
+        "x (6ab97bb6588c9dc1fccd8283) (6ab97bb6588c9dc1fccd828b): complete",
+        "x (6ab97bb6588c9dc1fccd8284) (6ab97bb6588c9dc1fccd828c): complete",
+        "x (6ab97bb6588c9dc1fccd8284) (6ab97bb6588c9dc1fccd828d): complete",
+        "x (6ab97bb6588c9dc1fccd8285) (6ab97bb6588c9dc1fccd828e): complete",
+        "x (6ab97bb6588c9dc1fccd8285) (6ab97bb6588c9dc1fccd828f): complete",
+        "อาจารย์พิเศษทดสอบ (6ab97bb6588c9dc1fccd829b): complete"
+       ]
+      }
+     ],
+     "verification": {
+      "found": 11,
+      "verified": null,
+      "approved": null,
+      "verifiedAt": null
+     },
+     "missingInformation": [],
+     "evidence": [],
+     "traceability": [
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd8286",
+       "fields": [
+        "appointmentOrder",
+        "appointmentOrder.orderDate",
+        "appointmentOrder.orderNumber",
+        "personId",
+        "role",
+        "roleName"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8281",
+        "role": "programmeResponsible",
+        "roleName": "อาจารย์ผู้รับผิดชอบหลักสูตร",
+        "appointmentOrder": "{'orderNumber': '350/2568', 'orderDate': '2568-02-04'}",
+        "appointmentOrder.orderNumber": "350/2568",
+        "appointmentOrder.orderDate": "2568-02-04"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd8287",
+       "fields": [
+        "appointmentOrder",
+        "appointmentOrder.orderDate",
+        "appointmentOrder.orderNumber",
+        "personId",
+        "role",
+        "roleName"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8281",
+        "role": "programmeStaff",
+        "roleName": "อาจารย์ประจำหลักสูตร",
+        "appointmentOrder": "{'orderNumber': '350/2568', 'orderDate': '2568-02-04'}",
+        "appointmentOrder.orderNumber": "350/2568",
+        "appointmentOrder.orderDate": "2568-02-04"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd8288",
+       "fields": [
+        "appointmentOrder",
+        "appointmentOrder.orderDate",
+        "appointmentOrder.orderNumber",
+        "personId",
+        "role",
+        "roleName"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8282",
+        "role": "programmeResponsible",
+        "roleName": "อาจารย์ผู้รับผิดชอบหลักสูตร",
+        "appointmentOrder": "{'orderNumber': '350/2568', 'orderDate': '2568-02-04'}",
+        "appointmentOrder.orderNumber": "350/2568",
+        "appointmentOrder.orderDate": "2568-02-04"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd8289",
+       "fields": [
+        "appointmentOrder",
+        "appointmentOrder.orderDate",
+        "appointmentOrder.orderNumber",
+        "personId",
+        "role",
+        "roleName"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8282",
+        "role": "programmeStaff",
+        "roleName": "อาจารย์ประจำหลักสูตร",
+        "appointmentOrder": "{'orderNumber': '350/2568', 'orderDate': '2568-02-04'}",
+        "appointmentOrder.orderNumber": "350/2568",
+        "appointmentOrder.orderDate": "2568-02-04"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd828a",
+       "fields": [
+        "appointmentOrder",
+        "appointmentOrder.orderDate",
+        "appointmentOrder.orderNumber",
+        "personId",
+        "role",
+        "roleName"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8283",
+        "role": "programmeResponsible",
+        "roleName": "อาจารย์ผู้รับผิดชอบหลักสูตร",
+        "appointmentOrder": "{'orderNumber': '350/2568', 'orderDate': '2568-02-04'}",
+        "appointmentOrder.orderNumber": "350/2568",
+        "appointmentOrder.orderDate": "2568-02-04"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd828b",
+       "fields": [
+        "appointmentOrder",
+        "appointmentOrder.orderDate",
+        "appointmentOrder.orderNumber",
+        "personId",
+        "role",
+        "roleName"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8283",
+        "role": "programmeStaff",
+        "roleName": "อาจารย์ประจำหลักสูตร",
+        "appointmentOrder": "{'orderNumber': '350/2568', 'orderDate': '2568-02-04'}",
+        "appointmentOrder.orderNumber": "350/2568",
+        "appointmentOrder.orderDate": "2568-02-04"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd828c",
+       "fields": [
+        "appointmentOrder",
+        "appointmentOrder.orderDate",
+        "appointmentOrder.orderNumber",
+        "personId",
+        "role",
+        "roleName"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8284",
+        "role": "programmeResponsible",
+        "roleName": "อาจารย์ผู้รับผิดชอบหลักสูตร",
+        "appointmentOrder": "{'orderNumber': '350/2568', 'orderDate': '2568-02-04'}",
+        "appointmentOrder.orderNumber": "350/2568",
+        "appointmentOrder.orderDate": "2568-02-04"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd828d",
+       "fields": [
+        "appointmentOrder",
+        "appointmentOrder.orderDate",
+        "appointmentOrder.orderNumber",
+        "personId",
+        "role",
+        "roleName"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8284",
+        "role": "programmeStaff",
+        "roleName": "อาจารย์ประจำหลักสูตร",
+        "appointmentOrder": "{'orderNumber': '350/2568', 'orderDate': '2568-02-04'}",
+        "appointmentOrder.orderNumber": "350/2568",
+        "appointmentOrder.orderDate": "2568-02-04"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd828e",
+       "fields": [
+        "appointmentOrder",
+        "appointmentOrder.orderDate",
+        "appointmentOrder.orderNumber",
+        "personId",
+        "role",
+        "roleName"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8285",
+        "role": "programmeResponsible",
+        "roleName": "อาจารย์ผู้รับผิดชอบหลักสูตร",
+        "appointmentOrder": "{'orderNumber': '350/2568', 'orderDate': '2568-02-04'}",
+        "appointmentOrder.orderNumber": "350/2568",
+        "appointmentOrder.orderDate": "2568-02-04"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd828f",
+       "fields": [
+        "appointmentOrder",
+        "appointmentOrder.orderDate",
+        "appointmentOrder.orderNumber",
+        "personId",
+        "role",
+        "roleName"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8285",
+        "role": "programmeStaff",
+        "roleName": "อาจารย์ประจำหลักสูตร",
+        "appointmentOrder": "{'orderNumber': '350/2568', 'orderDate': '2568-02-04'}",
+        "appointmentOrder.orderNumber": "350/2568",
+        "appointmentOrder.orderDate": "2568-02-04"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd829b",
+       "fields": [
+        "appointmentOrder",
+        "appointmentOrder.orderDate",
+        "appointmentOrder.orderNumber",
+        "personId",
+        "role",
+        "roleName"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd829a",
+        "role": "specialInstructor",
+        "roleName": "specialInstructor",
+        "appointmentOrder": "{'orderNumber': '350/2568', 'orderDate': '2568-02-04'}",
+        "appointmentOrder.orderNumber": "350/2568",
+        "appointmentOrder.orderDate": "2568-02-04"
+       }
+      }
+     ],
+     "dataCompleteness": "complete",
+     "issue": null,
+     "reviewRequired": null,
+     "reviewByUser": null,
+     "review": null,
+     "persistedResult": null
+    },
+    {
+     "psCode": "PS-05",
+     "status": "PASS",
+     "requirement": "อาจารย์ผู้รับผิดชอบหลักสูตรต้องมีคุณวุฒิสูงสุดอย่างน้อยระดับปริญญาโท",
+     "checks": [
+      "targetCollection: \"educations\"",
+      "appointment.role: \"programmeResponsible\"",
+      "join.from: \"appointments.personId\"",
+      "join.to: \"educations.personId\"",
+      "degree.field: \"degree\"",
+      "degree.minimum: \"master\"",
+      "degree.ordering: \"bachelor\", \"master\", \"Ph.D.\"",
+      "degree.aliases.bachelor: \"วท.บ.\", \"บธ.บ.\", \"วบ.บ.\"",
+      "degree.aliases.master: \"วท.ม.\"",
+      "degree.aliases.Ph.D.: \"ปร.ด.\"",
+      "degree.normalization.enabled: true",
+      "degree.normalization.remove: \" \", \".\"",
+      "degree.normalization.caseInsensitive: true",
+      "result.pass: \"PASS\"",
+      "result.fail: \"FAIL\"",
+      "result.review: \"REVIEW\"",
+      "result.na: \"N/A\"",
+      "reviewCondition: \"ไม่สามารถระบุระดับคุณวุฒิได้\"",
+      "naEnabled: false"
+     ],
+     "dataSummary": [
+      {
+       "label": "Operation",
+       "value": "for each distinct (personId) of appointments where role = 'programmeResponsible': join educations on personId = educations.personId; checks: AtLeastCheck"
+      },
+      {
+       "label": "Subjects",
+       "value": "5"
+      },
+      {
+       "label": "Subjects PASS",
+       "value": "5"
+      }
+     ],
+     "dataFound": [
+      {
+       "label": "x (6ab97bb6588c9dc1fccd8281)",
+       "items": [
+        "degree: master → master (highest 'master' is at least 'master') -> PASS"
+       ]
+      },
+      {
+       "label": "x (6ab97bb6588c9dc1fccd8282)",
+       "items": [
+        "degree: master → master (highest 'master' is at least 'master') -> PASS"
+       ]
+      },
+      {
+       "label": "x (6ab97bb6588c9dc1fccd8283)",
+       "items": [
+        "degree: master → master (highest 'master' is at least 'master') -> PASS"
+       ]
+      },
+      {
+       "label": "x (6ab97bb6588c9dc1fccd8284)",
+       "items": [
+        "degree: master → master (highest 'master' is at least 'master') -> PASS"
+       ]
+      },
+      {
+       "label": "x (6ab97bb6588c9dc1fccd8285)",
+       "items": [
+        "degree: master → master (highest 'master' is at least 'master') -> PASS"
+       ]
+      }
+     ],
+     "verification": {
+      "found": 10,
+      "verified": null,
+      "approved": null,
+      "verifiedAt": null
+     },
+     "missingInformation": [],
+     "evidence": [],
+     "traceability": [
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd8286",
+       "fields": [
+        "personId",
+        "role"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8281",
+        "role": "programmeResponsible"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd8288",
+       "fields": [
+        "personId",
+        "role"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8282",
+        "role": "programmeResponsible"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd828a",
+       "fields": [
+        "personId",
+        "role"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8283",
+        "role": "programmeResponsible"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd828c",
+       "fields": [
+        "personId",
+        "role"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8284",
+        "role": "programmeResponsible"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd828e",
+       "fields": [
+        "personId",
+        "role"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8285",
+        "role": "programmeResponsible"
+       }
+      },
+      {
+       "collection": "educations",
+       "recordId": "6ab97bb6588c9dc1fccd8290",
+       "fields": [
+        "degree",
+        "personId"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8281",
+        "degree": "master"
+       }
+      },
+      {
+       "collection": "educations",
+       "recordId": "6ab97bb6588c9dc1fccd8291",
+       "fields": [
+        "degree",
+        "personId"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8282",
+        "degree": "master"
+       }
+      },
+      {
+       "collection": "educations",
+       "recordId": "6ab97bb6588c9dc1fccd8292",
+       "fields": [
+        "degree",
+        "personId"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8283",
+        "degree": "master"
+       }
+      },
+      {
+       "collection": "educations",
+       "recordId": "6ab97bb6588c9dc1fccd8293",
+       "fields": [
+        "degree",
+        "personId"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8284",
+        "degree": "master"
+       }
+      },
+      {
+       "collection": "educations",
+       "recordId": "6ab97bb6588c9dc1fccd8294",
+       "fields": [
+        "degree",
+        "personId"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8285",
+        "degree": "master"
+       }
+      }
+     ],
+     "dataCompleteness": "complete",
+     "issue": null,
+     "reviewRequired": null,
+     "reviewByUser": null,
+     "review": null,
+     "persistedResult": null
+    },
+    {
+     "psCode": "PS-06",
+     "status": "PASS",
+     "requirement": "คุณวุฒิของอาจารย์สัมพันธ์กับสาขาของหลักสูตร",
+     "checks": [
+      "targetCollection: \"educations\"",
+      "appointment.role: \"programmeResponsible\"",
+      "join.appointmentPersonId: \"appointments.personId\"",
+      "join.educationPersonId: \"educations.personId\"",
+      "join.curriculumId: \"appointments.curriculumId\"",
+      "programmeField.source: \"curricula.curriculumName\"",
+      "programmeField.method: \"extract\"",
+      "qualificationField.source: \"educations.field\"",
+      "normalization.enabled: true",
+      "normalization.remove: \"สาขาวิชา\", \"สาขา\", \"หลักสูตร\", \"วิชา\", \" \", \"-\"",
+      "normalization.caseInsensitive: true",
+      "comparison.method: \"mapping\"",
+      "comparison.allowExactMatch: true",
+      "comparison.allowRelatedMatch: true",
+      "fieldMappings: 8 item(s)",
+      "result.exact: \"PASS\"",
+      "result.related: \"PASS\"",
+      "result.unrelated: \"FAIL\"",
+      "result.unknown: \"REVIEW\"",
+      "reviewCondition: \"ไม่พบข้อมูล education.field\", \"ไม่สามารถระบุ programme field ได้\", \"ไม่มี Mapping สำหรับ programme field\", \"ไม่สามารถตัดสินความสัมพันธ์ได้\"",
+      "naEnabled: false"
+     ],
+     "dataSummary": [
+      {
+       "label": "Operation",
+       "value": "for each distinct (personId) of appointments where role = 'programmeResponsible': join educations on personId = educations.personId; checks: MappingCheck"
+      },
+      {
+       "label": "Subjects",
+       "value": "5"
+      },
+      {
+       "label": "Subjects PASS",
+       "value": "5"
+      }
+     ],
+     "dataFound": [
+      {
+       "label": "x (6ab97bb6588c9dc1fccd8281)",
+       "items": [
+        "field: Computer Science -> exact (วิทยาการคอมพิวเตอร์) -> PASS"
+       ]
+      },
+      {
+       "label": "x (6ab97bb6588c9dc1fccd8282)",
+       "items": [
+        "field: Computer Science -> exact (วิทยาการคอมพิวเตอร์) -> PASS"
+       ]
+      },
+      {
+       "label": "x (6ab97bb6588c9dc1fccd8283)",
+       "items": [
+        "field: Computer Science -> exact (วิทยาการคอมพิวเตอร์) -> PASS"
+       ]
+      },
+      {
+       "label": "x (6ab97bb6588c9dc1fccd8284)",
+       "items": [
+        "field: Computer Science -> exact (วิทยาการคอมพิวเตอร์) -> PASS"
+       ]
+      },
+      {
+       "label": "x (6ab97bb6588c9dc1fccd8285)",
+       "items": [
+        "field: Computer Science -> exact (วิทยาการคอมพิวเตอร์) -> PASS"
+       ]
+      }
+     ],
+     "verification": {
+      "found": 11,
+      "verified": null,
+      "approved": null,
+      "verifiedAt": null
+     },
+     "missingInformation": [],
+     "evidence": [],
+     "traceability": [
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd8286",
+       "fields": [
+        "personId",
+        "role"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8281",
+        "role": "programmeResponsible"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd8288",
+       "fields": [
+        "personId",
+        "role"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8282",
+        "role": "programmeResponsible"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd828a",
+       "fields": [
+        "personId",
+        "role"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8283",
+        "role": "programmeResponsible"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd828c",
+       "fields": [
+        "personId",
+        "role"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8284",
+        "role": "programmeResponsible"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd828e",
+       "fields": [
+        "personId",
+        "role"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8285",
+        "role": "programmeResponsible"
+       }
+      },
+      {
+       "collection": "curricula",
+       "recordId": "6ab97bb6588c9dc1fccd8280",
+       "fields": [
+        "curriculumName"
+       ],
+       "values": {
+        "curriculumName": "วิทยาศาสตรบัณฑิต สาขาวิชาวิทยาการคอมพิวเตอร์"
+       }
+      },
+      {
+       "collection": "educations",
+       "recordId": "6ab97bb6588c9dc1fccd8290",
+       "fields": [
+        "field",
+        "personId"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8281",
+        "field": "Computer Science"
+       }
+      },
+      {
+       "collection": "educations",
+       "recordId": "6ab97bb6588c9dc1fccd8291",
+       "fields": [
+        "field",
+        "personId"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8282",
+        "field": "Computer Science"
+       }
+      },
+      {
+       "collection": "educations",
+       "recordId": "6ab97bb6588c9dc1fccd8292",
+       "fields": [
+        "field",
+        "personId"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8283",
+        "field": "Computer Science"
+       }
+      },
+      {
+       "collection": "educations",
+       "recordId": "6ab97bb6588c9dc1fccd8293",
+       "fields": [
+        "field",
+        "personId"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8284",
+        "field": "Computer Science"
+       }
+      },
+      {
+       "collection": "educations",
+       "recordId": "6ab97bb6588c9dc1fccd8294",
+       "fields": [
+        "field",
+        "personId"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8285",
+        "field": "Computer Science"
+       }
+      }
+     ],
+     "dataCompleteness": "complete",
+     "issue": null,
+     "reviewRequired": null,
+     "reviewByUser": null,
+     "review": null,
+     "persistedResult": null
+    },
+    {
+     "psCode": "PS-07",
+     "status": "PASS",
+     "requirement": "อาจารย์ผู้รับผิดชอบหรืออาจารย์ประจำหลักสูตรต้องมีผลงานวิชาการย้อนหลัง 5 ปี",
+     "checks": [
+      "targetCollections: \"academic_works\", \"appointments\"",
+      "targetRoles: \"programmeResponsible\", \"programmeStaff\"",
+      "join.from: \"appointments.personId\"",
+      "join.to: \"academic_works.personId\"",
+      "publicationYear.field: \"publicationYear\"",
+      "publicationYear.period: \"previous5Years\"",
+      "minimumCount: 1",
+      "result.pass: \"PASS\"",
+      "result.fail: \"FAIL\"",
+      "result.review: \"REVIEW\"",
+      "result.na: \"N/A\"",
+      "reviewCondition: \"ไม่สามารถตรวจสอบ publicationYear ได้\"",
+      "naEnabled: false"
+     ],
+     "dataSummary": [
+      {
+       "label": "Operation",
+       "value": "for each distinct (personId) of appointments where role in ['programmeResponsible', 'programmeStaff']: join academic_works on personId = academic_works.personId; checks: CountCheck"
+      },
+      {
+       "label": "Subjects",
+       "value": "5"
+      },
+      {
+       "label": "Subjects PASS",
+       "value": "5"
+      }
+     ],
+     "dataFound": [
+      {
+       "label": "x (6ab97bb6588c9dc1fccd8281)",
+       "items": [
+        "1 in window -> PASS"
+       ]
+      },
+      {
+       "label": "x (6ab97bb6588c9dc1fccd8282)",
+       "items": [
+        "1 in window -> PASS"
+       ]
+      },
+      {
+       "label": "x (6ab97bb6588c9dc1fccd8283)",
+       "items": [
+        "1 in window -> PASS"
+       ]
+      },
+      {
+       "label": "x (6ab97bb6588c9dc1fccd8284)",
+       "items": [
+        "1 in window -> PASS"
+       ]
+      },
+      {
+       "label": "x (6ab97bb6588c9dc1fccd8285)",
+       "items": [
+        "1 in window -> PASS"
+       ]
+      }
+     ],
+     "verification": {
+      "found": 15,
+      "verified": null,
+      "approved": null,
+      "verifiedAt": null
+     },
+     "missingInformation": [],
+     "evidence": [],
+     "traceability": [
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd8286",
+       "fields": [
+        "personId",
+        "role"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8281",
+        "role": "programmeResponsible"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd8287",
+       "fields": [
+        "personId",
+        "role"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8281",
+        "role": "programmeStaff"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd8288",
+       "fields": [
+        "personId",
+        "role"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8282",
+        "role": "programmeResponsible"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd8289",
+       "fields": [
+        "personId",
+        "role"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8282",
+        "role": "programmeStaff"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd828a",
+       "fields": [
+        "personId",
+        "role"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8283",
+        "role": "programmeResponsible"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd828b",
+       "fields": [
+        "personId",
+        "role"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8283",
+        "role": "programmeStaff"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd828c",
+       "fields": [
+        "personId",
+        "role"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8284",
+        "role": "programmeResponsible"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd828d",
+       "fields": [
+        "personId",
+        "role"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8284",
+        "role": "programmeStaff"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd828e",
+       "fields": [
+        "personId",
+        "role"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8285",
+        "role": "programmeResponsible"
+       }
+      },
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd828f",
+       "fields": [
+        "personId",
+        "role"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8285",
+        "role": "programmeStaff"
+       }
+      },
+      {
+       "collection": "academic_works",
+       "recordId": "6ab97bb6588c9dc1fccd8295",
+       "fields": [
+        "personId",
+        "publicationYear"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8281",
+        "publicationYear": "2569"
+       }
+      },
+      {
+       "collection": "academic_works",
+       "recordId": "6ab97bb6588c9dc1fccd8296",
+       "fields": [
+        "personId",
+        "publicationYear"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8282",
+        "publicationYear": "2569"
+       }
+      },
+      {
+       "collection": "academic_works",
+       "recordId": "6ab97bb6588c9dc1fccd8297",
+       "fields": [
+        "personId",
+        "publicationYear"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8283",
+        "publicationYear": "2569"
+       }
+      },
+      {
+       "collection": "academic_works",
+       "recordId": "6ab97bb6588c9dc1fccd8298",
+       "fields": [
+        "personId",
+        "publicationYear"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8284",
+        "publicationYear": "2569"
+       }
+      },
+      {
+       "collection": "academic_works",
+       "recordId": "6ab97bb6588c9dc1fccd8299",
+       "fields": [
+        "personId",
+        "publicationYear"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd8285",
+        "publicationYear": "2569"
+       }
+      }
+     ],
+     "dataCompleteness": "complete",
+     "issue": null,
+     "reviewRequired": null,
+     "reviewByUser": null,
+     "review": null,
+     "persistedResult": null
+    },
+    {
+     "psCode": "PS-08",
+     "status": "REVIEW",
+     "requirement": "อาจารย์พิเศษต้องมีคุณวุฒิและประสบการณ์ที่เหมาะสม",
+     "checks": [
+      "targetCollection: \"appointments\"",
+      "targetRole: \"specialInstructor\"",
+      "join.appointmentPersonId: \"appointments.personId\"",
+      "join.educationPersonId: \"educations.personId\"",
+      "qualification.source: \"educations.degree\"",
+      "qualification.required: true",
+      "qualification.condition.operator: \"EXISTS\"",
+      "experience.required: true",
+      "experience.source: \"persons.hasTeachingExperience\"",
+      "experience.condition.operator: \"==\"",
+      "experience.condition.value: true",
+      "result.pass: \"PASS\"",
+      "result.fail: \"FAIL\"",
+      "result.review: \"REVIEW\"",
+      "result.na: \"N/A\"",
+      "conditions.noSpecialInstructor: \"N/A\"",
+      "conditions.qualifiedAndSuitable: \"PASS\"",
+      "conditions.notQualifiedOrNotSuitable: \"FAIL\"",
+      "conditions.insufficientInformation: \"REVIEW\"",
+      "naEnabled: true"
+     ],
+     "dataSummary": [
+      {
+       "label": "Operation",
+       "value": "for each distinct (personId) of appointments where role = 'specialInstructor': join educations on personId = educations.personId; checks: ShowCheck; ShowCheck"
+      },
+      {
+       "label": "Subjects",
+       "value": "1"
+      },
+      {
+       "label": "Subjects REVIEW",
+       "value": "1"
+      }
+     ],
+     "dataFound": [
+      {
+       "label": "อาจารย์พิเศษทดสอบ",
+       "items": [
+        "qualification: master -> PASS",
+        "experience: no value found -> REVIEW"
+       ]
+      }
+     ],
+     "verification": {
+      "found": 3,
+      "verified": null,
+      "approved": null,
+      "verifiedAt": null
+     },
+     "missingInformation": [
+      "experience: no value found for review"
+     ],
+     "evidence": [],
+     "traceability": [
+      {
+       "collection": "appointments",
+       "recordId": "6ab97bb6588c9dc1fccd829b",
+       "fields": [
+        "personId",
+        "role"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd829a",
+        "role": "specialInstructor"
+       }
+      },
+      {
+       "collection": "educations",
+       "recordId": "6ab97bb6588c9dc1fccd829c",
+       "fields": [
+        "degree",
+        "personId"
+       ],
+       "values": {
+        "personId": "6ab97bb6588c9dc1fccd829a",
+        "degree": "master"
+       }
+      },
+      {
+       "collection": "persons",
+       "recordId": "6ab97bb6588c9dc1fccd829a",
+       "fields": [
+        "_id",
+        "hasTeachingExperience"
+       ],
+       "values": {
+        "_id": "6ab97bb6588c9dc1fccd829a",
+        "hasTeachingExperience": "—"
+       }
+      }
+     ],
+     "dataCompleteness": "incomplete",
+     "issue": null,
+     "reviewRequired": null,
+     "reviewByUser": null,
+     "review": null,
+     "persistedResult": null
+    },
+    {
+     "psCode": "PS-09",
+     "status": "PASS",
+     "requirement": "หลักสูตรต้องมีการปรับปรุงล่าสุดไม่เกิน 5 ปี",
+     "checks": [
+      "targetCollection: \"curricula\"",
+      "year.field: \"curriculumYear\"",
+      "comparison.operator: \"<=\"",
+      "comparison.value: 5",
+      "comparison.reference: \"currentYear\"",
+      "calculation.formula: \"currentYear - curriculumYear\"",
+      "result.pass: \"PASS\"",
+      "result.fail: \"FAIL\"",
+      "result.review: \"REVIEW\"",
+      "result.na: \"N/A\"",
+      "reviewCondition: \"ไม่สามารถระบุ curriculumYear ได้\"",
+      "naEnabled: false"
+     ],
+     "dataSummary": [
+      {
+       "label": "Operation",
+       "value": "currentYear - curriculumYear over curricula; compare <= 5"
+      },
+      {
+       "label": "curriculumYear",
+       "value": "2567"
+      }
+     ],
+     "dataFound": [
+      {
+       "label": "25500231104894",
+       "items": [
+        "currentYear = 2569",
+        "currentYear - curriculumYear = 2"
+       ]
+      }
+     ],
+     "verification": {
+      "found": 1,
+      "verified": null,
+      "approved": null,
+      "verifiedAt": null
+     },
+     "missingInformation": [],
+     "evidence": [],
+     "traceability": [
+      {
+       "collection": "curricula",
+       "recordId": "6ab97bb6588c9dc1fccd8280",
+       "fields": [
+        "curriculumYear"
+       ],
+       "values": {
+        "curriculumYear": "2567"
+       }
+      }
+     ],
+     "dataCompleteness": "complete",
+     "issue": null,
+     "reviewRequired": null,
+     "reviewByUser": null,
+     "review": null,
+     "persistedResult": null
+    }
+   ],
+   "generationReadiness": {
+    "status": null,
+    "blockingPS": [],
+    "issue": "configuration_error",
+    "detail": "no configuration document with configType 'generationReadiness' was found"
+   },
+   "programmeReadiness": {
+    "percentage": 77.78,
+    "passCount": 7,
+    "totalPS": 9
+   }
+  },
+  "detail": {
+   "psCode": "PS-08",
+   "status": "REVIEW",
+   "requirement": "อาจารย์พิเศษต้องมีคุณวุฒิและประสบการณ์ที่เหมาะสม",
+   "checks": [
+    "targetCollection: \"appointments\"",
+    "targetRole: \"specialInstructor\"",
+    "join.appointmentPersonId: \"appointments.personId\"",
+    "join.educationPersonId: \"educations.personId\"",
+    "qualification.source: \"educations.degree\"",
+    "qualification.required: true",
+    "qualification.condition.operator: \"EXISTS\"",
+    "experience.required: true",
+    "experience.source: \"persons.hasTeachingExperience\"",
+    "experience.condition.operator: \"==\"",
+    "experience.condition.value: true",
+    "result.pass: \"PASS\"",
+    "result.fail: \"FAIL\"",
+    "result.review: \"REVIEW\"",
+    "result.na: \"N/A\"",
+    "conditions.noSpecialInstructor: \"N/A\"",
+    "conditions.qualifiedAndSuitable: \"PASS\"",
+    "conditions.notQualifiedOrNotSuitable: \"FAIL\"",
+    "conditions.insufficientInformation: \"REVIEW\"",
+    "naEnabled: true"
+   ],
+   "dataSummary": [
+    {
+     "label": "Operation",
+     "value": "for each distinct (personId) of appointments where role = 'specialInstructor': join educations on personId = educations.personId; checks: ShowCheck; ShowCheck"
+    },
+    {
+     "label": "Subjects",
+     "value": "1"
+    },
+    {
+     "label": "Subjects REVIEW",
+     "value": "1"
+    }
+   ],
+   "dataFound": [
+    {
+     "label": "อาจารย์พิเศษทดสอบ",
+     "items": [
+      "qualification: master -> PASS",
+      "experience: no value found -> REVIEW"
+     ]
+    }
+   ],
+   "verification": {
+    "found": 3,
+    "verified": null,
+    "approved": null,
+    "verifiedAt": null
+   },
+   "missingInformation": [
+    "experience: no value found for review"
+   ],
+   "evidence": [],
+   "traceability": [
+    {
+     "collection": "appointments",
+     "recordId": "6ab97bb6588c9dc1fccd829b",
+     "fields": [
+      "personId",
+      "role"
+     ],
+     "values": {
+      "personId": "6ab97bb6588c9dc1fccd829a",
+      "role": "specialInstructor"
+     }
+    },
+    {
+     "collection": "educations",
+     "recordId": "6ab97bb6588c9dc1fccd829c",
+     "fields": [
+      "degree",
+      "personId"
+     ],
+     "values": {
+      "personId": "6ab97bb6588c9dc1fccd829a",
+      "degree": "master"
+     }
+    },
+    {
+     "collection": "persons",
+     "recordId": "6ab97bb6588c9dc1fccd829a",
+     "fields": [
+      "_id",
+      "hasTeachingExperience"
+     ],
+     "values": {
+      "_id": "6ab97bb6588c9dc1fccd829a",
+      "hasTeachingExperience": "—"
+     }
+    }
+   ],
+   "dataCompleteness": "incomplete",
+   "issue": null,
+   "reviewRequired": null,
+   "reviewByUser": null,
+   "review": null,
+   "persistedResult": null
+  }
+ }
+}

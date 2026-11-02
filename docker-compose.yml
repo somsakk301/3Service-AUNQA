@@ -1,0 +1,148 @@
+name: aunqa-portal
+
+x-runtime: &runtime
+  restart: unless-stopped
+  init: true
+
+services:
+  gateway:
+    <<: *runtime
+    image: nginx:1.28-alpine
+    ports: ["80:80"]
+    volumes:
+      - ./deploy/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./deploy/routes.conf:/etc/nginx/portal-routes.conf:ro
+    depends_on:
+      portal-frontend: {condition: service_healthy}
+      import-backend: {condition: service_healthy}
+      monitor-backend: {condition: service_healthy}
+      generator-backend: {condition: service_healthy}
+    healthcheck:
+      test: [CMD, wget, -q, -O, /dev/null, http://127.0.0.1/healthz]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+
+  portal-frontend:
+    <<: *runtime
+    build:
+      context: .
+      dockerfile: portal/Dockerfile
+    healthcheck:
+      test: [CMD, wget, -q, -O, /dev/null, http://127.0.0.1:8080/]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+
+  import-backend:
+    <<: *runtime
+    build: ./services/import/backend
+    environment:
+      MONGODB_URI: mongodb://mongodb:27017/aunqa_ps
+      CHROMADB_HOST: chromadb
+      CHROMADB_PORT: 8000
+      PROJECT_DATA_ROOT: /app/project-data
+      HF_HOME: /app/project-data/models/huggingface
+      HF_HUB_DISABLE_XET: "1"
+      ANONYMIZED_TELEMETRY: "FALSE"
+    volumes:
+      - uploaded-documents:/app/project-data
+    depends_on:
+      mongodb: {condition: service_healthy}
+      chromadb: {condition: service_healthy}
+    healthcheck:
+      test: [CMD, python, -c, "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health', timeout=5)"]
+      interval: 20s
+      timeout: 10s
+      retries: 10
+      start_period: 60s
+
+  monitor-backend:
+    <<: *runtime
+    build:
+      context: .
+      dockerfile: deploy/monitor.Dockerfile
+    environment:
+      MORNITOR_DB_URI: mongodb://mongodb:27017
+      MORNITOR_DB_NAME: aunqa_ps
+      MORNITOR_CONFIG_DB_NAME: aunqa_config
+      MORNITOR_RESULTS_DB_NAME: aunqa_monitor
+      MORNITOR_CORS_ORIGINS: ""
+      MORNITOR_SESSION_SECRET: ${MORNITOR_SESSION_SECRET:?Run deploy/setup.ps1 or set MORNITOR_SESSION_SECRET}
+      MORNITOR_COOKIE_SECURE: ${MORNITOR_COOKIE_SECURE:-false}
+      PORTAL_ADMIN_USERNAME: ${PORTAL_ADMIN_USERNAME:-admin}
+      PORTAL_ADMIN_NAME: ${PORTAL_ADMIN_NAME:-Portal Administrator}
+      PORTAL_ADMIN_PASSWORD: ${PORTAL_ADMIN_PASSWORD:-}
+    depends_on:
+      import-backend: {condition: service_healthy}
+    healthcheck:
+      test: [CMD, python, -c, "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health', timeout=5)"]
+      interval: 15s
+      timeout: 10s
+      retries: 5
+
+  generator-backend:
+    <<: *runtime
+    build: ./services/generator/backend
+    environment:
+      MONGODB_URI: mongodb://mongodb:27017
+      MONGODB_DB_NAME: aunqa_ps
+      CHROMA_HOST: chromadb
+      CHROMA_PORT: 8000
+      CHROMA_COLLECTION: document_chunks
+      TEMPLATE_SERVICE_URL: http://import-backend:8000
+      MONITOR_SERVICE_URL: http://monitor-backend:8000
+      MONITOR_CONTRACT: aunqa-portal
+      GENERATOR_DEV_MODE: "false"
+      TEST_MODE_FORCE_CONTENT: "false"
+      GEMINI_API_KEY: ${GEMINI_API_KEY:-}
+      GEMINI_CRITERIA_MODEL: ${GEMINI_CRITERIA_MODEL:-gemini-3.8-flash}
+      OUTPUT_DIR: /app/output
+      HF_HOME: /app/models/huggingface
+      CORS_ORIGINS: ""
+    volumes:
+      - generated-documents:/app/output
+      - generator-models:/app/models
+      - uploaded-documents:/app/project-data:ro
+    depends_on:
+      monitor-backend: {condition: service_healthy}
+      chromadb: {condition: service_healthy}
+    healthcheck:
+      test: [CMD, python, -c, "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8010/api/health', timeout=5)"]
+      interval: 20s
+      timeout: 10s
+      retries: 10
+      start_period: 60s
+
+  mongodb:
+    <<: *runtime
+    image: mongo:8.0.32-noble
+    volumes: ["mongodb-data:/data/db"]
+    healthcheck:
+      test: [CMD, mongosh, --quiet, --eval, "quit(db.adminCommand({ping:1}).ok ? 0 : 2)"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  chromadb:
+    <<: *runtime
+    image: chromadb/chroma:1.4.1
+    environment:
+      IS_PERSISTENT: "TRUE"
+      PERSIST_DIRECTORY: /data
+      CHROMA_PERSIST_PATH: /data
+      ANONYMIZED_TELEMETRY: "FALSE"
+    volumes: ["chroma-data:/data"]
+    healthcheck:
+      test: [CMD, bash, -ec, "exec 3<>/dev/tcp/127.0.0.1/8000"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  mongodb-data:
+  chroma-data:
+  uploaded-documents:
+  generated-documents:
+  generator-models:
+

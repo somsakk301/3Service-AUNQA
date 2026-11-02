@@ -1,0 +1,13 @@
+/*
+ * Tailwind CSS v4 entry (theme + utilities only).
+ * Preflight is intentionally not imported: it is a global CSS reset that would
+ * change the existing look defined in styles.css (headings, lists, links, paragraphs).
+ * Class detection is limited to the app source (tests are excluded).
+ */
+@layer theme, base, components, utilities;
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities) source(none);
+
+@source "../../index.html";
+@source "../**/*.{js,jsx}";
+@source not "../test";
